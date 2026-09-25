@@ -12,7 +12,7 @@
 
 :root {
   /* colors */
-  --background-color: white;
+  --background-color: tan;
   --light-color: #f8f8f8;
   --dark-color: #505050;
   --text-color: #131313;
@@ -320,6 +320,12 @@ main > .section:first-of-type {
 main .section.light,
 main .section.highlight {
   background-color: var(--light-color);
+  margin: 0;
+  padding: 40px 0;
+}
+
+main .section.background-grey {
+  background-color: grey;
   margin: 0;
   padding: 40px 0;
 }

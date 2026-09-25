@@ -1,0 +1,57 @@
+.employee-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.employee-list .employee-list-items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media (width >= 600px) {
+  .employee-list .employee-list-items {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (width >= 900px) {
+  .employee-list .employee-list-items {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.employee-list .employee-list-item {
+  border: 1px solid var(--dark-color, #ccc);
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.employee-list .employee-list-name {
+  font-weight: 700;
+  font-size: var(--heading-font-size-xs, 20px);
+}
+
+.employee-list .employee-list-department {
+  font-weight: 600;
+}
+
+.employee-list .employee-list-experience,
+.employee-list .employee-list-city {
+  color: var(--dark-color, #505050);
+  font-size: var(--body-font-size-s, 16px);
+}
+
+.employee-list .employee-list-more[disabled] {
+  opacity: 0.5;
+  cursor: progress;
+}

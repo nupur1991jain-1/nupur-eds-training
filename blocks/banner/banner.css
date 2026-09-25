@@ -1,0 +1,37 @@
+.banner {
+  display: grid;
+  gap: 24px;
+  align-items: center;
+  padding: 32px;
+  color: #fff;
+  background-color: var(--banner-background-color, blue);
+}
+
+.banner[data-variant="dark"] {
+  background-color: #111;
+}
+
+.banner .banner-image {
+  line-height: 0;
+}
+
+.banner .banner-image img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.banner .banner-content > :first-child {
+  margin-top: 0;
+}
+
+.banner .banner-content > :last-child {
+  margin-bottom: 0;
+}
+
+@media (width >= 900px) {
+  .banner {
+    grid-template-columns: 1fr 1fr;
+  }
+}

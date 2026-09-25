@@ -1,0 +1,13 @@
+{
+  ":type": "sheet",
+  "data": [
+    {
+      "name": "banner",
+      "path": "/blocks/banner"
+    },
+     {
+      "name": "breadcrumb",
+      "path": "/blocks/breadcrumb"
+    }
+  ]
+}
