@@ -92,7 +92,9 @@ export function fetchPageMeta(path) {
     metaCache.set(path, fetch(`${contentPrefix()}${path}`)
       .then((resp) => (resp.ok ? resp.text() : ''))
       .then((html) => {
-        const doc = new DOMParser().parseFromString(html, 'text/html');
+        // meta tags live in <head>: parsing only that keeps a many-card listing off the main thread
+        const end = html.indexOf('</head>');
+        const doc = new DOMParser().parseFromString(end > -1 ? html.slice(0, end + 7) : html, 'text/html');
         return Object.fromEntries([...doc.head.querySelectorAll('meta[name]')]
           .map((m) => [m.getAttribute('name'), m.getAttribute('content') || '']));
       })

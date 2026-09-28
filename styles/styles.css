@@ -80,6 +80,36 @@
   line-gap-override: 0%;
 }
 
+/* second line of defence for Linux systems that only ship DejaVu (e.g. test labs) */
+@font-face {
+  font-family: source-sans-pro-fallback-dejavu;
+  font-weight: 100 500;
+  src: local('DejaVu Sans'), local('DejaVuSans');
+  size-adjust: 82.31%;
+  ascent-override: 119.06%;
+  descent-override: 32.8%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: source-sans-pro-fallback-dejavu;
+  font-weight: 600 900;
+  src: local('DejaVu Sans Bold'), local('DejaVuSans-Bold');
+  size-adjust: 74.48%;
+  ascent-override: 131.59%;
+  descent-override: 36.25%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: asar-fallback-dejavu;
+  src: local('DejaVu Serif'), local('DejaVuSerif');
+  size-adjust: 83.63%;
+  ascent-override: 143.49%;
+  descent-override: 66.96%;
+  line-gap-override: 0%;
+}
+
 @media (width >= 900px) {
   :root {
     /* nav height */
