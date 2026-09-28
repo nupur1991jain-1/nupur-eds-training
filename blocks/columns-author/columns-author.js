@@ -1,4 +1,4 @@
-import { createOptimizedPicture } from '../../scripts/aem.js';
+import { optimizedPicture } from '../../scripts/utils.js';
 
 const NETWORKS = ['facebook', 'twitter', 'instagram', 'linkedin', 'youtube', 'pinterest', 'tiktok', 'x'];
 
@@ -80,7 +80,7 @@ export default function decorate(block) {
       if (pic && !avatar.children.length) {
         const img = pic.querySelector('img');
         avatar.append(img
-          ? createOptimizedPicture(img.src, img.alt, false, [{ width: '200' }])
+          ? optimizedPicture(img, false, [{ width: '200' }])
           : pic);
         // Drop the now-empty paragraph that wrapped the picture.
         if (el !== pic && !el.textContent.trim()) return;

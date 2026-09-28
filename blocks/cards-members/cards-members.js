@@ -1,4 +1,4 @@
-import { createOptimizedPicture } from '../../scripts/aem.js';
+import { optimizedPicture } from '../../scripts/utils.js';
 
 const CTA_PATTERN = /^read\s*more\b/i;
 
@@ -83,7 +83,7 @@ export default function decorate(block) {
   });
 
   ul.querySelectorAll('picture > img').forEach((img) => {
-    img.closest('picture').replaceWith(createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]));
+    img.closest('picture').replaceWith(optimizedPicture(img, false, [{ width: '750' }]));
   });
   block.replaceChildren(ul);
 }

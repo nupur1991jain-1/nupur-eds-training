@@ -1,4 +1,4 @@
-import { createOptimizedPicture } from '../../scripts/aem.js';
+import { optimizedPicture } from '../../scripts/utils.js';
 
 // The imported CTA is a plain <p><a> (no strong/em), so decorateButtons() leaves it as a text
 // link. Mark a trailing link-only paragraph as the panel's CTA button.
@@ -27,7 +27,7 @@ export default function decorate(block) {
         col.classList.add('columns-featured-image');
         const img = pic.querySelector('img');
         if (img) {
-          pic.replaceWith(createOptimizedPicture(img.src, img.alt, false, [{ media: '(min-width: 900px)', width: '1200' }, { width: '750' }]));
+          pic.replaceWith(optimizedPicture(img, false, [{ media: '(min-width: 900px)', width: '1200' }, { width: '750' }]));
         }
       } else if (col.textContent.trim() || col.children.length) {
         col.classList.add('columns-featured-content');

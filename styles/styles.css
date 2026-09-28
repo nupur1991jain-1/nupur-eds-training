@@ -48,6 +48,38 @@
   src: local('Arial');
 }
 
+/* Metric-matched fallbacks for the WKND fonts, so text keeps its width and line breaks when
+   fonts.css swaps in after first paint. Measured against Arimo/Tinos (metric-compatible with
+   Arial/Times New Roman); they and Liberation Sans/Serif stand in on Linux/ChromeOS. */
+@font-face {
+  font-family: source-sans-pro-fallback;
+  font-weight: 100 500;
+  src: local('Arial'), local('ArialMT'), local('Arimo'), local('Liberation Sans'), local('LiberationSans');
+  size-adjust: 92.71%;
+  ascent-override: 105.71%;
+  descent-override: 29.12%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: source-sans-pro-fallback;
+  font-weight: 600 900;
+  src: local('Arial Bold'), local('Arial-BoldMT'), local('Arimo Bold'), local('Arimo-Bold'), local('Liberation Sans Bold'), local('LiberationSans-Bold');
+  size-adjust: 88.52%;
+  ascent-override: 110.71%;
+  descent-override: 30.5%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: asar-fallback;
+  src: local('Times New Roman'), local('TimesNewRomanPSMT'), local('Tinos'), local('Liberation Serif'), local('LiberationSerif');
+  size-adjust: 103.97%;
+  ascent-override: 115.42%;
+  descent-override: 53.86%;
+  line-gap-override: 0%;
+}
+
 @media (width >= 900px) {
   :root {
     /* nav height */
@@ -117,9 +149,13 @@ h6 {
   scroll-margin: calc(var(--nav-height) + 20px);
 }
 
+/* .heading-hN: a heading re-levelled by fixHeadingOrder() keeps its authored look */
 h4,
 h5,
-h6 {
+h6,
+.heading-h4,
+.heading-h5,
+.heading-h6 {
   font-family: var(--body-font-family);
   font-weight: 600;
   text-transform: uppercase;
@@ -127,19 +163,26 @@ h6 {
 
 h1 { font-size: var(--heading-font-size-xxl); }
 h2 { font-size: var(--heading-font-size-xl); }
-h3 { font-size: var(--heading-font-size-l); }
 
-h4 {
+h3,
+.heading-h3 {
+  font-size: var(--heading-font-size-l);
+}
+
+h4,
+.heading-h4 {
   margin: 1.33em 0;
   font-size: var(--heading-font-size-m);
 }
 
-h5 {
+h5,
+.heading-h5 {
   margin: 1.67em 0;
   font-size: var(--heading-font-size-s);
 }
 
-h6 {
+h6,
+.heading-h6 {
   margin: 2.33em 0;
   font-size: var(--heading-font-size-xs);
 }
@@ -155,7 +198,12 @@ blockquote {
 }
 
 /* default content (text components on the source) */
-main .default-content-wrapper h2::after {
+main .default-content-wrapper :is(p, li) a:any-link:not(.button) {
+  /* links in running text must not rely on colour alone (3:1 vs the text is not met) */
+  text-decoration: underline;
+}
+
+main .default-content-wrapper h2:not([class*="heading-h"])::after {
   content: "";
   display: block;
   width: 84px;

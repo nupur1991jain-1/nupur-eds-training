@@ -1,4 +1,4 @@
-import { createOptimizedPicture } from '../../scripts/aem.js';
+import { optimizedPicture } from '../../scripts/utils.js';
 
 let tabsId = 0;
 
@@ -20,7 +20,7 @@ function selectTab(block, index, focus = false) {
 function optimizeImages(panel) {
   panel.querySelectorAll('picture > img').forEach((img) => {
     img.closest('picture').replaceWith(
-      createOptimizedPicture(img.src, img.alt, false, [{ media: '(min-width: 900px)', width: '1200' }, { width: '750' }]),
+      optimizedPicture(img, false, [{ media: '(min-width: 900px)', width: '1200' }, { width: '750' }]),
     );
   });
 }

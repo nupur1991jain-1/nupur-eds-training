@@ -1,7 +1,7 @@
 /* header and nav layout (mobile first) */
 header .header {
-  --header-font-family: "Source Sans Pro", "Helvetica Neue", helvetica, arial, sans-serif;
-  --header-heading-font-family: asar, georgia, serif;
+  --header-font-family: var(--body-font-family);
+  --header-heading-font-family: var(--heading-font-family);
   --header-dark: #202020;
   --header-light: #ebebeb;
   --header-accent: #ffea00;

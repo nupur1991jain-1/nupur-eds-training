@@ -1,4 +1,4 @@
-import { createOptimizedPicture } from '../../scripts/aem.js';
+import { optimizedPicture } from '../../scripts/utils.js';
 
 let carouselId = 0;
 
@@ -59,7 +59,8 @@ function bindEvents(block) {
 }
 
 function createSlide(picture, slideIndex, id) {
-  const slide = document.createElement('li');
+  // role=group slides can't be <li>, so the track is a plain div (WAI carousel pattern)
+  const slide = document.createElement('div');
   slide.className = 'carousel-gallery-slide';
   slide.dataset.slideIndex = slideIndex;
   slide.id = `carousel-gallery-${id}-slide-${slideIndex}`;
@@ -68,7 +69,7 @@ function createSlide(picture, slideIndex, id) {
 
   const img = picture.querySelector('img');
   const optimized = img
-    ? createOptimizedPicture(img.src, img.alt, slideIndex === 0, [{ media: '(min-width: 900px)', width: '2000' }, { width: '900' }])
+    ? optimizedPicture(img, slideIndex === 0, [{ media: '(min-width: 900px)', width: '2000' }, { width: '900' }])
     : picture;
   const imageWrap = document.createElement('div');
   imageWrap.className = 'carousel-gallery-slide-image';
@@ -90,7 +91,7 @@ export default function decorate(block) {
 
   const container = document.createElement('div');
   container.className = 'carousel-gallery-slides-container';
-  const slides = document.createElement('ul');
+  const slides = document.createElement('div');
   slides.className = 'carousel-gallery-slides';
 
   let indicators;

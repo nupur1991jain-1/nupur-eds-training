@@ -1,4 +1,4 @@
-import { createOptimizedPicture } from '../../scripts/aem.js';
+import { optimizedPicture } from '../../scripts/utils.js';
 
 // Same network vocabulary as columns-author so social links share one styling convention.
 const NETWORKS = ['facebook', 'twitter', 'instagram', 'linkedin', 'youtube', 'pinterest', 'tiktok', 'x'];
@@ -106,7 +106,7 @@ export default function decorate(block) {
   });
 
   ul.querySelectorAll('picture > img').forEach((img) => {
-    img.closest('picture').replaceWith(createOptimizedPicture(img.src, img.alt, false, [{ width: '400' }]));
+    img.closest('picture').replaceWith(optimizedPicture(img, false, [{ width: '400' }]));
   });
   block.replaceChildren(ul);
 }

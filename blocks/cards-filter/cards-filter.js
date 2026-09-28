@@ -1,7 +1,7 @@
-import { createOptimizedPicture } from '../../scripts/aem.js';
 import {
   expandListing, fetchPageMeta, indexPicture, listingCell, rowLink,
 } from '../../scripts/listing.js';
+import { optimizedPicture } from '../../scripts/utils.js';
 
 /**
  * Item row for a dynamic listing, in the same shape as an authored card.
@@ -152,7 +152,7 @@ export default async function decorate(block) {
   });
 
   ul.querySelectorAll('picture > img').forEach((img) => {
-    img.closest('picture').replaceWith(createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]));
+    img.closest('picture').replaceWith(optimizedPicture(img, false, [{ width: '750' }]));
   });
 
   const sorted = [...labels.entries()].sort((a, b) => a[1].localeCompare(b[1]));

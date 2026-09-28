@@ -1,4 +1,4 @@
-import { createOptimizedPicture } from '../../scripts/aem.js';
+import { optimizedPicture } from '../../scripts/utils.js';
 
 // The imported CTA is a plain <p><a> (no strong/em), so decorateButtons() leaves it as a text
 // link. Mark a trailing link-only paragraph as the teaser's CTA button.
@@ -23,8 +23,11 @@ export default function decorate(block) {
   media.className = 'hero-teaser-image';
   if (picture) {
     const img = picture.querySelector('img');
+    // leading hero (only a breadcrumb or nothing above it) is the LCP image: load it eagerly
+    const section = block.closest('.section');
+    const leading = section && [...section.parentElement.children].indexOf(section) <= 1;
     const optimized = img
-      ? createOptimizedPicture(img.src, img.alt, false, [{ media: '(min-width: 900px)', width: '2000' }, { width: '900' }])
+      ? optimizedPicture(img, leading, [{ media: '(min-width: 900px)', width: '2000' }, { width: '900' }])
       : picture;
     const wrapper = picture.parentElement;
     media.append(optimized);

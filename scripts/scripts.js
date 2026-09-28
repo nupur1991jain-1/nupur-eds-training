@@ -14,6 +14,7 @@ import {
   toCamelCase,
   toClassName,
 } from './aem.js';
+import { fixHeadingOrder } from './utils.js';
 
 if (window.trustedTypes && window.trustedTypes.createPolicy) {
   const innerTT = window.trustedTypes.createPolicy('tt-inner', {
@@ -217,6 +218,8 @@ async function loadLazy(doc) {
 
   const main = doc.querySelector('main');
   await loadSections(main);
+  // after blocks have rendered their own headings (e.g. listings)
+  fixHeadingOrder(main);
 
   const { hash } = window.location;
   const element = hash ? doc.getElementById(hash.substring(1)) : false;

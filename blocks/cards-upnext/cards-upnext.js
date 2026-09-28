@@ -1,7 +1,7 @@
-import { createOptimizedPicture } from '../../scripts/aem.js';
 import {
   expandListing, fetchPageMeta, formatDate, listingCell, rowLink,
 } from '../../scripts/listing.js';
+import { optimizedPicture } from '../../scripts/utils.js';
 
 /**
  * Item row for a dynamic listing, in the same shape as an authored item.
@@ -80,7 +80,7 @@ export default async function decorate(block) {
   });
 
   ul.querySelectorAll('picture > img').forEach((img) => {
-    img.closest('picture').replaceWith(createOptimizedPicture(img.src, img.alt, false, [{ width: '400' }]));
+    img.closest('picture').replaceWith(optimizedPicture(img, false, [{ width: '400' }]));
   });
   block.replaceChildren(ul);
 }

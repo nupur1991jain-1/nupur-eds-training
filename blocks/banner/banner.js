@@ -1,4 +1,4 @@
-import { createOptimizedPicture } from '../../scripts/aem.js';
+import { optimizedPicture } from '../../scripts/utils.js';
 
 const DEFAULT_BACKGROUND_COLOR = 'blue';
 
@@ -19,7 +19,7 @@ export default function decorate(block) {
   if (image) {
     const imageWrapper = document.createElement('div');
     imageWrapper.className = 'banner-image';
-    imageWrapper.append(createOptimizedPicture(image.src, image.alt, false, [{ width: '1200' }]));
+    imageWrapper.append(optimizedPicture(image, false, [{ width: '1200' }]));
     block.append(imageWrapper);
   }
 

@@ -83,6 +83,14 @@ export default async function decorate(block) {
 
   if (social) {
     social.className = 'footer-social';
+    // footer is its own landmark: its heading is a top-level (h2) section heading, whatever
+    // level was authored, so the page outline never skips levels
+    const heading = social.querySelector('h1, h2, h3, h4, h5, h6');
+    const h2 = document.createElement('h2');
+    [...heading.attributes].forEach((attr) => h2.setAttribute(attr.name, attr.value));
+    h2.classList.add('footer-social-heading');
+    h2.append(...heading.childNodes);
+    heading.replaceWith(h2);
     const list = social.querySelector('ul');
     if (list) list.className = 'footer-social-links';
     social.querySelectorAll('a').forEach((a) => {

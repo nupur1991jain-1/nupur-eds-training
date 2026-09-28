@@ -1,4 +1,4 @@
-import { createOptimizedPicture } from '../../scripts/aem.js';
+import { optimizedPicture } from '../../scripts/utils.js';
 
 let carouselId = 0;
 
@@ -112,7 +112,7 @@ function createSlide(row, slideIndex, id) {
   if (imageCell) {
     imageCell.className = 'carousel-hero-slide-image';
     imageCell.querySelectorAll('picture > img').forEach((img) => {
-      img.closest('picture').replaceWith(createOptimizedPicture(img.src, img.alt, slideIndex === 0, [{ media: '(min-width: 900px)', width: '2000' }, { width: '900' }]));
+      img.closest('picture').replaceWith(optimizedPicture(img, slideIndex === 0, [{ media: '(min-width: 900px)', width: '2000' }, { width: '900' }]));
     });
     slide.append(imageCell);
   }

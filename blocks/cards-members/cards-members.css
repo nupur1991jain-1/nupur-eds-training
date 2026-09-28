@@ -27,8 +27,9 @@
   min-width: 0;
 }
 
-/* the gated content is dimmed; the lock marker is not */
-.cards-members .cards-members-body > :not(.cards-members-lock),
+/* the gated content is dimmed; the lock marker is not. The small description is not faded
+   (it would drop to 2.7:1); it gets the lightest grey that keeps 4.5:1 contrast instead. */
+.cards-members .cards-members-body > :not(.cards-members-lock, .cards-members-description),
 .cards-members .cards-members-image {
   opacity: 0.65;
 }
@@ -80,7 +81,7 @@
   font-size: var(--body-font-size-xs);
   line-height: 24.5px;
   text-transform: uppercase;
-  color: rgb(105 105 105);
+  color: rgb(112 112 112);
 }
 
 .cards-members .cards-members-cta {
