@@ -143,8 +143,8 @@
   gap: 4px;
 }
 
-/* stylelint-disable-next-line no-descending-specificity */
-.carousel-hero .carousel-hero-navigation button {
+.carousel-hero .carousel-hero-navigation .carousel-hero-prev,
+.carousel-hero .carousel-hero-navigation .carousel-hero-next {
   box-sizing: border-box;
   width: 26px;
   height: 24px;

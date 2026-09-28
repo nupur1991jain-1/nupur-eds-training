@@ -108,8 +108,8 @@
   height: 27px;
 }
 
-/* stylelint-disable-next-line no-descending-specificity */
-.carousel-gallery .carousel-gallery-navigation button {
+.carousel-gallery .carousel-gallery-navigation .carousel-gallery-prev,
+.carousel-gallery .carousel-gallery-navigation .carousel-gallery-next {
   box-sizing: border-box;
   width: 26px;
   height: 24px;
