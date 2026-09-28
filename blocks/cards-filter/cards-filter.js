@@ -1,4 +1,29 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
+import {
+  expandListing, fetchPageMeta, indexPicture, listingCell, rowLink,
+} from '../../scripts/listing.js';
+
+/**
+ * Item row for a dynamic listing, in the same shape as an authored card.
+ * Categories come from the index when it carries them, otherwise from the page's metadata.
+ * @param {Object} row query index row
+ */
+async function listingRow(row) {
+  const title = document.createElement('h3');
+  title.append(rowLink(row));
+  const description = document.createElement('p');
+  description.textContent = row.description || '';
+  const categories = row.categories !== undefined
+    ? row.categories
+    : ((await fetchPageMeta(row.path)).categories || '');
+  const categoryCell = listingCell();
+  categoryCell.textContent = categories;
+  return [
+    listingCell(indexPicture(row)),
+    listingCell(title, row.description ? description : null),
+    categoryCell,
+  ];
+}
 
 // No authorable options yet; declared so future options branch on one list.
 const OPTION_CLASSES = [];
@@ -113,7 +138,10 @@ function buildFilters(cards, labels) {
   return group;
 }
 
-export default function decorate(block) {
+export default async function decorate(block) {
+  // Listing mode: rows come from the query index (see scripts/listing.js)
+  await expandListing(block, listingRow);
+
   // eslint-disable-next-line no-unused-vars
   const active = [...block.classList].filter((c) => OPTION_CLASSES.includes(c));
 

@@ -1,4 +1,23 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
+import {
+  expandListing, fetchPageMeta, formatDate, listingCell, rowLink,
+} from '../../scripts/listing.js';
+
+/**
+ * Item row for a dynamic listing, in the same shape as an authored item.
+ * The date is the page's publication-date metadata, falling back to its last modification.
+ * @param {Object} row query index row
+ */
+async function listingRow(row) {
+  const title = document.createElement('p');
+  title.append(rowLink(row));
+  const published = row.publicationDate !== undefined
+    ? row.publicationDate
+    : (await fetchPageMeta(row.path))['publication-date'];
+  const date = document.createElement('p');
+  date.textContent = formatDate(published || row.lastModified);
+  return [listingCell(title, date.textContent ? date : null)];
+}
 
 // No authorable options yet; declared so future options branch on one list.
 const OPTION_CLASSES = [];
@@ -13,7 +32,10 @@ function unbuttonize(el) {
   });
 }
 
-export default function decorate(block) {
+export default async function decorate(block) {
+  // Listing mode: rows come from the query index (see scripts/listing.js)
+  await expandListing(block, listingRow);
+
   // eslint-disable-next-line no-unused-vars
   const active = [...block.classList].filter((c) => OPTION_CLASSES.includes(c));
 

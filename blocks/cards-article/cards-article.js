@@ -1,9 +1,29 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
+import {
+  expandListing, indexPicture, listingCell, rowLink,
+} from '../../scripts/listing.js';
+
+/**
+ * Item row for a dynamic listing, in the same shape as an authored card.
+ * @param {Object} row query index row
+ */
+function listingRow(row) {
+  const title = document.createElement('p');
+  const strong = document.createElement('strong');
+  strong.append(rowLink(row));
+  title.append(strong);
+  const description = document.createElement('p');
+  description.textContent = row.description || '';
+  return [listingCell(indexPicture(row)), listingCell(title, row.description ? description : null)];
+}
 
 // No authorable options yet; declared so future options branch on one list.
 const OPTION_CLASSES = [];
 
-export default function decorate(block) {
+export default async function decorate(block) {
+  // Listing mode: rows come from the query index (see scripts/listing.js)
+  await expandListing(block, listingRow);
+
   // eslint-disable-next-line no-unused-vars
   const active = [...block.classList].filter((c) => OPTION_CLASSES.includes(c));
 
