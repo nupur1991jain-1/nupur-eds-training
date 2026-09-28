@@ -32,13 +32,13 @@ const PAGE_TEMPLATE = {
     {
       "name": "breadcrumb",
       "instances": [
-        ".aem-Grid > .image + .breadcrumb"
+        ".aem-Grid > .breadcrumb"
       ]
     },
     {
       "name": "columns-author",
       "instances": [
-        ".breadcrumb + main.container .experiencefragment"
+        "main.container .experiencefragment"
       ]
     },
     {
@@ -53,19 +53,19 @@ const PAGE_TEMPLATE = {
       "id": "section-1",
       "name": "Hero image",
       "selector": [
-        ".aem-Grid > .image:has(+ .breadcrumb)"
+        ".aem-Grid > .image:has(~ .breadcrumb)"
       ],
       "style": null,
       "blocks": [],
       "defaultContent": [
-        ".aem-Grid > .image:has(+ .breadcrumb)"
+        ".aem-Grid > .image:has(~ .breadcrumb)"
       ]
     },
     {
       "id": "section-2",
       "name": "Breadcrumb",
       "selector": [
-        ".aem-Grid > .image + .breadcrumb"
+        ".aem-Grid > .breadcrumb"
       ],
       "style": null,
       "blocks": [
@@ -77,7 +77,7 @@ const PAGE_TEMPLATE = {
       "id": "section-3",
       "name": "Article body with right sidebar",
       "selector": [
-        ".aem-Grid > .breadcrumb + main.container"
+        ".aem-Grid > .breadcrumb ~ main.container"
       ],
       "style": "article-sidebar",
       "blocks": [
@@ -85,8 +85,8 @@ const PAGE_TEMPLATE = {
         "cards-upnext"
       ],
       "defaultContent": [
-        ".breadcrumb + main.container .title",
-        ".breadcrumb + main.container .contentfragment",
+        ".aem-Grid > .breadcrumb ~ main.container .title",
+        ".aem-Grid > .breadcrumb ~ main.container .contentfragment",
         "aside.cmp-layoutcontainer--sidebar .title"
       ]
     }

@@ -361,7 +361,7 @@ main .section.background-grey {
   main > .section.article-sidebar {
     display: grid;
     grid-template-columns: 3fr 1fr;
-    grid-template-rows: min-content 1fr;
+    grid-template-rows: min-content min-content 1fr;
     column-gap: 48px;
     max-width: 1200px;
     margin-left: auto;
@@ -377,7 +377,7 @@ main .section.background-grey {
   }
 
   main > .section.article-sidebar > div:first-child {
-    grid-row: 1 / span 2;
+    grid-row: 1 / span 3;
   }
 
   main > .section.article-sidebar > div:nth-last-child(2):not(:nth-child(-n+2)) {
