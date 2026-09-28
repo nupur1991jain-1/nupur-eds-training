@@ -134,6 +134,9 @@ export function indexPicture(row) {
   const picture = document.createElement('picture');
   const img = document.createElement('img');
   const url = new URL(row.image, window.location.href);
+  // lazy before src: this placeholder is swapped for an optimized picture by the block, and a
+  // lazy image that never enters the document is never fetched (no full-size original download)
+  img.loading = 'lazy';
   img.src = url.pathname;
   img.alt = row.title || '';
   picture.append(img);
