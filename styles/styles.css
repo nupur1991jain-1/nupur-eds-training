@@ -470,15 +470,18 @@ main > .section.separator-medium::after {
   content: "";
   display: block;
   box-sizing: border-box;
+  width: calc(100% - (2 * var(--content-gutter)));
   max-width: calc(var(--content-max-width) - (2 * var(--content-gutter)));
-  margin: 64.5px auto 0;
-  padding-bottom: 64.5px;
-  border-top: 1px solid var(--light-color);
+  margin: 64px auto 0;
+  padding-bottom: 64px;
+
+  /* WKND: <hr> with 1px top + bottom borders in the same colour, inset by the gutter */
+  border-top: 2px solid var(--light-color);
 }
 
 main > .section.separator-medium::after {
-  margin-top: 36.5px;
-  padding-bottom: 36.5px;
+  margin-top: 36px;
+  padding-bottom: 36px;
 }
 
 /* title-underline: page titles that carry the yellow bar on WKND (adventures, FAQs) */
