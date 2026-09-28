@@ -172,6 +172,11 @@ var CustomImportScript = (() => {
         el.removeAttribute("data-cmp-data-layer");
         el.removeAttribute("data-cmp-clickable");
       });
+      element.querySelectorAll("a[href]").forEach((a) => {
+        const href = a.getAttribute("href");
+        const m = href.match(/^(?:https?:\/\/(?:www\.)?wknd\.site)?(\/[^?#]*?)\.html([?#].*)?$/);
+        if (m) a.setAttribute("href", `${m[1]}${m[2] || ""}`);
+      });
     }
   }
 

@@ -2,21 +2,18 @@
    headings, full-width images, paragraphs and lists. Active-tab styling uses currentcolor
    inversion as a neutral placeholder; brand styling is applied later by the design pass. */
 
+/* Tabs wrap onto a second line on narrow screens instead of scrolling behind a hidden
+   scrollbar (the 3 real labels overflow a 375px viewport and the last tab was cut off). */
 .tabs-adventure .tabs-adventure-list {
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   gap: 4px;
-  overflow-x: auto;
-  scrollbar-width: none;
   margin-bottom: 24px;
-}
-
-.tabs-adventure .tabs-adventure-list::-webkit-scrollbar {
-  display: none;
 }
 
 .tabs-adventure .tabs-adventure-tab {
   flex: 0 0 auto;
+  max-width: 100%;
   margin: 0;
   padding: 8px 12px;
   border: 0;

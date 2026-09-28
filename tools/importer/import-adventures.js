@@ -29,7 +29,17 @@ const PAGE_TEMPLATE = {
     "https://wknd.site/us/en/adventures/tahoe-skiing.html",
     "https://wknd.site/us/en/adventures/west-coast-cycling.html",
     "https://wknd.site/us/en/adventures/whistler-mountain-biking.html",
-    "https://wknd.site/us/en/adventures/yosemite-backpacking.html"
+    "https://wknd.site/us/en/adventures/yosemite-backpacking.html",
+    "https://wknd.site/us/en/adventures/bali-surf-camp.html",
+    "https://wknd.site/us/en/adventures/beervana-portland.html",
+    "https://wknd.site/us/en/adventures/colorado-rock-climbing.html",
+    "https://wknd.site/us/en/adventures/cycling-southern-utah.html",
+    "https://wknd.site/us/en/adventures/cycling-tuscany.html",
+    "https://wknd.site/us/en/adventures/gastronomic-marais-tour.html",
+    "https://wknd.site/us/en/adventures/napa-wine-tasting.html",
+    "https://wknd.site/us/en/adventures/riverside-camping-australia.html",
+    "https://wknd.site/us/en/adventures/ski-touring-mont-blanc.html",
+    "https://wknd.site/us/en/adventures/surf-camp-costa-rica.html"
   ],
   "blocks": [
     {
@@ -115,7 +125,7 @@ const PAGE_TEMPLATE = {
 // TRANSFORMER REGISTRY - section transformer runs after cleanup
 const transformers = [
   wkndCleanupTransformer,
-  ...(PAGE_TEMPLATE.sections && PAGE_TEMPLATE.sections.length > 1 ? [wkndSectionsTransformer] : []),
+  ...(PAGE_TEMPLATE.sections && (PAGE_TEMPLATE.sections.length > 1 || PAGE_TEMPLATE.sections.some((s) => s.style)) ? [wkndSectionsTransformer] : []),
 ];
 
 /**

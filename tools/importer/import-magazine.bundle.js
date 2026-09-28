@@ -226,6 +226,11 @@ var CustomImportScript = (() => {
         el.removeAttribute("data-cmp-data-layer");
         el.removeAttribute("data-cmp-clickable");
       });
+      element.querySelectorAll("a[href]").forEach((a) => {
+        const href = a.getAttribute("href");
+        const m = href.match(/^(?:https?:\/\/(?:www\.)?wknd\.site)?(\/[^?#]*?)\.html([?#].*)?$/);
+        if (m) a.setAttribute("href", `${m[1]}${m[2] || ""}`);
+      });
     }
   }
 
@@ -242,13 +247,15 @@ var CustomImportScript = (() => {
   }
   function transform2(hookName, element, payload) {
     const sections = payload && payload.template && payload.template.sections || [];
-    if (sections.length < 2) return;
+    if (sections.length < 2 && !sections.some((s) => s.style)) return;
     const doc = element.ownerDocument || document;
     if (hookName === "beforeTransform") {
+      const sectionEls = sections.map((section) => querySection(element, section.selector));
+      const firstIdx = sectionEls.findIndex(Boolean);
       for (let i = sections.length - 1; i >= 0; i -= 1) {
         const section = sections[i];
-        if (i === 0 && !section.style) continue;
-        const sectionEl = querySection(element, section.selector);
+        if (i === firstIdx && !section.style) continue;
+        const sectionEl = sectionEls[i];
         if (!sectionEl) continue;
         const hr = doc.createElement("hr");
         if (section.style) hr.setAttribute(SECTION_MARKER_ATTR, section.id);
@@ -357,7 +364,7 @@ var CustomImportScript = (() => {
   };
   var transformers = [
     transform,
-    ...PAGE_TEMPLATE.sections && PAGE_TEMPLATE.sections.length > 1 ? [transform2] : []
+    ...PAGE_TEMPLATE.sections && (PAGE_TEMPLATE.sections.length > 1 || PAGE_TEMPLATE.sections.some((s) => s.style)) ? [transform2] : []
   ];
   function executeTransformers(hookName, element, payload) {
     const enhancedPayload = __spreadProps(__spreadValues({}, payload), {

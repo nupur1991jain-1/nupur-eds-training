@@ -127,7 +127,7 @@ const PAGE_TEMPLATE = {
 // TRANSFORMER REGISTRY - section transformer runs after cleanup
 const transformers = [
   wkndCleanupTransformer,
-  ...(PAGE_TEMPLATE.sections && PAGE_TEMPLATE.sections.length > 1 ? [wkndSectionsTransformer] : []),
+  ...(PAGE_TEMPLATE.sections && (PAGE_TEMPLATE.sections.length > 1 || PAGE_TEMPLATE.sections.some((s) => s.style)) ? [wkndSectionsTransformer] : []),
 ];
 
 /**

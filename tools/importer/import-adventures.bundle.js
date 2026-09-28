@@ -274,6 +274,8 @@ var CustomImportScript = (() => {
         ".cmp-carousel__actions",
         ".cmp-carousel__indicators"
       ]);
+      WebImporter.DOMUtils.remove(element, [".experiencefragment .separator:has(+ .byline)"]);
+      element.querySelectorAll(".breadcrumb + main.container :is(h1, h2, h3, h4, h5, h6) :is(b, strong)").forEach((b) => b.replaceWith(...b.childNodes));
     }
     if (hookName === TransformHook.afterTransform) {
       WebImporter.DOMUtils.remove(element, [
@@ -296,6 +298,11 @@ var CustomImportScript = (() => {
         el.removeAttribute("data-cmp-data-layer");
         el.removeAttribute("data-cmp-clickable");
       });
+      element.querySelectorAll("a[href]").forEach((a) => {
+        const href = a.getAttribute("href");
+        const m = href.match(/^(?:https?:\/\/(?:www\.)?wknd\.site)?(\/[^?#]*?)\.html([?#].*)?$/);
+        if (m) a.setAttribute("href", `${m[1]}${m[2] || ""}`);
+      });
     }
   }
 
@@ -312,13 +319,15 @@ var CustomImportScript = (() => {
   }
   function transform2(hookName, element, payload) {
     const sections = payload && payload.template && payload.template.sections || [];
-    if (sections.length < 2) return;
+    if (sections.length < 2 && !sections.some((s) => s.style)) return;
     const doc = element.ownerDocument || document;
     if (hookName === "beforeTransform") {
+      const sectionEls = sections.map((section) => querySection(element, section.selector));
+      const firstIdx = sectionEls.findIndex(Boolean);
       for (let i = sections.length - 1; i >= 0; i -= 1) {
         const section = sections[i];
-        if (i === 0 && !section.style) continue;
-        const sectionEl = querySection(element, section.selector);
+        if (i === firstIdx && !section.style) continue;
+        const sectionEl = sectionEls[i];
         if (!sectionEl) continue;
         const hr = doc.createElement("hr");
         if (section.style) hr.setAttribute(SECTION_MARKER_ATTR, section.id);
@@ -361,7 +370,17 @@ var CustomImportScript = (() => {
       "https://wknd.site/us/en/adventures/tahoe-skiing.html",
       "https://wknd.site/us/en/adventures/west-coast-cycling.html",
       "https://wknd.site/us/en/adventures/whistler-mountain-biking.html",
-      "https://wknd.site/us/en/adventures/yosemite-backpacking.html"
+      "https://wknd.site/us/en/adventures/yosemite-backpacking.html",
+      "https://wknd.site/us/en/adventures/bali-surf-camp.html",
+      "https://wknd.site/us/en/adventures/beervana-portland.html",
+      "https://wknd.site/us/en/adventures/colorado-rock-climbing.html",
+      "https://wknd.site/us/en/adventures/cycling-southern-utah.html",
+      "https://wknd.site/us/en/adventures/cycling-tuscany.html",
+      "https://wknd.site/us/en/adventures/gastronomic-marais-tour.html",
+      "https://wknd.site/us/en/adventures/napa-wine-tasting.html",
+      "https://wknd.site/us/en/adventures/riverside-camping-australia.html",
+      "https://wknd.site/us/en/adventures/ski-touring-mont-blanc.html",
+      "https://wknd.site/us/en/adventures/surf-camp-costa-rica.html"
     ],
     "blocks": [
       {
@@ -445,7 +464,7 @@ var CustomImportScript = (() => {
   };
   var transformers = [
     transform,
-    ...PAGE_TEMPLATE.sections && PAGE_TEMPLATE.sections.length > 1 ? [transform2] : []
+    ...PAGE_TEMPLATE.sections && (PAGE_TEMPLATE.sections.length > 1 || PAGE_TEMPLATE.sections.some((s) => s.style)) ? [transform2] : []
   ];
   function executeTransformers(hookName, element, payload) {
     const enhancedPayload = __spreadProps(__spreadValues({}, payload), {
