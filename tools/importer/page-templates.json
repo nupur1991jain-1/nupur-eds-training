@@ -8,8 +8,119 @@
       ],
       "representativeUrl": "https://wknd.site/us/en/about-us.html",
       "description": "To be named in naming step",
-      "blocks": [],
-      "urlPattern": "/us/en/*"
+      "blocks": [
+        {
+          "name": "cards-contributor",
+          "instances": [
+            "section.cmp-experience-fragment--contributor"
+          ]
+        },
+        {
+          "name": "columns-featured",
+          "instances": [
+            ".teaser.cmp-teaser--featured"
+          ]
+        },
+        {
+          "name": "cards-article",
+          "instances": [
+            "main .image-list.list"
+          ]
+        },
+        {
+          "name": "cards-members",
+          "instances": [
+            ".teaser.cmp-teaser--secure"
+          ]
+        }
+      ],
+      "urlPattern": "/us/en/*",
+      "sections": [
+        {
+          "id": "section-1",
+          "name": "Our Contributors",
+          "selector": [
+            ".aem-Grid > .title:first-child:has(~ .cmp-experience-fragment--contributor)"
+          ],
+          "style": null,
+          "blocks": [
+            "cards-contributor"
+          ],
+          "defaultContent": [
+            ".aem-Grid > .title:first-child:has(~ .cmp-experience-fragment--contributor)",
+            ".aem-Grid > .title.cmp-title--underline",
+            ".aem-Grid > .text.cmp-text--font-small"
+          ]
+        },
+        {
+          "id": "section-2",
+          "name": "WKND Guides",
+          "selector": [
+            ".aem-Grid > .cmp-experience-fragment--contributor ~ .title.cmp-title--underline"
+          ],
+          "style": null,
+          "blocks": [
+            "cards-contributor"
+          ],
+          "defaultContent": [
+            ".aem-Grid > .cmp-experience-fragment--contributor ~ .title.cmp-title--underline",
+            ".aem-Grid > .cmp-experience-fragment--contributor ~ .text.cmp-text--font-small"
+          ]
+        },
+        {
+          "id": "section-3",
+          "name": "Magazine featured article",
+          "selector": [
+            ".aem-Grid > .title:first-child:has(~ .teaser.cmp-teaser--featured)"
+          ],
+          "style": null,
+          "blocks": [
+            "columns-featured"
+          ],
+          "defaultContent": [
+            ".aem-Grid > .title:first-child:has(~ .teaser.cmp-teaser--featured)"
+          ]
+        },
+        {
+          "id": "section-4",
+          "name": "All Articles",
+          "selector": [
+            ".aem-Grid > .teaser.cmp-teaser--featured ~ .title.cmp-title--underline"
+          ],
+          "style": null,
+          "blocks": [
+            "cards-article"
+          ],
+          "defaultContent": [
+            ".aem-Grid > .teaser.cmp-teaser--featured ~ .title.cmp-title--underline"
+          ]
+        },
+        {
+          "id": "section-5",
+          "name": "Members Only",
+          "selector": [
+            ".aem-Grid > .image-list ~ .title.cmp-title--underline"
+          ],
+          "style": null,
+          "blocks": [],
+          "defaultContent": [
+            ".aem-Grid > .image-list ~ .title.cmp-title--underline",
+            ".aem-Grid > .image-list ~ .text"
+          ]
+        },
+        {
+          "id": "section-6",
+          "name": "Members-only teasers",
+          "selector": [
+            ".teaser.cmp-teaser--secure"
+          ],
+          "style": null,
+          "blocks": [
+            "cards-members"
+          ],
+          "defaultContent": []
+        }
+      ]
     },
     {
       "name": "adventures",
@@ -111,8 +222,61 @@
       ],
       "representativeUrl": "https://wknd.site/us/en/adventures.html",
       "description": "To be named in naming step",
-      "blocks": [],
-      "urlPattern": "/us/en/*"
+      "blocks": [
+        {
+          "name": "hero-teaser",
+          "instances": [
+            ".teaser.cmp-teaser--hero"
+          ]
+        },
+        {
+          "name": "cards-filter",
+          "instances": [
+            "main .tabs.panelcontainer"
+          ]
+        }
+      ],
+      "urlPattern": "/us/en/*",
+      "sections": [
+        {
+          "id": "section-1",
+          "name": "Page title",
+          "selector": [
+            "main.cmp-layout-container--fixed:has(~ .teaser.cmp-teaser--hero)"
+          ],
+          "style": null,
+          "blocks": [],
+          "defaultContent": [
+            "main.cmp-layout-container--fixed:has(~ .teaser.cmp-teaser--hero) .title"
+          ]
+        },
+        {
+          "id": "section-2",
+          "name": "Intro teaser",
+          "selector": [
+            ".teaser.cmp-teaser--hero"
+          ],
+          "style": null,
+          "blocks": [
+            "hero-teaser"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "section-3",
+          "name": "Current Adventures",
+          "selector": [
+            ".teaser.cmp-teaser--hero ~ main.cmp-layout-container--fixed"
+          ],
+          "style": null,
+          "blocks": [
+            "cards-filter"
+          ],
+          "defaultContent": [
+            ".teaser.cmp-teaser--hero ~ main.cmp-layout-container--fixed .title.cmp-title--underline"
+          ]
+        }
+      ]
     },
     {
       "name": "faqs",
@@ -121,8 +285,35 @@
       ],
       "representativeUrl": "https://wknd.site/us/en/faqs.html",
       "description": "To be named in naming step",
-      "blocks": [],
-      "urlPattern": "/us/en/*"
+      "blocks": [
+        {
+          "name": "accordion-faq",
+          "instances": [
+            "main .accordion"
+          ]
+        }
+      ],
+      "urlPattern": "/us/en/*",
+      "sections": [
+        {
+          "id": "section-1",
+          "name": "FAQs with help sidebar",
+          "selector": [
+            "main .aem-Grid > .container.aem-GridColumn--default--8"
+          ],
+          "style": "article-sidebar",
+          "blocks": [
+            "accordion-faq"
+          ],
+          "defaultContent": [
+            "main .aem-GridColumn--default--8 .title",
+            "main .aem-GridColumn--default--8 .image",
+            "main .aem-GridColumn--default--8 .text",
+            "main .aem-GridColumn--default--3 .title",
+            "main .aem-GridColumn--default--3 .text"
+          ]
+        }
+      ]
     },
     {
       "name": "home",

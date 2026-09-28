@@ -11,11 +11,16 @@
   },
   "contentPattern": "hero: row 1 = [image]; row 2 = [h2, paragraph, CTA link]",
   "options": [],
-  "memberVariantIds": ["hero-teaser"],
+  "memberVariantIds": [
+    "hero-teaser"
+  ],
   "sourceUrl": "https://wknd.site/us/en.html",
   "usage": {
-    "pagesUsing": ["https://wknd.site/us/en.html"],
-    "reuseCount": 1,
-    "lastUsed": "2026-09-28"
+    "pagesUsing": [
+      "https://wknd.site/us/en.html",
+      "https://wknd.site/us/en/adventures.html"
+    ],
+    "reuseCount": 2,
+    "lastUsed": "2026-09-28T11:03:35.774Z"
   }
 }

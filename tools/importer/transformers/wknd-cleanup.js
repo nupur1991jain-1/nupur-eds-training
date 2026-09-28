@@ -10,6 +10,12 @@
  * Magazine reuses the shared rules: hidden content-fragment <h3> title, div.sharing
  * (Pinterest/Facebook widget; "SHARE THIS STORY" .title is kept), header/footer (incl. both
  * WKND logo images; the hero .image before .breadcrumb is untouched), div.separator.
+ * About-us template (https://wknd.site/us/en/about-us.html, migration-work/cleaned.html, and
+ * https://wknd.site/us/en/magazine.html, migration-work/gap-magazine/cleaned.html) needs no extra
+ * rules: sign-in buttons live in the header (already removed), there are no modals, hidden
+ * duplicate titles or lock overlays, and the magazine.html div.separator (a section break) is
+ * removed by the shared afterTransform rule. The members-only .cmp-teaser--secure teasers and the
+ * "Sign in to un-lock..." paragraph are real content and are intentionally kept.
  * Note: no generic hidden-element removal - inactive tab panels and carousel slides are content.
  */
 const TransformHook = { beforeTransform: 'beforeTransform', afterTransform: 'afterTransform' };

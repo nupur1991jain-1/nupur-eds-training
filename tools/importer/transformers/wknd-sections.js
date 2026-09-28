@@ -14,6 +14,11 @@
  * hero .image (no break, no metadata), <hr> before .breadcrumb, <hr> + Section Metadata
  * (style: article-sidebar) before the article main.container; the sibling <aside> sidebar
  * follows main.container, so it stays in the same section.
+ *
+ * Union templates (e.g. about-us = about-us.html sections 1-2 + magazine.html sections 3-6):
+ * sections absent from a page are skipped, and no <hr> is inserted before the first section
+ * that IS present, so about-us.html gets 1 break and magazine.html gets 3 with no empty
+ * leading section.
  */
 const SECTION_MARKER_ATTR = 'data-excat-section-id';
 
@@ -30,14 +35,20 @@ function querySection(root, selectors) {
 
 export default function transform(hookName, element, payload) {
   const sections = (payload && payload.template && payload.template.sections) || [];
-  if (sections.length < 2) return;
+  // a single section only needs work when it carries a style (Section Metadata)
+  if (sections.length < 2 && !sections.some((s) => s.style)) return;
   const doc = element.ownerDocument || document;
 
   if (hookName === 'beforeTransform') {
+    // Resolve every section before inserting breaks, so an inserted <hr> can't
+    // break adjacency selectors. Templates can union several pages, so the
+    // first section present on this page may not be sections[0].
+    const sectionEls = sections.map((section) => querySection(element, section.selector));
+    const firstIdx = sectionEls.findIndex(Boolean);
     for (let i = sections.length - 1; i >= 0; i -= 1) {
       const section = sections[i];
-      if (i === 0 && !section.style) continue;
-      const sectionEl = querySection(element, section.selector);
+      if (i === firstIdx && !section.style) continue;
+      const sectionEl = sectionEls[i];
       if (!sectionEl) continue;
 
       const hr = doc.createElement('hr');

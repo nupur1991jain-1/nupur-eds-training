@@ -1,0 +1,91 @@
+/* Structural only: filter button row + responsive card grid (1 / 2 / 4 columns). */
+
+.cards-filter .cards-filter-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.cards-filter .cards-filter-button {
+  margin: 0;
+  padding: 8px 16px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+/* Active filter: filled pill (layout-level; brand colors come from the design pass). */
+.cards-filter .cards-filter-button[aria-pressed='true'] {
+  border-radius: 999px;
+  background-color: var(--text-color);
+  color: var(--light-color);
+}
+
+.cards-filter > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+.cards-filter .cards-filter-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.cards-filter .cards-filter-card[hidden] {
+  display: none;
+}
+
+.cards-filter .cards-filter-image {
+  line-height: 0;
+}
+
+.cards-filter .cards-filter-image p {
+  margin: 0;
+}
+
+.cards-filter .cards-filter-image a {
+  display: block;
+}
+
+.cards-filter .cards-filter-image img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.cards-filter .cards-filter-body {
+  padding-top: 8px;
+}
+
+.cards-filter .cards-filter-title {
+  margin: 0 0 8px;
+}
+
+.cards-filter .cards-filter-description {
+  margin: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+@media (width >= 600px) {
+  .cards-filter > ul {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (width >= 900px) {
+  .cards-filter > ul {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

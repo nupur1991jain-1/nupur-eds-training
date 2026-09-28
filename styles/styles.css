@@ -389,4 +389,9 @@ main .section.background-grey {
     grid-column: 2;
     grid-row: 2;
   }
+
+  /* three groups (content, block, sidebar): only the last group sits on the right */
+  main > .section.article-sidebar > div:last-child:nth-child(3) {
+    grid-row: 1;
+  }
 }

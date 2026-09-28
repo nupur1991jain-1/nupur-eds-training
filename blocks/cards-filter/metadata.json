@@ -1,0 +1,25 @@
+{
+  "variantName": "cards-filter",
+  "baseBlock": "cards",
+  "canonicalModel": "standalone",
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "compact",
+    "purpose": "filterable adventure listing",
+    "imagePattern": "top image 4:3",
+    "structure": "row of category filter buttons (All + categories, active = filled pill) over a 4-col grid of cards: image + uppercase linked title + truncated description"
+  },
+  "contentPattern": "cards-filter: each row = [linked image] | [linked H3 title, description] | [comma-separated categories, may be empty]; filter buttons derived from unique categories; 16 rows",
+  "options": [],
+  "memberVariantIds": [
+    "cards-filter"
+  ],
+  "sourceUrl": "https://wknd.site/us/en/adventures.html",
+  "usage": {
+    "pagesUsing": [
+      "https://wknd.site/us/en/adventures.html"
+    ],
+    "reuseCount": 1,
+    "lastUsed": "2026-09-28"
+  }
+}

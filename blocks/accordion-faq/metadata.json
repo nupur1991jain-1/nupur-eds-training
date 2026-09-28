@@ -1,0 +1,25 @@
+{
+  "variantName": "accordion-faq",
+  "baseBlock": "accordion",
+  "canonicalModel": "standalone",
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "medium",
+    "purpose": "FAQ question/answer list",
+    "imagePattern": "noimg",
+    "structure": "uppercase bold question + thin '+' icon right + grey divider rules; collapsed by default; rich-text answer panel"
+  },
+  "contentPattern": "One row per question: [question text | rich answer]. Question from .cmp-accordion__title (plain text, the uppercase styling is CSS). Answer = children of .cmp-accordion__panel .cmp-text (keep <p>, <b>/<strong>, links; drop empty headings like '<h3>&nbsp;</h3>'; normalise &nbsp;).",
+  "options": [],
+  "memberVariantIds": [
+    "accordion-faq"
+  ],
+  "sourceUrl": "https://wknd.site/us/en/faqs.html",
+  "usage": {
+    "pagesUsing": [
+      "https://wknd.site/us/en/faqs.html"
+    ],
+    "reuseCount": 1,
+    "lastUsed": "2026-09-28T11:15:00.000Z"
+  }
+}
