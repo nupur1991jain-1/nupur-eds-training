@@ -1,5 +1,3 @@
-/* eslint-disable */
-/* global WebImporter */
 /**
  * Parser for cards-upnext (listing mode). Base: cards.
  * Source: https://wknd.site/us/en/magazine/*.html, selector aside .list.cmp-list--upnext.

@@ -1,4 +1,3 @@
-/* eslint-disable */
 /* global WebImporter */
 
 // PARSER IMPORTS
@@ -24,107 +23,107 @@ const parsers = {
 
 // PAGE TEMPLATE CONFIGURATION - Embedded from page-templates.json
 const PAGE_TEMPLATE = {
-  "name": "home",
-  "description": "WKND homepage",
-  "urls": [
-    "https://wknd.site/us/en.html"
+  name: 'home',
+  description: 'WKND homepage',
+  urls: [
+    'https://wknd.site/us/en.html',
   ],
-  "blocks": [
+  blocks: [
     {
-      "name": "carousel-hero",
-      "instances": [
-        ".carousel.cmp-carousel--hero"
-      ]
+      name: 'carousel-hero',
+      instances: [
+        '.carousel.cmp-carousel--hero',
+      ],
     },
     {
-      "name": "columns-featured",
-      "instances": [
-        ".teaser.cmp-teaser--featured"
-      ]
+      name: 'columns-featured',
+      instances: [
+        '.teaser.cmp-teaser--featured',
+      ],
     },
     {
-      "name": "cards-article",
-      "instances": [
-        "main .image-list.list"
-      ]
+      name: 'cards-article',
+      instances: [
+        'main .image-list.list',
+      ],
     },
     {
-      "name": "hero-teaser",
-      "instances": [
-        ".teaser.cmp-teaser--hero.cmp-teaser--imagebottom"
-      ]
-    }
+      name: 'hero-teaser',
+      instances: [
+        '.teaser.cmp-teaser--hero.cmp-teaser--imagebottom',
+      ],
+    },
   ],
-  "sections": [
+  sections: [
     {
-      "id": "section-1",
-      "name": "Hero carousel",
-      "selector": [
-        ".carousel.cmp-carousel--hero"
+      id: 'section-1',
+      name: 'Hero carousel',
+      selector: [
+        '.carousel.cmp-carousel--hero',
       ],
-      "style": null,
-      "blocks": [
-        "carousel-hero"
+      style: null,
+      blocks: [
+        'carousel-hero',
       ],
-      "defaultContent": []
+      defaultContent: [],
     },
     {
-      "id": "section-2",
-      "name": "Featured article",
-      "selector": [
-        ".teaser.cmp-teaser--featured"
+      id: 'section-2',
+      name: 'Featured article',
+      selector: [
+        '.teaser.cmp-teaser--featured',
       ],
-      "style": null,
-      "blocks": [
-        "columns-featured"
+      style: null,
+      blocks: [
+        'columns-featured',
       ],
-      "defaultContent": []
+      defaultContent: [],
     },
     {
-      "id": "section-3",
-      "name": "Recent Articles",
-      "selector": [
-        ".teaser.cmp-teaser--featured + .title"
+      id: 'section-3',
+      name: 'Recent Articles',
+      selector: [
+        '.teaser.cmp-teaser--featured + .title',
       ],
-      "style": "separator",
-      "blocks": [
-        "cards-article"
+      style: 'separator',
+      blocks: [
+        'cards-article',
       ],
-      "defaultContent": [
-        ".teaser.cmp-teaser--featured + .title",
-        ".teaser.cmp-teaser--featured ~ .button.cmp-button--primary"
-      ]
+      defaultContent: [
+        '.teaser.cmp-teaser--featured + .title',
+        '.teaser.cmp-teaser--featured ~ .button.cmp-button--primary',
+      ],
     },
     {
-      "id": "section-4",
-      "name": "Next Adventures",
-      "selector": [
-        ".separator + .title.cmp-title--underline"
+      id: 'section-4',
+      name: 'Next Adventures',
+      selector: [
+        '.separator + .title.cmp-title--underline',
       ],
-      "style": null,
-      "blocks": [
-        "hero-teaser"
+      style: null,
+      blocks: [
+        'hero-teaser',
       ],
-      "defaultContent": [
-        ".separator + .title.cmp-title--underline"
-      ]
+      defaultContent: [
+        '.separator + .title.cmp-title--underline',
+      ],
     },
     {
-      "id": "section-5",
-      "name": "Where do you want to go?",
-      "selector": [
-        ".teaser.cmp-teaser--imagebottom + .cmp-layout-container--fixed"
+      id: 'section-5',
+      name: 'Where do you want to go?',
+      selector: [
+        '.teaser.cmp-teaser--imagebottom + .cmp-layout-container--fixed',
       ],
-      "style": "separator",
-      "blocks": [
-        "cards-article"
+      style: 'separator',
+      blocks: [
+        'cards-article',
       ],
-      "defaultContent": [
-        ".teaser.cmp-teaser--imagebottom + .cmp-layout-container--fixed .title",
-        ".teaser.cmp-teaser--imagebottom + .cmp-layout-container--fixed .button.cmp-button--primary"
-      ]
-    }
-  ]
+      defaultContent: [
+        '.teaser.cmp-teaser--imagebottom + .cmp-layout-container--fixed .title',
+        '.teaser.cmp-teaser--imagebottom + .cmp-layout-container--fixed .button.cmp-button--primary',
+      ],
+    },
+  ],
 };
 
 // TRANSFORMER REGISTRY - section transformer runs after cleanup

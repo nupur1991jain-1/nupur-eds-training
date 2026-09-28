@@ -1,4 +1,3 @@
-/* eslint-disable */
 /* global WebImporter */
 
 // PARSER IMPORTS
@@ -24,124 +23,124 @@ const parsers = {
 
 // PAGE TEMPLATE CONFIGURATION - Embedded from page-templates.json
 const PAGE_TEMPLATE = {
-  "name": "about-us",
-  "description": "WKND About Us and Magazine landing pages",
-  "urls": [
-    "https://wknd.site/us/en/about-us.html",
-    "https://wknd.site/us/en/magazine.html"
+  name: 'about-us',
+  description: 'WKND About Us and Magazine landing pages',
+  urls: [
+    'https://wknd.site/us/en/about-us.html',
+    'https://wknd.site/us/en/magazine.html',
   ],
-  "blocks": [
+  blocks: [
     {
-      "name": "cards-contributor",
-      "instances": [
-        "section.cmp-experience-fragment--contributor"
-      ]
+      name: 'cards-contributor',
+      instances: [
+        'section.cmp-experience-fragment--contributor',
+      ],
     },
     {
-      "name": "columns-featured",
-      "instances": [
-        ".teaser.cmp-teaser--featured"
-      ]
+      name: 'columns-featured',
+      instances: [
+        '.teaser.cmp-teaser--featured',
+      ],
     },
     {
-      "name": "cards-article",
-      "instances": [
-        "main .image-list.list"
-      ]
+      name: 'cards-article',
+      instances: [
+        'main .image-list.list',
+      ],
     },
     {
-      "name": "cards-members",
-      "instances": [
-        ".teaser.cmp-teaser--secure"
-      ]
-    }
+      name: 'cards-members',
+      instances: [
+        '.teaser.cmp-teaser--secure',
+      ],
+    },
   ],
-  "sections": [
+  sections: [
     {
-      "id": "section-1",
-      "name": "Our Contributors",
-      "selector": [
-        ".aem-Grid > .title:first-child:has(~ .cmp-experience-fragment--contributor)"
+      id: 'section-1',
+      name: 'Our Contributors',
+      selector: [
+        '.aem-Grid > .title:first-child:has(~ .cmp-experience-fragment--contributor)',
       ],
-      "style": null,
-      "blocks": [
-        "cards-contributor"
+      style: null,
+      blocks: [
+        'cards-contributor',
       ],
-      "defaultContent": [
-        ".aem-Grid > .title:first-child:has(~ .cmp-experience-fragment--contributor)",
-        ".aem-Grid > .title.cmp-title--underline",
-        ".aem-Grid > .text.cmp-text--font-small"
-      ]
+      defaultContent: [
+        '.aem-Grid > .title:first-child:has(~ .cmp-experience-fragment--contributor)',
+        '.aem-Grid > .title.cmp-title--underline',
+        '.aem-Grid > .text.cmp-text--font-small',
+      ],
     },
     {
-      "id": "section-2",
-      "name": "WKND Guides",
-      "selector": [
-        ".aem-Grid > .cmp-experience-fragment--contributor ~ .title.cmp-title--underline"
+      id: 'section-2',
+      name: 'WKND Guides',
+      selector: [
+        '.aem-Grid > .cmp-experience-fragment--contributor ~ .title.cmp-title--underline',
       ],
-      "style": null,
-      "blocks": [
-        "cards-contributor"
+      style: null,
+      blocks: [
+        'cards-contributor',
       ],
-      "defaultContent": [
-        ".aem-Grid > .cmp-experience-fragment--contributor ~ .title.cmp-title--underline",
-        ".aem-Grid > .cmp-experience-fragment--contributor ~ .text.cmp-text--font-small"
-      ]
+      defaultContent: [
+        '.aem-Grid > .cmp-experience-fragment--contributor ~ .title.cmp-title--underline',
+        '.aem-Grid > .cmp-experience-fragment--contributor ~ .text.cmp-text--font-small',
+      ],
     },
     {
-      "id": "section-3",
-      "name": "Magazine featured article",
-      "selector": [
-        ".aem-Grid > .title:first-child:has(~ .teaser.cmp-teaser--featured)"
+      id: 'section-3',
+      name: 'Magazine featured article',
+      selector: [
+        '.aem-Grid > .title:first-child:has(~ .teaser.cmp-teaser--featured)',
       ],
-      "style": null,
-      "blocks": [
-        "columns-featured"
+      style: null,
+      blocks: [
+        'columns-featured',
       ],
-      "defaultContent": [
-        ".aem-Grid > .title:first-child:has(~ .teaser.cmp-teaser--featured)"
-      ]
+      defaultContent: [
+        '.aem-Grid > .title:first-child:has(~ .teaser.cmp-teaser--featured)',
+      ],
     },
     {
-      "id": "section-4",
-      "name": "All Articles",
-      "selector": [
-        ".aem-Grid > .teaser.cmp-teaser--featured ~ .title.cmp-title--underline"
+      id: 'section-4',
+      name: 'All Articles',
+      selector: [
+        '.aem-Grid > .teaser.cmp-teaser--featured ~ .title.cmp-title--underline',
       ],
-      "style": null,
-      "blocks": [
-        "cards-article"
+      style: null,
+      blocks: [
+        'cards-article',
       ],
-      "defaultContent": [
-        ".aem-Grid > .teaser.cmp-teaser--featured ~ .title.cmp-title--underline"
-      ]
+      defaultContent: [
+        '.aem-Grid > .teaser.cmp-teaser--featured ~ .title.cmp-title--underline',
+      ],
     },
     {
-      "id": "section-5",
-      "name": "Members Only",
-      "selector": [
-        ".aem-Grid > .image-list ~ .title.cmp-title--underline"
+      id: 'section-5',
+      name: 'Members Only',
+      selector: [
+        '.aem-Grid > .image-list ~ .title.cmp-title--underline',
       ],
-      "style": "separator-medium",
-      "blocks": [],
-      "defaultContent": [
-        ".aem-Grid > .image-list ~ .title.cmp-title--underline",
-        ".aem-Grid > .image-list ~ .text"
-      ]
+      style: 'separator-medium',
+      blocks: [],
+      defaultContent: [
+        '.aem-Grid > .image-list ~ .title.cmp-title--underline',
+        '.aem-Grid > .image-list ~ .text',
+      ],
     },
     {
-      "id": "section-6",
-      "name": "Members-only teasers",
-      "selector": [
-        ".teaser.cmp-teaser--secure"
+      id: 'section-6',
+      name: 'Members-only teasers',
+      selector: [
+        '.teaser.cmp-teaser--secure',
       ],
-      "style": null,
-      "blocks": [
-        "cards-members"
+      style: null,
+      blocks: [
+        'cards-members',
       ],
-      "defaultContent": []
-    }
-  ]
+      defaultContent: [],
+    },
+  ],
 };
 
 // TRANSFORMER REGISTRY - section transformer runs after cleanup

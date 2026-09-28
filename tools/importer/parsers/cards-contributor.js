@@ -1,4 +1,3 @@
-/* eslint-disable */
 /* global WebImporter */
 /**
  * Parser for cards-contributor. Base: cards.
@@ -48,7 +47,7 @@ function resolveImage(container, document, fallbackAlt) {
   if (!src) {
     const ns = container.querySelector('noscript');
     const m = ns && /src=["']([^"']+)["']/i.exec(ns.textContent || ns.innerHTML || '');
-    if (m && isUsableSrc(m[1])) src = m[1];
+    if (m && isUsableSrc(m[1])) [, src] = m;
   }
   if (!src) return null;
   if (!img) img = document.createElement('img');

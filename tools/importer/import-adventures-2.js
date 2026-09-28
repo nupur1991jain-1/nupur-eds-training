@@ -1,4 +1,3 @@
-/* eslint-disable */
 /* global WebImporter */
 
 // PARSER IMPORTS
@@ -20,65 +19,65 @@ const parsers = {
 
 // PAGE TEMPLATE CONFIGURATION - Embedded from page-templates.json
 const PAGE_TEMPLATE = {
-  "name": "adventures-2",
-  "description": "WKND Adventures landing page",
-  "urls": [
-    "https://wknd.site/us/en/adventures.html"
+  name: 'adventures-2',
+  description: 'WKND Adventures landing page',
+  urls: [
+    'https://wknd.site/us/en/adventures.html',
   ],
-  "blocks": [
+  blocks: [
     {
-      "name": "hero-teaser",
-      "instances": [
-        ".teaser.cmp-teaser--hero"
-      ]
+      name: 'hero-teaser',
+      instances: [
+        '.teaser.cmp-teaser--hero',
+      ],
     },
     {
-      "name": "cards-filter",
-      "instances": [
-        "main .tabs.panelcontainer"
-      ]
-    }
+      name: 'cards-filter',
+      instances: [
+        'main .tabs.panelcontainer',
+      ],
+    },
   ],
-  "sections": [
+  sections: [
     {
-      "id": "section-1",
-      "name": "Page title",
-      "selector": [
-        "main.cmp-layout-container--fixed:has(~ .teaser.cmp-teaser--hero)"
+      id: 'section-1',
+      name: 'Page title',
+      selector: [
+        'main.cmp-layout-container--fixed:has(~ .teaser.cmp-teaser--hero)',
       ],
-      "style": null,
-      "blocks": [],
-      "defaultContent": [
-        "main.cmp-layout-container--fixed:has(~ .teaser.cmp-teaser--hero) .title"
-      ]
+      style: null,
+      blocks: [],
+      defaultContent: [
+        'main.cmp-layout-container--fixed:has(~ .teaser.cmp-teaser--hero) .title',
+      ],
     },
     {
-      "id": "section-2",
-      "name": "Intro teaser",
-      "selector": [
-        ".teaser.cmp-teaser--hero"
+      id: 'section-2',
+      name: 'Intro teaser',
+      selector: [
+        '.teaser.cmp-teaser--hero',
       ],
-      "style": null,
-      "blocks": [
-        "hero-teaser"
+      style: null,
+      blocks: [
+        'hero-teaser',
       ],
-      "defaultContent": []
+      defaultContent: [],
     },
     {
-      "id": "section-3",
-      "name": "Current Adventures",
-      "selector": [
-        ".teaser.cmp-teaser--hero ~ main.cmp-layout-container--fixed"
+      id: 'section-3',
+      name: 'Current Adventures',
+      selector: [
+        '.teaser.cmp-teaser--hero ~ main.cmp-layout-container--fixed',
       ],
-      "style": "separator",
-      "blocks": [
-        "cards-filter"
+      style: 'separator',
+      blocks: [
+        'cards-filter',
       ],
-      "defaultContent": [
-        ".teaser.cmp-teaser--hero ~ main.cmp-layout-container--fixed .title.cmp-title--underline"
-      ]
-    }
-  ]
+      defaultContent: [
+        '.teaser.cmp-teaser--hero ~ main.cmp-layout-container--fixed .title.cmp-title--underline',
+      ],
+    },
+  ],
 };
 
 // TRANSFORMER REGISTRY - section transformer runs after cleanup

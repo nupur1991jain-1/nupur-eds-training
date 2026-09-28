@@ -1,4 +1,3 @@
-/* eslint-disable */
 /* global WebImporter */
 
 // PARSER IMPORTS
@@ -16,7 +15,7 @@ import wkndSectionsTransformer from './transformers/wknd-sections.js';
 
 // PARSER REGISTRY
 const parsers = {
-  'breadcrumb': breadcrumbParser,
+  breadcrumb: breadcrumbParser,
   'carousel-gallery': carouselGalleryParser,
   'table-trip-facts': tableTripFactsParser,
   'tabs-adventure': tabsAdventureParser,
@@ -24,105 +23,105 @@ const parsers = {
 
 // PAGE TEMPLATE CONFIGURATION - Embedded from page-templates.json
 const PAGE_TEMPLATE = {
-  "name": "adventures",
-  "description": "WKND adventure detail pages",
-  "urls": [
-    "https://wknd.site/us/en/adventures/climbing-new-zealand.html",
-    "https://wknd.site/us/en/adventures/downhill-skiing-wyoming.html",
-    "https://wknd.site/us/en/adventures/tahoe-skiing.html",
-    "https://wknd.site/us/en/adventures/west-coast-cycling.html",
-    "https://wknd.site/us/en/adventures/whistler-mountain-biking.html",
-    "https://wknd.site/us/en/adventures/yosemite-backpacking.html",
-    "https://wknd.site/us/en/adventures/bali-surf-camp.html",
-    "https://wknd.site/us/en/adventures/beervana-portland.html",
-    "https://wknd.site/us/en/adventures/colorado-rock-climbing.html",
-    "https://wknd.site/us/en/adventures/cycling-southern-utah.html",
-    "https://wknd.site/us/en/adventures/cycling-tuscany.html",
-    "https://wknd.site/us/en/adventures/gastronomic-marais-tour.html",
-    "https://wknd.site/us/en/adventures/napa-wine-tasting.html",
-    "https://wknd.site/us/en/adventures/riverside-camping-australia.html",
-    "https://wknd.site/us/en/adventures/ski-touring-mont-blanc.html",
-    "https://wknd.site/us/en/adventures/surf-camp-costa-rica.html"
+  name: 'adventures',
+  description: 'WKND adventure detail pages',
+  urls: [
+    'https://wknd.site/us/en/adventures/climbing-new-zealand.html',
+    'https://wknd.site/us/en/adventures/downhill-skiing-wyoming.html',
+    'https://wknd.site/us/en/adventures/tahoe-skiing.html',
+    'https://wknd.site/us/en/adventures/west-coast-cycling.html',
+    'https://wknd.site/us/en/adventures/whistler-mountain-biking.html',
+    'https://wknd.site/us/en/adventures/yosemite-backpacking.html',
+    'https://wknd.site/us/en/adventures/bali-surf-camp.html',
+    'https://wknd.site/us/en/adventures/beervana-portland.html',
+    'https://wknd.site/us/en/adventures/colorado-rock-climbing.html',
+    'https://wknd.site/us/en/adventures/cycling-southern-utah.html',
+    'https://wknd.site/us/en/adventures/cycling-tuscany.html',
+    'https://wknd.site/us/en/adventures/gastronomic-marais-tour.html',
+    'https://wknd.site/us/en/adventures/napa-wine-tasting.html',
+    'https://wknd.site/us/en/adventures/riverside-camping-australia.html',
+    'https://wknd.site/us/en/adventures/ski-touring-mont-blanc.html',
+    'https://wknd.site/us/en/adventures/surf-camp-costa-rica.html',
   ],
-  "blocks": [
+  blocks: [
     {
-      "name": "breadcrumb",
-      "instances": [
-        ".breadcrumb.cmp-breadcrumb--fixed"
-      ]
+      name: 'breadcrumb',
+      instances: [
+        '.breadcrumb.cmp-breadcrumb--fixed',
+      ],
     },
     {
-      "name": "carousel-gallery",
-      "instances": [
-        ".carousel.cmp-carousel--mini"
-      ]
+      name: 'carousel-gallery',
+      instances: [
+        '.carousel.cmp-carousel--mini',
+      ],
     },
     {
-      "name": "table-trip-facts",
-      "instances": [
-        "main .aem-GridColumn--default--3 .contentfragment.cmp-contentfragment--elements"
-      ]
+      name: 'table-trip-facts',
+      instances: [
+        'main .aem-GridColumn--default--3 .contentfragment.cmp-contentfragment--elements',
+      ],
     },
     {
-      "name": "tabs-adventure",
-      "instances": [
-        "main .tabs.panelcontainer"
-      ]
-    }
+      name: 'tabs-adventure',
+      instances: [
+        'main .tabs.panelcontainer',
+      ],
+    },
   ],
-  "sections": [
+  sections: [
     {
-      "id": "section-1",
-      "name": "Breadcrumb",
-      "selector": [
-        ".breadcrumb.cmp-breadcrumb--fixed"
+      id: 'section-1',
+      name: 'Breadcrumb',
+      selector: [
+        '.breadcrumb.cmp-breadcrumb--fixed',
       ],
-      "style": null,
-      "blocks": [
-        "breadcrumb"
+      style: null,
+      blocks: [
+        'breadcrumb',
       ],
-      "defaultContent": []
+      defaultContent: [],
     },
     {
-      "id": "section-2",
-      "name": "Image carousel",
-      "selector": [
-        ".carousel.cmp-carousel--mini"
+      id: 'section-2',
+      name: 'Image carousel',
+      selector: [
+        '.carousel.cmp-carousel--mini',
       ],
-      "style": null,
-      "blocks": [
-        "carousel-gallery"
+      style: null,
+      blocks: [
+        'carousel-gallery',
       ],
-      "defaultContent": []
+      defaultContent: [],
     },
     {
-      "id": "section-3",
-      "name": "Adventure title",
-      "selector": [
-        "main .cmp-layout-container--fixed .title.cmp-title--underline"
+      id: 'section-3',
+      name: 'Adventure title',
+      selector: [
+        'main .cmp-layout-container--fixed .title.cmp-title--underline',
       ],
-      "style": "title-underline",
-      "blocks": [],
-      "defaultContent": [
-        "main .cmp-layout-container--fixed .title.cmp-title--underline"
-      ]
+      style: 'title-underline',
+      blocks: [],
+      defaultContent: [
+        'main .cmp-layout-container--fixed .title.cmp-title--underline',
+      ],
     },
     {
-      "id": "section-4",
-      "name": "Adventure details (sidebar + tabbed content)",
-      "selector": [
-        "main .cmp-layout-container--fixed .title.cmp-title--underline + .container"
+      id: 'section-4',
+      name: 'Adventure details (sidebar + tabbed content)',
+      selector: [
+        'main .cmp-layout-container--fixed .title.cmp-title--underline + .container',
       ],
-      "style": "sidebar",
-      "blocks": [
-        "table-trip-facts",
-        "tabs-adventure"
+      style: 'sidebar',
+      blocks: [
+        'table-trip-facts',
+        'tabs-adventure',
       ],
-      "defaultContent": [
-        "main .aem-GridColumn--default--3 .title"
-      ]
-    }
-  ]
+      defaultContent: [
+        'main .aem-GridColumn--default--3 .title',
+      ],
+    },
+  ],
 };
 
 // TRANSFORMER REGISTRY - section transformer runs after cleanup

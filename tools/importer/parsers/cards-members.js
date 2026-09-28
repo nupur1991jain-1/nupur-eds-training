@@ -1,4 +1,3 @@
-/* eslint-disable */
 /* global WebImporter */
 /**
  * Parser for cards-members. Base: cards.
@@ -44,7 +43,7 @@ function resolveImage(container, document, fallbackAlt) {
   if (!src) {
     const ns = container.querySelector('noscript');
     const m = ns && /src=["']([^"']+)["']/i.exec(ns.textContent || ns.innerHTML || '');
-    if (m && isUsableSrc(m[1])) src = m[1];
+    if (m && isUsableSrc(m[1])) [, src] = m;
   }
   if (!src) return null;
   if (!img) img = document.createElement('img');
@@ -105,7 +104,9 @@ function buildRow(teaser, document) {
   const action = content.querySelector('.cmp-teaser__action-container');
   if (action) {
     const links = Array.from(action.querySelectorAll('a, .cmp-teaser__action-link'));
-    const labels = links.length ? links.map((a) => clean(a.textContent)) : [clean(action.textContent)];
+    const labels = links.length
+      ? links.map((a) => clean(a.textContent))
+      : [clean(action.textContent)];
     labels.filter(Boolean).forEach((label) => {
       const p = document.createElement('p');
       p.textContent = label;

@@ -1,5 +1,3 @@
-/* eslint-disable */
-/* global WebImporter */
 /**
  * Parser for cards-article (listing mode). Base: cards.
  * Source: https://wknd.site/us/en.html ("Recent Articles", "Where do you want to go?") and

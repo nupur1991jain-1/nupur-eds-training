@@ -19,19 +19,23 @@
  */
 const TransformHook = { beforeTransform: 'beforeTransform', afterTransform: 'afterTransform' };
 
-export default function transform(hookName, element, payload) {
+export default function transform(hookName, element) {
   if (hookName === TransformHook.beforeTransform) {
-    // Adobe ID syncing iframe: <iframe id="destination_publishing_iframe_wkndsite_0" class="aamIframeLoaded">
-    // Mobile nav toggle + drawer: <div id="toggleNav">, <div id="mobileNav" class="cmp-navigation--mobile">
+    // Adobe ID syncing iframe:
+    //   <iframe id="destination_publishing_iframe_wkndsite_0" class="aamIframeLoaded">
+    // Mobile nav toggle + drawer:
+    //   <div id="toggleNav">, <div id="mobileNav" class="cmp-navigation--mobile">
     WebImporter.DOMUtils.remove(element, [
       'iframe.aamIframeLoaded',
       '#toggleNav',
       '#mobileNav',
     ]);
 
-    // --- Adventures template (verified in cleaned.html of /us/en/adventures/climbing-new-zealand.html) ---
+    // --- Adventures template
+    // (verified in cleaned.html of /us/en/adventures/climbing-new-zealand.html) ---
     // Hidden content-fragment title repeated inside the trip-facts list and each tab panel:
-    // <article class="cmp-contentfragment ..."><h3 class="cmp-contentfragment__title">Climbing New Zealand</h3>
+    // <article class="cmp-contentfragment ...">
+    //   <h3 class="cmp-contentfragment__title">Climbing New Zealand</h3>
     // Removed before parsing so table-trip-facts / tabs-adventure parsers never pick it up.
     // Only the h3 is removed - tab panels (.cmp-tabs__tabpanel) and carousel slides
     // (.cmp-carousel__item) are real content even when inactive/hidden, and are NOT touched.
@@ -39,7 +43,9 @@ export default function transform(hookName, element, payload) {
       'article.cmp-contentfragment > h3.cmp-contentfragment__title',
     ]);
 
-    // Social share widgets (Facebook/Pinterest): <div class="sharing"><div class="fb-share-button"><a href="https://www.pinterest.com/pin/create/button/">
+    // Social share widgets (Facebook/Pinterest):
+    //   <div class="sharing"><div class="fb-share-button">
+    //   <a href="https://www.pinterest.com/pin/create/button/">
     // The preceding "Share this Adventure" .title heading is default content and is kept.
     WebImporter.DOMUtils.remove(element, ['div.sharing']);
 
@@ -53,8 +59,10 @@ export default function transform(hookName, element, payload) {
     // --- Magazine template (verified in cleaned.html of /us/en/magazine/arctic-surfing.html,
     // and in western-australia / guide-la-skateparks / san-diego-surf / ski-touring) ---
     // Author experience fragment starts with a plain decorative rule directly above the byline:
-    // <div class="experiencefragment"><div class="cmp-experiencefragment cmp-experiencefragment--jacob-wester">
-    //   ... <div class="separator"><div class="cmp-separator"><hr class="cmp-separator__horizontal-rule"></div></div>
+    // <div class="experiencefragment">
+    //   <div class="cmp-experiencefragment cmp-experiencefragment--jacob-wester">
+    //   ... <div class="separator"><div class="cmp-separator">
+    //         <hr class="cmp-separator__horizontal-rule"></div></div>
     //       <div class="byline image"> ...
     // Removed before parsing so the columns-author parser never sees it. Scoped via `+ .byline`
     // (home/adventures have no byline), so section selectors on other templates are unaffected.
@@ -65,7 +73,8 @@ export default function transform(hookName, element, payload) {
     // magazine article so adventures' authored <h2><b>..</b></h2> output is unchanged.
     // Runs here (not afterTransform) because the section transformer later inserts an <hr>
     // between .breadcrumb and main.container, which breaks the `+` adjacency.
-    element.querySelectorAll('.breadcrumb + main.container :is(h1, h2, h3, h4, h5, h6) :is(b, strong)')
+    element
+      .querySelectorAll('.breadcrumb + main.container :is(h1, h2, h3, h4, h5, h6) :is(b, strong)')
       .forEach((b) => b.replaceWith(...b.childNodes));
 
     // Primary button components in default content ("All Articles", "All Trips"):
@@ -81,7 +90,8 @@ export default function transform(hookName, element, payload) {
 
   if (hookName === TransformHook.afterTransform) {
     // Global chrome (handled separately by nav/footer migration):
-    // <header class="experiencefragment cmp-experiencefragment--header"> (sign-in, language nav, logo, nav, search)
+    // <header class="experiencefragment cmp-experiencefragment--header">
+    //   (sign-in, language nav, logo, nav, search)
     // <footer class="experiencefragment cmp-experiencefragment--footer">
     WebImporter.DOMUtils.remove(element, [
       'header.cmp-experiencefragment--header',
@@ -94,19 +104,24 @@ export default function transform(hookName, element, payload) {
       '#mobileNav',
     ]);
 
-    // Carousel UI controls (non-authorable): <div class="cmp-carousel__actions">, <ol class="cmp-carousel__indicators">
+    // Carousel UI controls (non-authorable):
+    //   <div class="cmp-carousel__actions">, <ol class="cmp-carousel__indicators">
     WebImporter.DOMUtils.remove(element, [
       '.cmp-carousel__actions',
       '.cmp-carousel__indicators',
     ]);
 
-    // Decorative separators: <div class="separator ..."><div class="cmp-separator"><hr class="cmp-separator__horizontal-rule">
-    // Removed only in afterTransform (section selectors reference .separator during beforeTransform).
+    // Decorative separators:
+    //   <div class="separator ..."><div class="cmp-separator">
+    //   <hr class="cmp-separator__horizontal-rule">
+    // Removed only in afterTransform (section selectors reference .separator in beforeTransform).
     // Targets the wrapper, never bare <hr>, so section-break <hr>s survive.
     WebImporter.DOMUtils.remove(element, ['div.separator']);
 
     // Leftover non-content elements
-    WebImporter.DOMUtils.remove(element, ['iframe', 'link', 'noscript', 'meta', 'script', 'style']);
+    WebImporter.DOMUtils.remove(element, [
+      'iframe', 'link', 'noscript', 'meta', 'script', 'style',
+    ]);
 
     // Tracking / data-layer attributes
     element.querySelectorAll('[data-cmp-data-layer], [data-cmp-clickable]').forEach((el) => {

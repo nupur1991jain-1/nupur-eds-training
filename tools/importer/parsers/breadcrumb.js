@@ -1,4 +1,3 @@
-/* eslint-disable */
 /* global WebImporter */
 /**
  * Parser for breadcrumb. Base: breadcrumb (custom, no library convention).

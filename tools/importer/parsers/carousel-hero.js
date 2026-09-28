@@ -1,9 +1,9 @@
-/* eslint-disable */
 /* global WebImporter */
 /**
  * Parser for carousel-hero. Base: carousel.
  * Source: https://wknd.site/us/en.html (selector: .carousel.cmp-carousel--hero)
- * Structure (carousel convention, 2 columns): one row per slide -> [image | title, description, CTA].
+ * Structure (carousel convention, 2 columns):
+ *   one row per slide -> [image | title, description, CTA].
  * Slides 2+ can be lazily loaded (AEM Core image v3), so the image URL is resolved from
  * img[src] -> img[data-src] -> img[srcset] -> .cmp-image[data-cmp-src] -> <noscript> fallback.
  * Generated: 2026-09-28
@@ -45,7 +45,7 @@ function resolveImage(container, document) {
     const noscript = container.querySelector('noscript');
     if (noscript) {
       const m = /src=["']([^"']+)["']/i.exec(noscript.textContent || noscript.innerHTML || '');
-      if (m) src = m[1];
+      if (m) [, src] = m;
     }
   }
   if (!src) return img || null;

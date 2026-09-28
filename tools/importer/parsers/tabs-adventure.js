@@ -1,4 +1,3 @@
-/* eslint-disable */
 /* global WebImporter */
 /**
  * Parser for tabs-adventure. Base: tabs.
@@ -54,7 +53,7 @@ function resolveImage(container, document) {
     const noscript = container.querySelector('noscript');
     if (noscript) {
       const m = /src=["']([^"']+)["']/i.exec(noscript.textContent || noscript.innerHTML || '');
-      if (m) src = m[1];
+      if (m) [, src] = m;
     }
   }
   if (!src) return null;
@@ -72,7 +71,7 @@ function resolveImage(container, document) {
 }
 
 function hasContent(el) {
-  return !!(el.textContent || '').replace(/ /g, ' ').trim() || !!el.querySelector('img, picture');
+  return !!(el.textContent || '').replace(/\u00a0/g, ' ').trim() || !!el.querySelector('img, picture');
 }
 
 /** Collects panel content nodes in document order, skipping layout wrappers. */

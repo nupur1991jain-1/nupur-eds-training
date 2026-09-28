@@ -1,5 +1,3 @@
-/* eslint-disable */
-/* global WebImporter */
 /**
  * Parser for cards-filter (listing mode). Base: cards.
  * Source: https://wknd.site/us/en/adventures.html, selector main .tabs.panelcontainer

@@ -1,4 +1,3 @@
-/* eslint-disable */
 /* global WebImporter */
 
 // PARSER IMPORTS
@@ -18,39 +17,39 @@ const parsers = {
 
 // PAGE TEMPLATE CONFIGURATION - Embedded from page-templates.json
 const PAGE_TEMPLATE = {
-  "name": "faqs",
-  "description": "WKND FAQs page",
-  "urls": [
-    "https://wknd.site/us/en/faqs.html"
+  name: 'faqs',
+  description: 'WKND FAQs page',
+  urls: [
+    'https://wknd.site/us/en/faqs.html',
   ],
-  "blocks": [
+  blocks: [
     {
-      "name": "accordion-faq",
-      "instances": [
-        "main .accordion"
-      ]
-    }
+      name: 'accordion-faq',
+      instances: [
+        'main .accordion',
+      ],
+    },
   ],
-  "sections": [
+  sections: [
     {
-      "id": "section-1",
-      "name": "FAQs with help sidebar",
-      "selector": [
-        "main .aem-Grid > .container.aem-GridColumn--default--8"
+      id: 'section-1',
+      name: 'FAQs with help sidebar',
+      selector: [
+        'main .aem-Grid > .container.aem-GridColumn--default--8',
       ],
-      "style": "article-sidebar, title-underline",
-      "blocks": [
-        "accordion-faq"
+      style: 'article-sidebar, title-underline',
+      blocks: [
+        'accordion-faq',
       ],
-      "defaultContent": [
-        "main .aem-GridColumn--default--8 .title",
-        "main .aem-GridColumn--default--8 .image",
-        "main .aem-GridColumn--default--8 .text",
-        "main .aem-GridColumn--default--3 .title",
-        "main .aem-GridColumn--default--3 .text"
-      ]
-    }
-  ]
+      defaultContent: [
+        'main .aem-GridColumn--default--8 .title',
+        'main .aem-GridColumn--default--8 .image',
+        'main .aem-GridColumn--default--8 .text',
+        'main .aem-GridColumn--default--3 .title',
+        'main .aem-GridColumn--default--3 .text',
+      ],
+    },
+  ],
 };
 
 // TRANSFORMER REGISTRY - section transformer runs after cleanup

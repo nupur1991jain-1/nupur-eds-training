@@ -1,4 +1,3 @@
-/* eslint-disable */
 /* global WebImporter */
 /**
  * Parser for carousel-gallery. Base: carousel.
@@ -53,7 +52,7 @@ function resolveImage(container, document) {
     const noscript = container.querySelector('noscript');
     if (noscript) {
       const m = /src=["']([^"']+)["']/i.exec(noscript.textContent || noscript.innerHTML || '');
-      if (m) src = m[1];
+      if (m) [, src] = m;
     }
   }
   if (!src) return null;

@@ -24,12 +24,7 @@ const SECTION_MARKER_ATTR = 'data-excat-section-id';
 // section.selector is an array of candidate selectors - first match wins.
 function querySection(root, selectors) {
   const list = Array.isArray(selectors) ? selectors : [selectors];
-  for (const sel of list) {
-    if (!sel) continue;
-    const el = root.querySelector(sel);
-    if (el) return el;
-  }
-  return null;
+  return list.reduce((found, sel) => found || (sel && root.querySelector(sel)) || null, null);
 }
 
 export default function transform(hookName, element, payload) {
@@ -46,34 +41,33 @@ export default function transform(hookName, element, payload) {
     const firstIdx = sectionEls.findIndex(Boolean);
     for (let i = sections.length - 1; i >= 0; i -= 1) {
       const section = sections[i];
-      if (i === firstIdx && !section.style) continue;
       const sectionEl = sectionEls[i];
-      if (!sectionEl) continue;
-
-      const hr = doc.createElement('hr');
-      if (section.style) hr.setAttribute(SECTION_MARKER_ATTR, section.id);
-      sectionEl.before(hr);
+      // no break before the first section present, unless it needs Section Metadata
+      if (sectionEl && (i !== firstIdx || section.style)) {
+        const hr = doc.createElement('hr');
+        if (section.style) hr.setAttribute(SECTION_MARKER_ATTR, section.id);
+        sectionEl.before(hr);
+      }
     }
   }
 
   if (hookName === 'afterTransform') {
     for (let i = sections.length - 1; i >= 0; i -= 1) {
       const section = sections[i];
-      if (!section.style) continue;
+      const marker = section.style
+        && element.querySelector(`[${SECTION_MARKER_ATTR}="${section.id}"]`);
+      const anchor = section.style && (marker || querySection(element, section.selector));
+      if (anchor) {
+        const metadataBlock = WebImporter.Blocks.createBlock(doc, {
+          name: 'Section Metadata',
+          cells: { style: section.style },
+        });
+        anchor.after(metadataBlock);
 
-      const marker = element.querySelector(`[${SECTION_MARKER_ATTR}="${section.id}"]`);
-      const anchor = marker || querySection(element, section.selector);
-      if (!anchor) continue;
-
-      const metadataBlock = WebImporter.Blocks.createBlock(doc, {
-        name: 'Section Metadata',
-        cells: { style: section.style },
-      });
-      anchor.after(metadataBlock);
-
-      if (marker) {
-        marker.removeAttribute(SECTION_MARKER_ATTR);
-        if (i === 0) marker.remove();
+        if (marker) {
+          marker.removeAttribute(SECTION_MARKER_ATTR);
+          if (i === 0) marker.remove();
+        }
       }
     }
   }

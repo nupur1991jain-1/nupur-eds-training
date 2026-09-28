@@ -1,13 +1,15 @@
-/* eslint-disable */
 /* global WebImporter */
 /**
  * Parser for accordion-faq. Base: accordion.
  * Source: https://wknd.site/us/en/faqs.html (selector: main .accordion).
  *
- * Source DOM (AEM Core Accordion, verified in migration-work/block-context/accordion-faq/source.html):
+ * Source DOM (AEM Core Accordion,
+ * verified in migration-work/block-context/accordion-faq/source.html):
  *   div.accordion > div.cmp-accordion > div.cmp-accordion__item (x7)
- *     h3.cmp-accordion__header > button.cmp-accordion__button > span.cmp-accordion__title   (question)
- *     div.cmp-accordion__panel[.cmp-accordion__panel--hidden] > ... > div.cmp-text > p/h3/b/a (answer)
+ *     h3.cmp-accordion__header > button.cmp-accordion__button
+ *       > span.cmp-accordion__title (question)
+ *     div.cmp-accordion__panel[.cmp-accordion__panel--hidden] > ...
+ *       > div.cmp-text > p/h3/b/a (answer)
  * Collapsed panels are hidden via CSS class but present in the DOM - they are always included.
  *
  * Iteration is keyed on the block-level div.cmp-accordion__item wrappers (structure.json:
