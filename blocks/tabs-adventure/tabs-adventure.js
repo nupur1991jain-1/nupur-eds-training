@@ -1,8 +1,5 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 
-// No authorable options yet; declared so future options branch on one list.
-const OPTION_CLASSES = [];
-
 let tabsId = 0;
 
 function selectTab(block, index, focus = false) {
@@ -29,9 +26,6 @@ function optimizeImages(panel) {
 }
 
 export default function decorate(block) {
-  // eslint-disable-next-line no-unused-vars
-  const active = [...block.classList].filter((c) => OPTION_CLASSES.includes(c));
-
   tabsId += 1;
   const id = tabsId;
 

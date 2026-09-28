@@ -1,8 +1,5 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 
-// No authorable options yet; declared so future options branch on one list.
-const OPTION_CLASSES = [];
-
 let carouselId = 0;
 
 function updateActiveSlide(block, slideIndex) {
@@ -81,9 +78,6 @@ function createSlide(picture, slideIndex, id) {
 }
 
 export default function decorate(block) {
-  // eslint-disable-next-line no-unused-vars
-  const active = [...block.classList].filter((c) => OPTION_CLASSES.includes(c));
-
   carouselId += 1;
   // Image-only slides: one picture per row. Tolerate authors putting several pictures in a row
   // or adding stray text cells - every picture becomes a slide, text is ignored.

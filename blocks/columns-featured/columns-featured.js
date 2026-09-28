@@ -1,8 +1,5 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 
-// No authorable options yet; declared so future options branch on one list.
-const OPTION_CLASSES = [];
-
 // The imported CTA is a plain <p><a> (no strong/em), so decorateButtons() leaves it as a text
 // link. Mark a trailing link-only paragraph as the panel's CTA button.
 function decorateCta(content) {
@@ -17,9 +14,6 @@ function decorateCta(content) {
 }
 
 export default function decorate(block) {
-  // eslint-disable-next-line no-unused-vars
-  const active = [...block.classList].filter((c) => OPTION_CLASSES.includes(c));
-
   const rows = [...block.children];
   const cols = rows[0] ? [...rows[0].children] : [];
   block.classList.add(`columns-featured-${cols.length}-cols`);

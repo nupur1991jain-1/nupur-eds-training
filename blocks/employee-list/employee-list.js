@@ -79,9 +79,9 @@ export default async function decorate(block) {
       if (offset >= total || data.length === 0) button.remove();
       else button.disabled = false;
     } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error('Employee list failed to load', error);
+      // Drop the control, then let the block loader report the failure
       button.remove();
+      throw error;
     }
   };
 

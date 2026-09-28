@@ -17,15 +17,9 @@ function listingRow(row) {
   return [listingCell(indexPicture(row)), listingCell(title, row.description ? description : null)];
 }
 
-// No authorable options yet; declared so future options branch on one list.
-const OPTION_CLASSES = [];
-
 export default async function decorate(block) {
   // Listing mode: rows come from the query index (see scripts/listing.js)
   await expandListing(block, listingRow);
-
-  // eslint-disable-next-line no-unused-vars
-  const active = [...block.classList].filter((c) => OPTION_CLASSES.includes(c));
 
   const ul = document.createElement('ul');
   [...block.children].forEach((row) => {

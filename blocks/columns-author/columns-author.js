@@ -1,8 +1,5 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 
-// No authorable options yet; declared so future options branch on one list.
-const OPTION_CLASSES = [];
-
 const NETWORKS = ['facebook', 'twitter', 'instagram', 'linkedin', 'youtube', 'pinterest', 'tiktok', 'x'];
 
 // scripts.js decorateButtons() runs before block decoration and turns <p><strong|em><a> into
@@ -61,9 +58,6 @@ function buildSocial(cells) {
 }
 
 export default function decorate(block) {
-  // eslint-disable-next-line no-unused-vars
-  const active = [...block.classList].filter((c) => OPTION_CLASSES.includes(c));
-
   unbuttonize(block);
 
   // Tolerate extra rows/cells: gather every non-empty cell across rows.

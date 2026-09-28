@@ -1,15 +1,9 @@
-// No authorable options yet; declared so future options branch on one list.
-const OPTION_CLASSES = [];
-
 /**
  * Trip facts: each authored row is [label] | [value]. Rendered as a definition list
  * (label above value). Tolerates rows with a single cell (treated as value-only) and rows
  * with extra cells (appended to the value). Empty rows are dropped.
  */
 export default function decorate(block) {
-  // eslint-disable-next-line no-unused-vars
-  const active = [...block.classList].filter((c) => OPTION_CLASSES.includes(c));
-
   const dl = document.createElement('dl');
   dl.className = 'table-trip-facts-list';
 

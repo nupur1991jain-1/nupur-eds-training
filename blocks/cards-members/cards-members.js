@@ -1,8 +1,5 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 
-// No authorable options yet; declared so future options branch on one list.
-const OPTION_CLASSES = [];
-
 const CTA_PATTERN = /^read\s*more\b/i;
 
 // The gated "Read More" is a disabled label, not a link. It is authored as plain text, but if an
@@ -79,9 +76,6 @@ function buildCard(row) {
 }
 
 export default function decorate(block) {
-  // eslint-disable-next-line no-unused-vars
-  const active = [...block.classList].filter((c) => OPTION_CLASSES.includes(c));
-
   const ul = document.createElement('ul');
   [...block.children].forEach((row) => {
     if (!row.textContent.trim() && !row.querySelector('picture')) return;

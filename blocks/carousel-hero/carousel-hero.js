@@ -1,8 +1,5 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 
-// No authorable options yet; declared so future options branch on one list.
-const OPTION_CLASSES = [];
-
 let carouselId = 0;
 
 // The imported CTA is a plain <p><a> (no strong/em), so decorateButtons() leaves it as a text
@@ -122,9 +119,6 @@ function createSlide(row, slideIndex, id) {
 }
 
 export default function decorate(block) {
-  // eslint-disable-next-line no-unused-vars
-  const active = [...block.classList].filter((c) => OPTION_CLASSES.includes(c));
-
   carouselId += 1;
   const rows = [...block.querySelectorAll(':scope > div')].filter((r) => r.textContent.trim() || r.querySelector('picture'));
   const isSingleSlide = rows.length < 2;

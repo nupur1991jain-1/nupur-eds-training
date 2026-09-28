@@ -25,9 +25,6 @@ async function listingRow(row) {
   ];
 }
 
-// No authorable options yet; declared so future options branch on one list.
-const OPTION_CLASSES = [];
-
 const HEADINGS = 'h1, h2, h3, h4, h5, h6';
 
 function parseCategories(text) {
@@ -141,9 +138,6 @@ function buildFilters(cards, labels) {
 export default async function decorate(block) {
   // Listing mode: rows come from the query index (see scripts/listing.js)
   await expandListing(block, listingRow);
-
-  // eslint-disable-next-line no-unused-vars
-  const active = [...block.classList].filter((c) => OPTION_CLASSES.includes(c));
 
   const ul = document.createElement('ul');
   const labels = new Map();

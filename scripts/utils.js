@@ -23,11 +23,8 @@ export async function fetchPlaceholders(prefix = '') {
           .filter((row) => row.Key)
           .map((row) => [toCamelCase(row.Key), row.Value]),
       ))
-      .catch((error) => {
-        // eslint-disable-next-line no-console
-        console.error('failed to load placeholders', error);
-        return {};
-      });
+      // Network failures are already reported by the browser; fall back to no placeholders
+      .catch(() => ({}));
     placeholders.set(prefix, loaded);
   }
   return placeholders.get(prefix);

@@ -1,4 +1,3 @@
-/* eslint-disable */
 /* global WebImporter */
 
 // PARSER IMPORTS
@@ -15,85 +14,85 @@ import wkndSectionsTransformer from './transformers/wknd-sections.js';
 
 // PARSER REGISTRY
 const parsers = {
-  'breadcrumb': breadcrumbParser,
+  breadcrumb: breadcrumbParser,
   'columns-author': columnsAuthorParser,
   'cards-upnext': cardsUpnextParser,
 };
 
 // PAGE TEMPLATE CONFIGURATION - Embedded from page-templates.json
 const PAGE_TEMPLATE = {
-  "name": "magazine",
-  "description": "WKND magazine article pages",
-  "urls": [
-    "https://wknd.site/us/en/magazine/arctic-surfing.html",
-    "https://wknd.site/us/en/magazine/guide-la-skateparks.html",
-    "https://wknd.site/us/en/magazine/san-diego-surf.html",
-    "https://wknd.site/us/en/magazine/ski-touring.html",
-    "https://wknd.site/us/en/magazine/western-australia.html"
+  name: 'magazine',
+  description: 'WKND magazine article pages',
+  urls: [
+    'https://wknd.site/us/en/magazine/arctic-surfing.html',
+    'https://wknd.site/us/en/magazine/guide-la-skateparks.html',
+    'https://wknd.site/us/en/magazine/san-diego-surf.html',
+    'https://wknd.site/us/en/magazine/ski-touring.html',
+    'https://wknd.site/us/en/magazine/western-australia.html',
   ],
-  "blocks": [
+  blocks: [
     {
-      "name": "breadcrumb",
-      "instances": [
-        ".aem-Grid > .breadcrumb"
-      ]
+      name: 'breadcrumb',
+      instances: [
+        '.aem-Grid > .breadcrumb',
+      ],
     },
     {
-      "name": "columns-author",
-      "instances": [
-        "main.container .experiencefragment"
-      ]
+      name: 'columns-author',
+      instances: [
+        'main.container .experiencefragment',
+      ],
     },
     {
-      "name": "cards-upnext",
-      "instances": [
-        "aside .list.cmp-list--upnext"
-      ]
-    }
+      name: 'cards-upnext',
+      instances: [
+        'aside .list.cmp-list--upnext',
+      ],
+    },
   ],
-  "sections": [
+  sections: [
     {
-      "id": "section-1",
-      "name": "Hero image",
-      "selector": [
-        ".aem-Grid > .image:has(~ .breadcrumb)"
+      id: 'section-1',
+      name: 'Hero image',
+      selector: [
+        '.aem-Grid > .image:has(~ .breadcrumb)',
       ],
-      "style": null,
-      "blocks": [],
-      "defaultContent": [
-        ".aem-Grid > .image:has(~ .breadcrumb)"
-      ]
+      style: null,
+      blocks: [],
+      defaultContent: [
+        '.aem-Grid > .image:has(~ .breadcrumb)',
+      ],
     },
     {
-      "id": "section-2",
-      "name": "Breadcrumb",
-      "selector": [
-        ".aem-Grid > .breadcrumb"
+      id: 'section-2',
+      name: 'Breadcrumb',
+      selector: [
+        '.aem-Grid > .breadcrumb',
       ],
-      "style": null,
-      "blocks": [
-        "breadcrumb"
+      style: null,
+      blocks: [
+        'breadcrumb',
       ],
-      "defaultContent": []
+      defaultContent: [],
     },
     {
-      "id": "section-3",
-      "name": "Article body with right sidebar",
-      "selector": [
-        ".aem-Grid > .breadcrumb ~ main.container"
+      id: 'section-3',
+      name: 'Article body with right sidebar',
+      selector: [
+        '.aem-Grid > .breadcrumb ~ main.container',
       ],
-      "style": "article-sidebar",
-      "blocks": [
-        "columns-author",
-        "cards-upnext"
+      style: 'article-sidebar',
+      blocks: [
+        'columns-author',
+        'cards-upnext',
       ],
-      "defaultContent": [
-        ".aem-Grid > .breadcrumb ~ main.container .title",
-        ".aem-Grid > .breadcrumb ~ main.container .contentfragment",
-        "aside.cmp-layoutcontainer--sidebar .title"
-      ]
-    }
-  ]
+      defaultContent: [
+        '.aem-Grid > .breadcrumb ~ main.container .title',
+        '.aem-Grid > .breadcrumb ~ main.container .contentfragment',
+        'aside.cmp-layoutcontainer--sidebar .title',
+      ],
+    },
+  ],
 };
 
 // TRANSFORMER REGISTRY - section transformer runs after cleanup

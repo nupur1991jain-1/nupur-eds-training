@@ -57,29 +57,26 @@ export function readListingConfig(block) {
 }
 
 /**
+ * Loads one page of the query index, then the following pages until `total` is reached.
+ * @param {number} offset first row to load
+ * @returns {Promise<Object[]>}
+ */
+async function loadIndexFrom(offset) {
+  const resp = await fetch(`/query-index.json?limit=500&offset=${offset}`);
+  if (!resp.ok) return [];
+  const json = await resp.json();
+  const data = json.data || [];
+  const next = offset + data.length;
+  if (!data.length || next >= (json.total || next)) return data;
+  return [...data, ...await loadIndexFrom(next)];
+}
+
+/**
  * Loads every row of the site query index (follows pagination).
  * @returns {Promise<Object[]>}
  */
 export function loadIndex() {
-  if (!indexPromise) {
-    indexPromise = (async () => {
-      const rows = [];
-      let offset = 0;
-      let total = 0;
-      do {
-        // eslint-disable-next-line no-await-in-loop
-        const resp = await fetch(`/query-index.json?limit=500&offset=${offset}`);
-        if (!resp.ok) break;
-        // eslint-disable-next-line no-await-in-loop
-        const json = await resp.json();
-        rows.push(...(json.data || []));
-        total = json.total || rows.length;
-        offset += (json.data || []).length;
-        if (!(json.data || []).length) break;
-      } while (offset < total);
-      return rows;
-    })().catch(() => []);
-  }
+  if (!indexPromise) indexPromise = loadIndexFrom(0).catch(() => []);
   return indexPromise;
 }
 
