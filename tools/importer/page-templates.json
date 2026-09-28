@@ -240,8 +240,70 @@
       ],
       "representativeUrl": "https://wknd.site/us/en/magazine/arctic-surfing.html",
       "description": "To be named in naming step",
-      "blocks": [],
-      "urlPattern": "/us/en/magazine/*"
+      "blocks": [
+        {
+          "name": "breadcrumb",
+          "instances": [
+            ".aem-Grid > .image + .breadcrumb"
+          ]
+        },
+        {
+          "name": "columns-author",
+          "instances": [
+            ".breadcrumb + main.container .experiencefragment"
+          ]
+        },
+        {
+          "name": "cards-upnext",
+          "instances": [
+            "aside .list.cmp-list--upnext"
+          ]
+        }
+      ],
+      "urlPattern": "/us/en/magazine/*",
+      "sections": [
+        {
+          "id": "section-1",
+          "name": "Hero image",
+          "selector": [
+            ".aem-Grid > .image:has(+ .breadcrumb)"
+          ],
+          "style": null,
+          "blocks": [],
+          "defaultContent": [
+            ".aem-Grid > .image:has(+ .breadcrumb)"
+          ]
+        },
+        {
+          "id": "section-2",
+          "name": "Breadcrumb",
+          "selector": [
+            ".aem-Grid > .image + .breadcrumb"
+          ],
+          "style": null,
+          "blocks": [
+            "breadcrumb"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "section-3",
+          "name": "Article body with right sidebar",
+          "selector": [
+            ".aem-Grid > .breadcrumb + main.container"
+          ],
+          "style": "article-sidebar",
+          "blocks": [
+            "columns-author",
+            "cards-upnext"
+          ],
+          "defaultContent": [
+            ".breadcrumb + main.container .title",
+            ".breadcrumb + main.container .contentfragment",
+            "aside.cmp-layoutcontainer--sidebar .title"
+          ]
+        }
+      ]
     }
   ],
   "metadata": {

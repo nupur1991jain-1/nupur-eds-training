@@ -1,0 +1,21 @@
+{
+  "variantName": "columns-author",
+  "baseBlock": "columns",
+  "canonicalModel": "standalone",
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "compact",
+    "purpose": "article author bio",
+    "imagePattern": "small round avatar left",
+    "structure": "avatar + name + occupation | social icons"
+  },
+  "contentPattern": "columns: 1 row x 2 cells -> [picture(avatar) + h2 'Jacob Wester' + p 'Skater, Writer'] | [p links: Facebook, Twitter, Instagram]",
+  "options": [],
+  "memberVariantIds": ["columns-author"],
+  "sourceUrl": "https://wknd.site/us/en/magazine/arctic-surfing.html",
+  "usage": {
+    "pagesUsing": ["https://wknd.site/us/en/magazine/arctic-surfing.html"],
+    "reuseCount": 1,
+    "lastUsed": "2026-09-28"
+  }
+}

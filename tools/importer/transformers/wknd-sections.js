@@ -9,6 +9,11 @@
  * beforeTransform: insert <hr> before each non-first section while section elements
  *   still exist (parsers replace block elements between hooks).
  * afterTransform: insert Section Metadata for styled sections, anchored to marker <hr>.
+ *
+ * Template-agnostic - shared by home, adventures and magazine. Magazine (3 sections):
+ * hero .image (no break, no metadata), <hr> before .breadcrumb, <hr> + Section Metadata
+ * (style: article-sidebar) before the article main.container; the sibling <aside> sidebar
+ * follows main.container, so it stays in the same section.
  */
 const SECTION_MARKER_ATTR = 'data-excat-section-id';
 

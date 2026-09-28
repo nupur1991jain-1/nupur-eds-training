@@ -1,0 +1,21 @@
+{
+  "variantName": "cards-upnext",
+  "baseBlock": "cards",
+  "canonicalModel": "standalone",
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "compact",
+    "purpose": "related articles up-next list",
+    "imagePattern": "noimg",
+    "structure": "uppercase title link + date, vertical 1-col list"
+  },
+  "contentPattern": "cards (no images): 4 rows x 1 cell -> [p><a href='/us/en/magazine/western-australia'>Western Australia</a></p><p>Thursday, 9 Jul 2020</p>]",
+  "options": [],
+  "memberVariantIds": ["cards-upnext"],
+  "sourceUrl": "https://wknd.site/us/en/magazine/arctic-surfing.html",
+  "usage": {
+    "pagesUsing": ["https://wknd.site/us/en/magazine/arctic-surfing.html"],
+    "reuseCount": 1,
+    "lastUsed": "2026-09-28"
+  }
+}

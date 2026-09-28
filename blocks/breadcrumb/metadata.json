@@ -11,11 +11,16 @@
   },
   "contentPattern": "breadcrumb: header row only (no content rows); decorate() builds trail from og:title",
   "options": [],
-  "memberVariantIds": ["breadcrumb"],
+  "memberVariantIds": [
+    "breadcrumb"
+  ],
   "sourceUrl": "https://wknd.site/us/en/adventures/climbing-new-zealand.html",
   "usage": {
-    "pagesUsing": ["https://wknd.site/us/en/adventures/climbing-new-zealand.html"],
-    "reuseCount": 1,
-    "lastUsed": "2026-09-28"
+    "pagesUsing": [
+      "https://wknd.site/us/en/adventures/climbing-new-zealand.html",
+      "https://wknd.site/us/en/magazine/arctic-surfing.html"
+    ],
+    "reuseCount": 2,
+    "lastUsed": "2026-09-28T10:19:55.700821Z"
   }
 }

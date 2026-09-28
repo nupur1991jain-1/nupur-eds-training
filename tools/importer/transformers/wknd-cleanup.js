@@ -5,7 +5,11 @@
  * Transformer: WKND site-wide cleanup.
  * All selectors verified in captured DOM of https://wknd.site/us/en.html (home,
  * migration-work/archive/home/cleaned.html) and
- * https://wknd.site/us/en/adventures/climbing-new-zealand.html (adventures).
+ * https://wknd.site/us/en/adventures/climbing-new-zealand.html (adventures) and
+ * https://wknd.site/us/en/magazine/arctic-surfing.html (magazine, migration-work/cleaned.html).
+ * Magazine reuses the shared rules: hidden content-fragment <h3> title, div.sharing
+ * (Pinterest/Facebook widget; "SHARE THIS STORY" .title is kept), header/footer (incl. both
+ * WKND logo images; the hero .image before .breadcrumb is untouched), div.separator.
  * Note: no generic hidden-element removal - inactive tab panels and carousel slides are content.
  */
 const TransformHook = { beforeTransform: 'beforeTransform', afterTransform: 'afterTransform' };
@@ -40,6 +44,24 @@ export default function transform(hookName, element, payload) {
       '.cmp-carousel__actions',
       '.cmp-carousel__indicators',
     ]);
+
+    // --- Magazine template (verified in cleaned.html of /us/en/magazine/arctic-surfing.html,
+    // and in western-australia / guide-la-skateparks / san-diego-surf / ski-touring) ---
+    // Author experience fragment starts with a plain decorative rule directly above the byline:
+    // <div class="experiencefragment"><div class="cmp-experiencefragment cmp-experiencefragment--jacob-wester">
+    //   ... <div class="separator"><div class="cmp-separator"><hr class="cmp-separator__horizontal-rule"></div></div>
+    //       <div class="byline image"> ...
+    // Removed before parsing so the columns-author parser never sees it. Scoped via `+ .byline`
+    // (home/adventures have no byline), so section selectors on other templates are unaffected.
+    WebImporter.DOMUtils.remove(element, ['.experiencefragment .separator:has(+ .byline)']);
+
+    // Magazine article body (<main class="container"> right after the breadcrumb):
+    // unwrap presentational <b>/<strong> inside headings, keeping the text. Scoped to the
+    // magazine article so adventures' authored <h2><b>..</b></h2> output is unchanged.
+    // Runs here (not afterTransform) because the section transformer later inserts an <hr>
+    // between .breadcrumb and main.container, which breaks the `+` adjacency.
+    element.querySelectorAll('.breadcrumb + main.container :is(h1, h2, h3, h4, h5, h6) :is(b, strong)')
+      .forEach((b) => b.replaceWith(...b.childNodes));
   }
 
   if (hookName === TransformHook.afterTransform) {

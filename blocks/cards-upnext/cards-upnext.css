@@ -1,0 +1,48 @@
+/* Structural only: single-column vertical list of linked titles with a date below, no images. */
+
+.cards-upnext > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.cards-upnext .cards-upnext-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  padding: 16px 0;
+  border-bottom: 1px solid currentcolor;
+}
+
+.cards-upnext .cards-upnext-item:last-child {
+  border-bottom: 0;
+}
+
+.cards-upnext .cards-upnext-image {
+  line-height: 0;
+}
+
+.cards-upnext .cards-upnext-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.cards-upnext .cards-upnext-body > * {
+  margin: 0;
+}
+
+.cards-upnext .cards-upnext-title {
+  overflow-wrap: anywhere;
+}
+
+.cards-upnext .cards-upnext-title a {
+  display: block;
+}
+
+.cards-upnext .cards-upnext-date {
+  margin-top: 4px;
+}
