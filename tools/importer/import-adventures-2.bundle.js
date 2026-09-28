@@ -118,153 +118,103 @@ var CustomImportScript = (() => {
     element.replaceWith(block);
   }
 
+  // tools/importer/parsers/listing-config.js
+  function toPath(href, base) {
+    try {
+      return new URL(href, base).pathname.replace(/\.html$/, "");
+    } catch (e) {
+      return "";
+    }
+  }
+  function listingSource(element, base) {
+    var _a;
+    const counts = /* @__PURE__ */ new Map();
+    element.querySelectorAll("a[href]").forEach((a) => {
+      const path = toPath(a.getAttribute("href"), base);
+      if (!path || path.split("/").length < 3) return;
+      const parent = `${path.slice(0, path.lastIndexOf("/"))}/`;
+      counts.set(parent, (counts.get(parent) || 0) + 1);
+    });
+    return ((_a = [...counts.entries()].sort((a, b) => b[1] - a[1])[0]) == null ? void 0 : _a[0]) || "";
+  }
+  function replaceWithListing(element, document2, name, config) {
+    const cells = [["Source", config.source], ["Sort", config.sort]];
+    if (config.limit) cells.push(["Limit", String(config.limit)]);
+    if (config.excludeCurrent) cells.push(["Exclude Current", "true"]);
+    const block = WebImporter.Blocks.createBlock(document2, { name, cells });
+    element.replaceWith(block);
+  }
+
   // tools/importer/parsers/cards-filter.js
-  function pickFromSrcset2(srcset) {
-    if (!srcset) return "";
-    const entries = srcset.split(",").map((s) => s.trim()).filter(Boolean);
-    return entries.length ? entries[entries.length - 1].split(/\s+/)[0] : "";
-  }
-  function isUsableSrc2(src) {
-    return !!src && !src.startsWith("data:") && !/placeholder|blank\.gif/i.test(src);
-  }
-  function srcFromNoscript(container) {
-    const ns = container.querySelector("noscript");
-    if (!ns) return "";
-    const html = ns.innerHTML || ns.textContent || "";
-    const m = html.match(/<img[^>]*\ssrc=["']([^"']+)["']/i);
-    return m ? m[1].replace(/&amp;/g, "&") : "";
-  }
-  function resolveImage2(container, document2, fallbackAlt) {
-    if (!container) return null;
-    let img = container.querySelector("img");
-    const cmp = container.querySelector("[data-cmp-src]");
-    let src = "";
-    if (img) {
-      src = [
-        img.getAttribute("src"),
-        img.getAttribute("data-src"),
-        pickFromSrcset2(img.getAttribute("srcset") || img.getAttribute("data-srcset"))
-      ].find(isUsableSrc2) || "";
-    }
-    if (!src && cmp) src = (cmp.getAttribute("data-cmp-src") || "").replace("{.width}", ".1600");
-    if (!src) src = srcFromNoscript(container);
-    if (!src) return img || null;
-    if (!img) img = document2.createElement("img");
-    if (!img.getAttribute("alt")) {
-      img.setAttribute("alt", cmp && cmp.getAttribute("data-cmp-alt") || fallbackAlt || "");
-    }
-    img.setAttribute("src", src);
-    img.removeAttribute("srcset");
-    img.removeAttribute("data-src");
-    img.removeAttribute("loading");
-    return img;
-  }
-  function normalizeHref(href) {
-    if (!href) return "";
-    return href.trim().replace(/^https?:\/\/[^/]+/i, "").replace(/[?#].*$/, "");
-  }
-  function itemsIn(scope) {
-    let items = Array.from(scope.querySelectorAll(".cmp-image-list__item-content"));
-    if (!items.length) items = Array.from(scope.querySelectorAll(".cmp-image-list__item, li"));
-    return items;
-  }
-  function itemHref(item) {
-    const a = item.querySelector("a.cmp-image-list__item-title-link[href]") || item.querySelector("a.cmp-image-list__item-image-link[href]") || item.querySelector("a[href]");
-    return a ? a.getAttribute("href") : "";
-  }
-  function getPanels(element) {
-    const tabs = Array.from(element.querySelectorAll('.cmp-tabs__tab, [role="tab"]')).filter((t, i, arr) => arr.indexOf(t) === i);
-    let panels = Array.from(element.querySelectorAll(".cmp-tabs__tabpanel"));
-    if (!panels.length) panels = Array.from(element.querySelectorAll('[role="tabpanel"]'));
-    const byId = new Map(panels.filter((p) => p.id).map((p) => [p.id, p]));
-    const used = /* @__PURE__ */ new Set();
-    const result = [];
-    tabs.forEach((tab, i) => {
-      const label = tab.textContent.trim();
-      let panel = null;
-      const controls = tab.getAttribute("aria-controls");
-      if (controls && byId.has(controls)) panel = byId.get(controls);
-      if (!panel && tab.id && byId.has(tab.id.replace(/-tab$/, "-tabpanel"))) {
-        panel = byId.get(tab.id.replace(/-tab$/, "-tabpanel"));
-      }
-      if (!panel && tab.id) {
-        panel = panels.find((p) => p.getAttribute("aria-labelledby") === tab.id) || null;
-      }
-      if (!panel && panels[i] && !used.has(panels[i])) panel = panels[i];
-      if (panel && !used.has(panel)) {
-        used.add(panel);
-        result.push({ label, panel });
-      }
-    });
-    panels.forEach((p) => {
-      if (!used.has(p)) result.push({ label: "", panel: p });
-    });
-    return result;
-  }
-  function parse2(element, { document: document2 }) {
-    const panels = getPanels(element);
-    let allEntry = panels.find((p) => /^all$/i.test(p.label));
-    if (!allEntry && panels.length) allEntry = panels[0];
-    const allScope = allEntry ? allEntry.panel : element;
-    const categoriesByHref = /* @__PURE__ */ new Map();
-    panels.forEach(({ label, panel }) => {
-      if (!label || allEntry && panel === allEntry.panel) return;
-      itemsIn(panel).forEach((item) => {
-        const key = normalizeHref(itemHref(item));
-        if (!key) return;
-        const list = categoriesByHref.get(key) || [];
-        if (!list.includes(label)) list.push(label);
-        categoriesByHref.set(key, list);
-      });
-    });
-    const cells = [];
-    itemsIn(allScope).forEach((item) => {
-      const titleEl = item.querySelector(".cmp-image-list__item-title");
-      const titleText = titleEl ? titleEl.textContent.trim() : "";
-      const href = itemHref(item);
-      const imageWrap = item.querySelector(".cmp-image-list__item-image") || item.querySelector(".cmp-image");
-      const image = resolveImage2(imageWrap, document2, titleText);
-      let imageCell = "";
-      if (image) {
-        if (href) {
-          const a = document2.createElement("a");
-          a.setAttribute("href", href);
-          a.append(image);
-          imageCell = a;
-        } else {
-          imageCell = image;
-        }
-      }
-      const body = [];
-      if (titleText) {
-        const h3 = document2.createElement("h3");
-        if (href) {
-          const a = document2.createElement("a");
-          a.setAttribute("href", href);
-          a.textContent = titleText;
-          h3.append(a);
-        } else {
-          h3.textContent = titleText;
-        }
-        body.push(h3);
-      }
-      const desc = item.querySelector(".cmp-image-list__item-description");
-      if (desc && desc.textContent.trim()) {
-        const p = document2.createElement("p");
-        p.textContent = desc.textContent.trim();
-        body.push(p);
-      }
-      if (!imageCell && !body.length) return;
-      const cats = categoriesByHref.get(normalizeHref(href)) || [];
-      cells.push([imageCell, body.length ? body : "", cats.join(", ")]);
-    });
-    if (!cells.length) {
+  function parse2(element, { document: document2, params }) {
+    const source = listingSource(element, params.originalURL);
+    if (!source) {
       element.replaceWith(...element.childNodes);
       return;
     }
-    const block = WebImporter.Blocks.createBlock(document2, { name: "cards-filter", cells });
-    element.replaceWith(block);
+    replaceWithListing(element, document2, "cards-filter", { source, sort: "title" });
   }
+
+  // tools/importer/data/wknd-page-data.js
+  var wknd_page_data_default = {
+    "/us/en/adventures/bali-surf-camp": {
+      "Categories": "Surfing"
+    },
+    "/us/en/adventures/beervana-portland": {
+      "Categories": "Travel"
+    },
+    "/us/en/adventures/climbing-new-zealand": {
+      "Categories": "Climbing"
+    },
+    "/us/en/adventures/colorado-rock-climbing": {
+      "Categories": "Climbing"
+    },
+    "/us/en/adventures/cycling-tuscany": {
+      "Categories": "Cycling, Travel"
+    },
+    "/us/en/adventures/downhill-skiing-wyoming": {
+      "Categories": "Skiing"
+    },
+    "/us/en/adventures/gastronomic-marais-tour": {
+      "Categories": "Travel"
+    },
+    "/us/en/adventures/napa-wine-tasting": {
+      "Categories": "Travel"
+    },
+    "/us/en/adventures/riverside-camping-australia": {
+      "Categories": "Travel"
+    },
+    "/us/en/adventures/ski-touring-mont-blanc": {
+      "Categories": "Skiing"
+    },
+    "/us/en/adventures/surf-camp-costa-rica": {
+      "Categories": "Surfing"
+    },
+    "/us/en/adventures/tahoe-skiing": {
+      "Categories": "Skiing"
+    },
+    "/us/en/adventures/west-coast-cycling": {
+      "Categories": "Cycling"
+    },
+    "/us/en/adventures/whistler-mountain-biking": {
+      "Categories": "Cycling"
+    },
+    "/us/en/adventures/yosemite-backpacking": {
+      "Categories": "Travel"
+    },
+    "/us/en/magazine/guide-la-skateparks": {
+      "Publication Date": "2020-09-30"
+    },
+    "/us/en/magazine/ski-touring": {
+      "Publication Date": "2020-09-30"
+    },
+    "/us/en/magazine/western-australia": {
+      "Publication Date": "2020-07-09"
+    },
+    "/us/en/magazine/san-diego-surf": {
+      "Publication Date": "2020-07-09"
+    }
+  };
 
   // tools/importer/transformers/wknd-cleanup.js
   var TransformHook = { beforeTransform: "beforeTransform", afterTransform: "afterTransform" };
@@ -451,6 +401,26 @@ var CustomImportScript = (() => {
       }
     });
   }
+  function addPageMetadata(main, document2, originalURL) {
+    const pagePath = new URL(originalURL).pathname.replace(/\.html?$/, "");
+    const entries = Object.entries(wknd_page_data_default[pagePath] || {}).filter(([, v]) => v);
+    if (!entries.length) return;
+    const table = [...main.querySelectorAll("table")].find((t) => {
+      var _a;
+      return (((_a = t.querySelector("tr")) == null ? void 0 : _a.textContent) || "").trim().toLowerCase() === "metadata";
+    });
+    if (!table) return;
+    const body = table.tBodies[0] || table;
+    entries.forEach(([key, value]) => {
+      const tr = document2.createElement("tr");
+      [key, value].forEach((text) => {
+        const td = document2.createElement("td");
+        td.textContent = text;
+        tr.append(td);
+      });
+      body.append(tr);
+    });
+  }
   function findBlocksOnPage(document2, template) {
     const pageBlocks = [];
     template.blocks.forEach((blockDef) => {
@@ -495,6 +465,7 @@ var CustomImportScript = (() => {
       const hr = document2.createElement("hr");
       main.appendChild(hr);
       WebImporter.rules.createMetadata(main, document2);
+      addPageMetadata(main, document2, params.originalURL);
       WebImporter.rules.transformBackgroundImages(main, document2);
       WebImporter.rules.adjustImageUrls(main, url, params.originalURL);
       const rawPath = new URL(params.originalURL).pathname.replace(/\/$/, "").replace(/\.html?$/, "");

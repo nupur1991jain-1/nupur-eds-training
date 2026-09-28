@@ -144,46 +144,109 @@ var CustomImportScript = (() => {
     element.replaceWith(block);
   }
 
-  // tools/importer/parsers/cards-upnext.js
-  function parse3(element, { document: document2 }) {
-    let items = Array.from(element.querySelectorAll("li.cmp-list__item"));
-    if (!items.length) items = Array.from(element.querySelectorAll("li"));
-    const cells = [];
-    items.forEach((item) => {
-      const link = item.querySelector("a.cmp-list__item-link") || item.querySelector("a[href]");
-      const titleEl = item.querySelector(".cmp-list__item-title");
-      const dateEl = item.querySelector(".cmp-list__item-date");
-      const titleText = (titleEl ? titleEl.textContent : link ? link.textContent : "").trim();
-      const dateText = dateEl ? dateEl.textContent.trim() : "";
-      if (!titleText && !dateText) return;
-      const content = [];
-      if (titleText) {
-        const p = document2.createElement("p");
-        const href = link ? link.getAttribute("href") : "";
-        if (href) {
-          const a = document2.createElement("a");
-          a.setAttribute("href", href);
-          a.textContent = titleText;
-          p.append(a);
-        } else {
-          p.textContent = titleText;
-        }
-        content.push(p);
-      }
-      if (dateText) {
-        const p = document2.createElement("p");
-        p.textContent = dateText;
-        content.push(p);
-      }
-      cells.push([content]);
+  // tools/importer/parsers/listing-config.js
+  function toPath(href, base) {
+    try {
+      return new URL(href, base).pathname.replace(/\.html$/, "");
+    } catch (e) {
+      return "";
+    }
+  }
+  function listingSource(element, base) {
+    var _a;
+    const counts = /* @__PURE__ */ new Map();
+    element.querySelectorAll("a[href]").forEach((a) => {
+      const path = toPath(a.getAttribute("href"), base);
+      if (!path || path.split("/").length < 3) return;
+      const parent = `${path.slice(0, path.lastIndexOf("/"))}/`;
+      counts.set(parent, (counts.get(parent) || 0) + 1);
     });
-    if (!cells.length) {
+    return ((_a = [...counts.entries()].sort((a, b) => b[1] - a[1])[0]) == null ? void 0 : _a[0]) || "";
+  }
+  function replaceWithListing(element, document2, name, config) {
+    const cells = [["Source", config.source], ["Sort", config.sort]];
+    if (config.limit) cells.push(["Limit", String(config.limit)]);
+    if (config.excludeCurrent) cells.push(["Exclude Current", "true"]);
+    const block = WebImporter.Blocks.createBlock(document2, { name, cells });
+    element.replaceWith(block);
+  }
+
+  // tools/importer/parsers/cards-upnext.js
+  function parse3(element, { document: document2, params }) {
+    const source = listingSource(element, params.originalURL);
+    if (!source) {
       element.replaceWith(...element.childNodes);
       return;
     }
-    const block = WebImporter.Blocks.createBlock(document2, { name: "cards-upnext", cells });
-    element.replaceWith(block);
+    const items = element.querySelectorAll("li.cmp-list__item, li");
+    replaceWithListing(element, document2, "cards-upnext", {
+      source,
+      sort: "recent",
+      limit: items.length,
+      excludeCurrent: true
+    });
   }
+
+  // tools/importer/data/wknd-page-data.js
+  var wknd_page_data_default = {
+    "/us/en/adventures/bali-surf-camp": {
+      "Categories": "Surfing"
+    },
+    "/us/en/adventures/beervana-portland": {
+      "Categories": "Travel"
+    },
+    "/us/en/adventures/climbing-new-zealand": {
+      "Categories": "Climbing"
+    },
+    "/us/en/adventures/colorado-rock-climbing": {
+      "Categories": "Climbing"
+    },
+    "/us/en/adventures/cycling-tuscany": {
+      "Categories": "Cycling, Travel"
+    },
+    "/us/en/adventures/downhill-skiing-wyoming": {
+      "Categories": "Skiing"
+    },
+    "/us/en/adventures/gastronomic-marais-tour": {
+      "Categories": "Travel"
+    },
+    "/us/en/adventures/napa-wine-tasting": {
+      "Categories": "Travel"
+    },
+    "/us/en/adventures/riverside-camping-australia": {
+      "Categories": "Travel"
+    },
+    "/us/en/adventures/ski-touring-mont-blanc": {
+      "Categories": "Skiing"
+    },
+    "/us/en/adventures/surf-camp-costa-rica": {
+      "Categories": "Surfing"
+    },
+    "/us/en/adventures/tahoe-skiing": {
+      "Categories": "Skiing"
+    },
+    "/us/en/adventures/west-coast-cycling": {
+      "Categories": "Cycling"
+    },
+    "/us/en/adventures/whistler-mountain-biking": {
+      "Categories": "Cycling"
+    },
+    "/us/en/adventures/yosemite-backpacking": {
+      "Categories": "Travel"
+    },
+    "/us/en/magazine/guide-la-skateparks": {
+      "Publication Date": "2020-09-30"
+    },
+    "/us/en/magazine/ski-touring": {
+      "Publication Date": "2020-09-30"
+    },
+    "/us/en/magazine/western-australia": {
+      "Publication Date": "2020-07-09"
+    },
+    "/us/en/magazine/san-diego-surf": {
+      "Publication Date": "2020-07-09"
+    }
+  };
 
   // tools/importer/transformers/wknd-cleanup.js
   var TransformHook = { beforeTransform: "beforeTransform", afterTransform: "afterTransform" };
@@ -384,6 +447,26 @@ var CustomImportScript = (() => {
       }
     });
   }
+  function addPageMetadata(main, document2, originalURL) {
+    const pagePath = new URL(originalURL).pathname.replace(/\.html?$/, "");
+    const entries = Object.entries(wknd_page_data_default[pagePath] || {}).filter(([, v]) => v);
+    if (!entries.length) return;
+    const table = [...main.querySelectorAll("table")].find((t) => {
+      var _a;
+      return (((_a = t.querySelector("tr")) == null ? void 0 : _a.textContent) || "").trim().toLowerCase() === "metadata";
+    });
+    if (!table) return;
+    const body = table.tBodies[0] || table;
+    entries.forEach(([key, value]) => {
+      const tr = document2.createElement("tr");
+      [key, value].forEach((text) => {
+        const td = document2.createElement("td");
+        td.textContent = text;
+        tr.append(td);
+      });
+      body.append(tr);
+    });
+  }
   function findBlocksOnPage(document2, template) {
     const pageBlocks = [];
     template.blocks.forEach((blockDef) => {
@@ -428,6 +511,7 @@ var CustomImportScript = (() => {
       const hr = document2.createElement("hr");
       main.appendChild(hr);
       WebImporter.rules.createMetadata(main, document2);
+      addPageMetadata(main, document2, params.originalURL);
       WebImporter.rules.transformBackgroundImages(main, document2);
       WebImporter.rules.adjustImageUrls(main, url, params.originalURL);
       const rawPath = new URL(params.originalURL).pathname.replace(/\/$/, "").replace(/\.html?$/, "");

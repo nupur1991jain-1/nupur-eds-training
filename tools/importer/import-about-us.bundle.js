@@ -223,7 +223,49 @@ var CustomImportScript = (() => {
     element.replaceWith(block);
   }
 
+  // tools/importer/parsers/listing-config.js
+  function toPath(href, base) {
+    try {
+      return new URL(href, base).pathname.replace(/\.html$/, "");
+    } catch (e) {
+      return "";
+    }
+  }
+  function listingSource(element, base) {
+    var _a;
+    const counts = /* @__PURE__ */ new Map();
+    element.querySelectorAll("a[href]").forEach((a) => {
+      const path = toPath(a.getAttribute("href"), base);
+      if (!path || path.split("/").length < 3) return;
+      const parent = `${path.slice(0, path.lastIndexOf("/"))}/`;
+      counts.set(parent, (counts.get(parent) || 0) + 1);
+    });
+    return ((_a = [...counts.entries()].sort((a, b) => b[1] - a[1])[0]) == null ? void 0 : _a[0]) || "";
+  }
+  function pagePath(params) {
+    return toPath(params.originalURL, params.originalURL);
+  }
+  function replaceWithListing(element, document2, name, config) {
+    const cells = [["Source", config.source], ["Sort", config.sort]];
+    if (config.limit) cells.push(["Limit", String(config.limit)]);
+    if (config.excludeCurrent) cells.push(["Exclude Current", "true"]);
+    const block = WebImporter.Blocks.createBlock(document2, { name, cells });
+    element.replaceWith(block);
+  }
+
   // tools/importer/parsers/cards-article.js
+  function parse3(element, { document: document2, params }) {
+    const source = listingSource(element, params.originalURL);
+    if (!source) {
+      element.replaceWith(...element.childNodes);
+      return;
+    }
+    const items = element.querySelectorAll(".cmp-image-list__item, li");
+    const isLanding = `${pagePath(params)}/` === source;
+    replaceWithListing(element, document2, "cards-article", isLanding ? { source, sort: "title" } : { source, sort: "recent", limit: items.length });
+  }
+
+  // tools/importer/parsers/cards-members.js
   function pickFromSrcset3(srcset) {
     if (!srcset) return "";
     const entries = srcset.split(",").map((s) => s.trim()).filter(Boolean);
@@ -235,7 +277,7 @@ var CustomImportScript = (() => {
   function resolveImage3(container, document2, fallbackAlt) {
     if (!container) return null;
     let img = container.querySelector("img");
-    const cmp = container.querySelector("[data-cmp-src]");
+    const cmp = container.matches("[data-cmp-src]") ? container : container.querySelector("[data-cmp-src]");
     let src = "";
     if (img) {
       src = [
@@ -245,85 +287,10 @@ var CustomImportScript = (() => {
       ].find(isUsableSrc3) || "";
     }
     if (!src && cmp) src = (cmp.getAttribute("data-cmp-src") || "").replace("{.width}", ".1600");
-    if (!src) return img || null;
-    if (!img) {
-      img = document2.createElement("img");
-      img.setAttribute("alt", cmp && cmp.getAttribute("data-cmp-alt") || fallbackAlt || "");
-    }
-    img.setAttribute("src", src);
-    img.removeAttribute("srcset");
-    img.removeAttribute("loading");
-    return img;
-  }
-  function parse3(element, { document: document2 }) {
-    let items = Array.from(element.querySelectorAll(".cmp-image-list__item-content"));
-    if (!items.length) items = Array.from(element.querySelectorAll(".cmp-image-list__item, li"));
-    const cells = [];
-    items.forEach((item) => {
-      const titleEl = item.querySelector(".cmp-image-list__item-title");
-      const titleText = titleEl ? titleEl.textContent.trim() : "";
-      const titleLink = item.querySelector("a.cmp-image-list__item-title-link") || item.querySelector("a.cmp-image-list__item-image-link") || item.querySelector("a[href]");
-      const href = titleLink ? titleLink.getAttribute("href") : "";
-      const imageWrap = item.querySelector(".cmp-image-list__item-image") || item.querySelector(".cmp-image");
-      const image = resolveImage3(imageWrap, document2, titleText);
-      const body = [];
-      if (titleText) {
-        const p = document2.createElement("p");
-        const strong = document2.createElement("strong");
-        if (href) {
-          const a = document2.createElement("a");
-          a.setAttribute("href", href);
-          a.textContent = titleText;
-          strong.append(a);
-        } else {
-          strong.textContent = titleText;
-        }
-        p.append(strong);
-        body.push(p);
-      }
-      const desc = item.querySelector(".cmp-image-list__item-description");
-      if (desc && desc.textContent.trim()) {
-        const p = document2.createElement("p");
-        p.textContent = desc.textContent.trim();
-        body.push(p);
-      }
-      if (!image && !body.length) return;
-      cells.push([image || "", body.length ? body : ""]);
-    });
-    if (!cells.length) {
-      element.replaceWith(...element.childNodes);
-      return;
-    }
-    const block = WebImporter.Blocks.createBlock(document2, { name: "cards-article", cells });
-    element.replaceWith(block);
-  }
-
-  // tools/importer/parsers/cards-members.js
-  function pickFromSrcset4(srcset) {
-    if (!srcset) return "";
-    const entries = srcset.split(",").map((s) => s.trim()).filter(Boolean);
-    return entries.length ? entries[entries.length - 1].split(/\s+/)[0] : "";
-  }
-  function isUsableSrc4(src) {
-    return !!src && !src.startsWith("data:") && !/placeholder|blank\.gif/i.test(src);
-  }
-  function resolveImage4(container, document2, fallbackAlt) {
-    if (!container) return null;
-    let img = container.querySelector("img");
-    const cmp = container.matches("[data-cmp-src]") ? container : container.querySelector("[data-cmp-src]");
-    let src = "";
-    if (img) {
-      src = [
-        img.getAttribute("src"),
-        img.getAttribute("data-src"),
-        pickFromSrcset4(img.getAttribute("srcset") || img.getAttribute("data-srcset"))
-      ].find(isUsableSrc4) || "";
-    }
-    if (!src && cmp) src = (cmp.getAttribute("data-cmp-src") || "").replace("{.width}", ".1600");
     if (!src) {
       const ns = container.querySelector("noscript");
       const m = ns && /src=["']([^"']+)["']/i.exec(ns.textContent || ns.innerHTML || "");
-      if (m && isUsableSrc4(m[1])) src = m[1];
+      if (m && isUsableSrc3(m[1])) src = m[1];
     }
     if (!src) return null;
     if (!img) img = document2.createElement("img");
@@ -383,7 +350,7 @@ var CustomImportScript = (() => {
       });
     }
     const imageWrap = teaser.querySelector(".cmp-teaser__image") || teaser.querySelector(".cmp-image");
-    const image = resolveImage4(imageWrap, document2, titleText);
+    const image = resolveImage3(imageWrap, document2, titleText);
     if (!image && !text.length) return null;
     return [image || "", text.length ? text : ""];
   }
@@ -408,6 +375,67 @@ var CustomImportScript = (() => {
     const block = WebImporter.Blocks.createBlock(document2, { name: "cards-members", cells });
     element.replaceWith(block);
   }
+
+  // tools/importer/data/wknd-page-data.js
+  var wknd_page_data_default = {
+    "/us/en/adventures/bali-surf-camp": {
+      "Categories": "Surfing"
+    },
+    "/us/en/adventures/beervana-portland": {
+      "Categories": "Travel"
+    },
+    "/us/en/adventures/climbing-new-zealand": {
+      "Categories": "Climbing"
+    },
+    "/us/en/adventures/colorado-rock-climbing": {
+      "Categories": "Climbing"
+    },
+    "/us/en/adventures/cycling-tuscany": {
+      "Categories": "Cycling, Travel"
+    },
+    "/us/en/adventures/downhill-skiing-wyoming": {
+      "Categories": "Skiing"
+    },
+    "/us/en/adventures/gastronomic-marais-tour": {
+      "Categories": "Travel"
+    },
+    "/us/en/adventures/napa-wine-tasting": {
+      "Categories": "Travel"
+    },
+    "/us/en/adventures/riverside-camping-australia": {
+      "Categories": "Travel"
+    },
+    "/us/en/adventures/ski-touring-mont-blanc": {
+      "Categories": "Skiing"
+    },
+    "/us/en/adventures/surf-camp-costa-rica": {
+      "Categories": "Surfing"
+    },
+    "/us/en/adventures/tahoe-skiing": {
+      "Categories": "Skiing"
+    },
+    "/us/en/adventures/west-coast-cycling": {
+      "Categories": "Cycling"
+    },
+    "/us/en/adventures/whistler-mountain-biking": {
+      "Categories": "Cycling"
+    },
+    "/us/en/adventures/yosemite-backpacking": {
+      "Categories": "Travel"
+    },
+    "/us/en/magazine/guide-la-skateparks": {
+      "Publication Date": "2020-09-30"
+    },
+    "/us/en/magazine/ski-touring": {
+      "Publication Date": "2020-09-30"
+    },
+    "/us/en/magazine/western-australia": {
+      "Publication Date": "2020-07-09"
+    },
+    "/us/en/magazine/san-diego-surf": {
+      "Publication Date": "2020-07-09"
+    }
+  };
 
   // tools/importer/transformers/wknd-cleanup.js
   var TransformHook = { beforeTransform: "beforeTransform", afterTransform: "afterTransform" };
@@ -655,6 +683,26 @@ var CustomImportScript = (() => {
       }
     });
   }
+  function addPageMetadata(main, document2, originalURL) {
+    const pagePath2 = new URL(originalURL).pathname.replace(/\.html?$/, "");
+    const entries = Object.entries(wknd_page_data_default[pagePath2] || {}).filter(([, v]) => v);
+    if (!entries.length) return;
+    const table = [...main.querySelectorAll("table")].find((t) => {
+      var _a;
+      return (((_a = t.querySelector("tr")) == null ? void 0 : _a.textContent) || "").trim().toLowerCase() === "metadata";
+    });
+    if (!table) return;
+    const body = table.tBodies[0] || table;
+    entries.forEach(([key, value]) => {
+      const tr = document2.createElement("tr");
+      [key, value].forEach((text) => {
+        const td = document2.createElement("td");
+        td.textContent = text;
+        tr.append(td);
+      });
+      body.append(tr);
+    });
+  }
   function findBlocksOnPage(document2, template) {
     const pageBlocks = [];
     template.blocks.forEach((blockDef) => {
@@ -699,6 +747,7 @@ var CustomImportScript = (() => {
       const hr = document2.createElement("hr");
       main.appendChild(hr);
       WebImporter.rules.createMetadata(main, document2);
+      addPageMetadata(main, document2, params.originalURL);
       WebImporter.rules.transformBackgroundImages(main, document2);
       WebImporter.rules.adjustImageUrls(main, url, params.originalURL);
       const rawPath = new URL(params.originalURL).pathname.replace(/\/$/, "").replace(/\.html?$/, "");
