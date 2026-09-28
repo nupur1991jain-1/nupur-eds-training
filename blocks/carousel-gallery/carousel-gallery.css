@@ -1,0 +1,153 @@
+/* Structural only: full-bleed image-only slides; dot indicators centred below the image,
+   prev/next arrows at the right of the same control row. Brand styling is applied later. */
+
+.carousel-gallery-container .carousel-gallery-wrapper {
+  max-width: unset;
+  padding: 0;
+}
+
+.carousel-gallery {
+  position: relative;
+}
+
+.carousel-gallery .carousel-gallery-slides,
+.carousel-gallery .carousel-gallery-indicators {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.carousel-gallery .carousel-gallery-slides {
+  display: flex;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  overflow: scroll clip;
+  scrollbar-width: none;
+}
+
+.carousel-gallery .carousel-gallery-slides::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel-gallery .carousel-gallery-slide {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+  width: 100%;
+}
+
+.carousel-gallery .carousel-gallery-slide-image {
+  line-height: 0;
+}
+
+.carousel-gallery .carousel-gallery-slide-image img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.carousel-gallery .carousel-gallery-controls {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 8px 0;
+}
+
+.carousel-gallery .carousel-gallery-indicators {
+  display: flex;
+  gap: 8px;
+  line-height: 0;
+}
+
+.carousel-gallery .carousel-gallery-indicator button {
+  width: 8px;
+  height: 8px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background-color: currentcolor;
+  opacity: 0.3;
+  cursor: pointer;
+}
+
+.carousel-gallery .carousel-gallery-indicator button:disabled,
+.carousel-gallery .carousel-gallery-indicator button:hover,
+.carousel-gallery .carousel-gallery-indicator button:focus-visible {
+  opacity: 1;
+}
+
+.carousel-gallery .carousel-gallery-navigation {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  gap: 4px;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.carousel-gallery .carousel-gallery-navigation button {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+/* Arrow glyph: horizontal shaft + chevron head */
+.carousel-gallery .carousel-gallery-navigation button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 16px;
+  height: 2px;
+  background-color: currentcolor;
+  transform: translate(-50%, -50%);
+}
+
+.carousel-gallery .carousel-gallery-navigation button::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  border: 2px solid currentcolor;
+  border-bottom: 0;
+  border-left: 0;
+  transform: translate(-100%, -50%) rotate(-135deg);
+}
+
+.carousel-gallery .carousel-gallery-navigation .carousel-gallery-next::after {
+  transform: translate(0, -50%) rotate(45deg);
+}
+
+@media (width >= 600px) {
+  .carousel-gallery .carousel-gallery-slide-image img {
+    aspect-ratio: 16 / 7;
+  }
+}
+
+@media (width >= 900px) {
+  .carousel-gallery .carousel-gallery-controls {
+    padding: 8px 12px;
+  }
+
+  .carousel-gallery .carousel-gallery-navigation {
+    right: 12px;
+  }
+}
+
+@media (width >= 1200px) {
+  .carousel-gallery .carousel-gallery-slide-image img {
+    aspect-ratio: 1280 / 400;
+  }
+}

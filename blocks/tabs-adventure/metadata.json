@@ -1,0 +1,21 @@
+{
+  "variantName": "tabs-adventure",
+  "baseBlock": "tabs",
+  "canonicalModel": "standalone",
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "medium",
+    "purpose": "adventure detail tabbed article",
+    "imagePattern": "inline full-width images",
+    "structure": "tab labels (dark active pill) + panel: heading + image + text + list"
+  },
+  "contentPattern": "tabs: each row = [tab label] | [rich content: h2, picture, p, ul]; 3 rows",
+  "options": [],
+  "memberVariantIds": ["tabs-adventure"],
+  "sourceUrl": "https://wknd.site/us/en/adventures/climbing-new-zealand.html",
+  "usage": {
+    "pagesUsing": ["https://wknd.site/us/en/adventures/climbing-new-zealand.html"],
+    "reuseCount": 1,
+    "lastUsed": "2026-09-28"
+  }
+}

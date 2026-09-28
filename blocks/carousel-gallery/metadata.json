@@ -1,0 +1,21 @@
+{
+  "variantName": "carousel-gallery",
+  "baseBlock": "carousel",
+  "canonicalModel": "standalone",
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "medium",
+    "purpose": "adventure detail image gallery",
+    "imagePattern": "full-bleed",
+    "structure": "image + arrows + dots"
+  },
+  "contentPattern": "carousel: each row = [image] (single cell, no text cell); 3 rows",
+  "options": [],
+  "memberVariantIds": ["carousel-gallery"],
+  "sourceUrl": "https://wknd.site/us/en/adventures/climbing-new-zealand.html",
+  "usage": {
+    "pagesUsing": ["https://wknd.site/us/en/adventures/climbing-new-zealand.html"],
+    "reuseCount": 1,
+    "lastUsed": "2026-09-28"
+  }
+}

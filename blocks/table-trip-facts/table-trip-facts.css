@@ -1,0 +1,61 @@
+/* Structural only: vertical stack of label/value facts, label above value, each item with a
+   left bar. Brand colour/typography is applied later by the design pass. */
+
+.table-trip-facts .table-trip-facts-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin: 0;
+  padding: 0;
+}
+
+.table-trip-facts .table-trip-facts-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 0 8px 16px;
+}
+
+/* Left bar: neutral, derived from current text colour so the design pass can override it */
+.table-trip-facts .table-trip-facts-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 4px;
+  background-color: currentcolor;
+  opacity: 0.15;
+}
+
+.table-trip-facts .table-trip-facts-label,
+.table-trip-facts .table-trip-facts-value {
+  margin: 0;
+}
+
+.table-trip-facts .table-trip-facts-label p,
+.table-trip-facts .table-trip-facts-value p {
+  margin: 0;
+}
+
+/* Tablet: when the sidebar stacks above the main column, lay facts out in a grid */
+@media (width >= 600px) {
+  .table-trip-facts .table-trip-facts-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Desktop: facts live in the narrow 3/12 sidebar, back to a single column */
+@media (width >= 900px) {
+  .table-trip-facts .table-trip-facts-list {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+
+@media (width >= 1200px) {
+  .table-trip-facts .table-trip-facts-item {
+    padding-block: 12px;
+  }
+}

@@ -23,8 +23,86 @@
       ],
       "representativeUrl": "https://wknd.site/us/en/adventures/climbing-new-zealand.html",
       "description": "To be named in naming step",
-      "blocks": [],
-      "urlPattern": "/us/en/adventures/*"
+      "blocks": [
+        {
+          "name": "breadcrumb",
+          "instances": [
+            ".breadcrumb.cmp-breadcrumb--fixed"
+          ]
+        },
+        {
+          "name": "carousel-gallery",
+          "instances": [
+            ".carousel.cmp-carousel--mini"
+          ]
+        },
+        {
+          "name": "table-trip-facts",
+          "instances": [
+            "main .aem-GridColumn--default--3 .contentfragment.cmp-contentfragment--elements"
+          ]
+        },
+        {
+          "name": "tabs-adventure",
+          "instances": [
+            "main .tabs.panelcontainer"
+          ]
+        }
+      ],
+      "urlPattern": "/us/en/adventures/*",
+      "sections": [
+        {
+          "id": "section-1",
+          "name": "Breadcrumb",
+          "selector": [
+            ".breadcrumb.cmp-breadcrumb--fixed"
+          ],
+          "style": null,
+          "blocks": [
+            "breadcrumb"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "section-2",
+          "name": "Image carousel",
+          "selector": [
+            ".carousel.cmp-carousel--mini"
+          ],
+          "style": null,
+          "blocks": [
+            "carousel-gallery"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "section-3",
+          "name": "Adventure title",
+          "selector": [
+            "main .cmp-layout-container--fixed .title.cmp-title--underline"
+          ],
+          "style": null,
+          "blocks": [],
+          "defaultContent": [
+            "main .cmp-layout-container--fixed .title.cmp-title--underline"
+          ]
+        },
+        {
+          "id": "section-4",
+          "name": "Adventure details (sidebar + tabbed content)",
+          "selector": [
+            "main .cmp-layout-container--fixed .title.cmp-title--underline + .container"
+          ],
+          "style": "sidebar",
+          "blocks": [
+            "table-trip-facts",
+            "tabs-adventure"
+          ],
+          "defaultContent": [
+            "main .aem-GridColumn--default--3 .title"
+          ]
+        }
+      ]
     },
     {
       "name": "adventures-2",

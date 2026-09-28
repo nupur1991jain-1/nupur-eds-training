@@ -1,0 +1,14 @@
+{
+  "status": "success",
+  "url": "https://wknd.site/us/en/adventures/tahoe-skiing.html",
+  "path": "us/en/adventures/tahoe-skiing",
+  "timestamp": "2026-09-28T10:14:30.779Z",
+  "title": "Tahoe Skiing",
+  "template": "adventures",
+  "blocks": [
+    "breadcrumb",
+    "carousel-gallery",
+    "table-trip-facts",
+    "tabs-adventure"
+  ]
+}

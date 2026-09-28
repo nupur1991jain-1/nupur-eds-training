@@ -1,0 +1,21 @@
+{
+  "variantName": "breadcrumb",
+  "baseBlock": "breadcrumb",
+  "canonicalModel": "standalone",
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "compact",
+    "purpose": "page breadcrumb trail",
+    "imagePattern": "noimg",
+    "structure": "inline uppercase trail: parent link + separator + current page"
+  },
+  "contentPattern": "breadcrumb: header row only (no content rows); decorate() builds trail from og:title",
+  "options": [],
+  "memberVariantIds": ["breadcrumb"],
+  "sourceUrl": "https://wknd.site/us/en/adventures/climbing-new-zealand.html",
+  "usage": {
+    "pagesUsing": ["https://wknd.site/us/en/adventures/climbing-new-zealand.html"],
+    "reuseCount": 1,
+    "lastUsed": "2026-09-28"
+  }
+}

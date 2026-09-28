@@ -1,0 +1,66 @@
+/* Structural only: horizontal row of tab buttons above a single visible panel containing
+   headings, full-width images, paragraphs and lists. Active-tab styling uses currentcolor
+   inversion as a neutral placeholder; brand styling is applied later by the design pass. */
+
+.tabs-adventure .tabs-adventure-list {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  margin-bottom: 24px;
+}
+
+.tabs-adventure .tabs-adventure-list::-webkit-scrollbar {
+  display: none;
+}
+
+.tabs-adventure .tabs-adventure-tab {
+  flex: 0 0 auto;
+  margin: 0;
+  padding: 8px 12px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+/* Active tab: filled pill, inverted from the inherited text/background tokens */
+.tabs-adventure .tabs-adventure-tab[aria-selected='true'] {
+  color: var(--background-color, #fff);
+  background-color: var(--text-color, #000);
+}
+
+.tabs-adventure .tabs-adventure-panel[hidden] {
+  display: none;
+}
+
+.tabs-adventure .tabs-adventure-panel > :first-child {
+  margin-top: 0;
+}
+
+.tabs-adventure .tabs-adventure-panel picture,
+.tabs-adventure .tabs-adventure-panel img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.tabs-adventure .tabs-adventure-panel ul {
+  padding-left: 20px;
+}
+
+@media (width >= 600px) {
+  .tabs-adventure .tabs-adventure-tab {
+    padding: 8px 16px;
+  }
+}
+
+@media (width >= 900px) {
+  .tabs-adventure .tabs-adventure-list {
+    margin-bottom: 32px;
+  }
+}

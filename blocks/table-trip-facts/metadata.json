@@ -1,0 +1,21 @@
+{
+  "variantName": "table-trip-facts",
+  "baseBlock": "table",
+  "canonicalModel": "standalone",
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "compact",
+    "purpose": "trip facts key/value list",
+    "imagePattern": "noimg",
+    "structure": "label + value x6 + left bar"
+  },
+  "contentPattern": "table (no header): each row = [label] | [value]; 6 rows",
+  "options": [],
+  "memberVariantIds": ["table-trip-facts"],
+  "sourceUrl": "https://wknd.site/us/en/adventures/climbing-new-zealand.html",
+  "usage": {
+    "pagesUsing": ["https://wknd.site/us/en/adventures/climbing-new-zealand.html"],
+    "reuseCount": 1,
+    "lastUsed": "2026-09-28"
+  }
+}

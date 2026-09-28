@@ -329,3 +329,29 @@ main .section.background-grey {
   margin: 0;
   padding: 40px 0;
 }
+
+/* sidebar: narrow left column beside the last block (e.g. trip facts + tabs) */
+@media (width >= 900px) {
+  main > .section.sidebar {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-auto-rows: min-content;
+    column-gap: 32px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 32px;
+  }
+
+  main > .section.sidebar > div {
+    grid-column: 1;
+    width: 100%;
+    max-width: none;
+    padding: 0;
+  }
+
+  main > .section.sidebar > div:last-child {
+    grid-column: 2;
+    grid-row: 1 / span 20;
+  }
+}
