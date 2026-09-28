@@ -1,0 +1,21 @@
+{
+  "variantName": "columns-featured",
+  "baseBlock": "columns",
+  "canonicalModel": "standalone",
+  "visualCharacteristics": {
+    "colorScheme": "light-grey panel",
+    "density": "medium",
+    "purpose": "featured article teaser",
+    "imagePattern": "large left image",
+    "structure": "image | eyebrow + heading + text + CTA"
+  },
+  "contentPattern": "columns: 1 row, 2 cells = [image] | [eyebrow paragraph, h2, paragraph, CTA link]",
+  "options": [],
+  "memberVariantIds": ["columns-featured"],
+  "sourceUrl": "https://wknd.site/us/en.html",
+  "usage": {
+    "pagesUsing": ["https://wknd.site/us/en.html"],
+    "reuseCount": 1,
+    "lastUsed": "2026-09-28"
+  }
+}

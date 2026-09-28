@@ -1,0 +1,71 @@
+/* Structural only: image column + text panel side by side on desktop, stacked on mobile. */
+
+.columns-featured .columns-featured-row {
+  display: flex;
+  flex-direction: column;
+}
+
+.columns-featured .columns-featured-image {
+  line-height: 0;
+}
+
+.columns-featured .columns-featured-image p {
+  margin: 0;
+}
+
+.columns-featured .columns-featured-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.columns-featured .columns-featured-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 24px;
+}
+
+.columns-featured .columns-featured-eyebrow {
+  margin-bottom: 0;
+}
+
+@media (width >= 600px) {
+  .columns-featured .columns-featured-content {
+    padding: 32px;
+  }
+}
+
+@media (width >= 900px) {
+  .columns-featured .columns-featured-row {
+    flex-direction: row;
+    align-items: stretch;
+  }
+
+  .columns-featured .columns-featured-row > div {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  /* Image column is the dominant (~60%) column in the featured layout */
+  .columns-featured.columns-featured-2-cols .columns-featured-image {
+    flex: 3 1 0;
+  }
+
+  .columns-featured.columns-featured-2-cols .columns-featured-content {
+    flex: 2 1 0;
+  }
+
+  .columns-featured .columns-featured-image img {
+    aspect-ratio: auto;
+    min-height: 100%;
+  }
+}
+
+@media (width >= 1200px) {
+  .columns-featured .columns-featured-content {
+    padding: 40px;
+  }
+}

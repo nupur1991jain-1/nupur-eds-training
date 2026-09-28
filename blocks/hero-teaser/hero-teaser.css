@@ -1,0 +1,54 @@
+/* Structural only: full-bleed image with a content panel overlapping its bottom edge. */
+
+.hero-teaser-container .hero-teaser-wrapper {
+  max-width: unset;
+  padding: 0;
+}
+
+.hero-teaser {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-teaser .hero-teaser-image {
+  line-height: 0;
+}
+
+.hero-teaser .hero-teaser-image img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.hero-teaser .hero-teaser-content {
+  position: relative;
+  z-index: 1;
+  background-color: var(--background-color);
+  padding: 16px;
+}
+
+@media (width >= 600px) {
+  .hero-teaser .hero-teaser-image img {
+    aspect-ratio: 16 / 7;
+  }
+}
+
+/* Desktop: panel is pulled up over the image's bottom edge, inset from both sides */
+@media (width >= 900px) {
+  .hero-teaser .hero-teaser-content {
+    margin: -96px 24px 0;
+    padding: 16px 16px 24px;
+  }
+
+  .hero-teaser.hero-teaser-no-image .hero-teaser-content {
+    margin-top: 0;
+  }
+}
+
+@media (width >= 1200px) {
+  .hero-teaser .hero-teaser-image img {
+    aspect-ratio: 1280 / 640;
+  }
+}

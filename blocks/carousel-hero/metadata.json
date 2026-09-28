@@ -1,0 +1,21 @@
+{
+  "variantName": "carousel-hero",
+  "baseBlock": "carousel",
+  "canonicalModel": "standalone",
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "spacious",
+    "purpose": "homepage hero slider",
+    "imagePattern": "full-bleed",
+    "structure": "image + heading + text + CTA x3 + arrows + dots"
+  },
+  "contentPattern": "carousel: each row = [image] | [h2, paragraph, CTA link]; 3 rows",
+  "options": [],
+  "memberVariantIds": ["carousel-hero"],
+  "sourceUrl": "https://wknd.site/us/en.html",
+  "usage": {
+    "pagesUsing": ["https://wknd.site/us/en.html"],
+    "reuseCount": 1,
+    "lastUsed": "2026-09-28"
+  }
+}

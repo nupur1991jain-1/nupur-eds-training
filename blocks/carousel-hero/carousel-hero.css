@@ -1,0 +1,172 @@
+/* Structural only: full-bleed slides, content panel overlapping the bottom-left of the image,
+   dot indicators centred below, prev/next arrows at the bottom-right. Brand styling is applied later. */
+
+.carousel-hero-container .carousel-hero-wrapper {
+  max-width: unset;
+  padding: 0;
+}
+
+.carousel-hero {
+  position: relative;
+}
+
+.carousel-hero .carousel-hero-slides-container {
+  position: relative;
+}
+
+.carousel-hero .carousel-hero-slides,
+.carousel-hero .carousel-hero-indicators {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.carousel-hero .carousel-hero-slides {
+  display: flex;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  overflow: scroll clip;
+  scrollbar-width: none;
+}
+
+.carousel-hero .carousel-hero-slides::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel-hero .carousel-hero-slide {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+}
+
+.carousel-hero .carousel-hero-slide-image {
+  line-height: 0;
+}
+
+.carousel-hero .carousel-hero-slide-image p {
+  margin: 0;
+}
+
+.carousel-hero .carousel-hero-slide-image img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+/* Mobile: content stacks below the image */
+.carousel-hero .carousel-hero-slide-content {
+  position: relative;
+  background-color: var(--background-color);
+  padding: 16px;
+}
+
+.carousel-hero .carousel-hero-controls {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 8px 0;
+}
+
+.carousel-hero .carousel-hero-indicators {
+  display: flex;
+  gap: 8px;
+  line-height: 0;
+}
+
+.carousel-hero .carousel-hero-indicator button {
+  width: 10px;
+  height: 10px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background-color: currentcolor;
+  opacity: 0.3;
+  cursor: pointer;
+}
+
+.carousel-hero .carousel-hero-indicator button:disabled,
+.carousel-hero .carousel-hero-indicator button:hover,
+.carousel-hero .carousel-hero-indicator button:focus-visible {
+  opacity: 1;
+}
+
+.carousel-hero .carousel-hero-navigation {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  gap: 8px;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.carousel-hero .carousel-hero-navigation button {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.carousel-hero .carousel-hero-navigation button::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  border: 2px solid currentcolor;
+  border-bottom: 0;
+  border-left: 0;
+  transform: translate(-25%, -50%) rotate(-135deg);
+}
+
+.carousel-hero .carousel-hero-navigation .carousel-hero-next::after {
+  transform: translate(-75%, -50%) rotate(45deg);
+}
+
+@media (width >= 600px) {
+  .carousel-hero .carousel-hero-slide-image img {
+    aspect-ratio: 16 / 7;
+  }
+}
+
+/* Desktop: panel overlays the bottom-left of the image, stopping short of the right edge */
+@media (width >= 900px) {
+  .carousel-hero .carousel-hero-slide {
+    padding-bottom: 0;
+  }
+
+  .carousel-hero .carousel-hero-slide-content {
+    position: absolute;
+    left: 24px;
+    right: 24px;
+    bottom: 0;
+    padding: 16px 16px 24px;
+  }
+
+  .carousel-hero .carousel-hero-controls {
+    padding: 16px 24px;
+  }
+
+  .carousel-hero .carousel-hero-navigation {
+    right: 24px;
+  }
+}
+
+@media (width >= 1200px) {
+  .carousel-hero .carousel-hero-slide-image img {
+    aspect-ratio: 1280 / 640;
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "sites": {
+    "nupur-eds-training": {
+      "previewOrg": "nupur1991jain-1",
+      "previewSite": "nupur-eds-training",
+      "contentHostUrl": "https://content.da.live/nupur1991jain-1/nupur-eds-training/",
+      "libraryUrl": "https://main--sta-boilerplate--aemdemos.aem.page/tools/sidekick/library.json"
+    }
+  },
+  "type": "da"
+}
