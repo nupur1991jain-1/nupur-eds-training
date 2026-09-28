@@ -198,11 +198,6 @@ blockquote {
 }
 
 /* default content (text components on the source) */
-main .default-content-wrapper :is(p, li) a:any-link:not(.button) {
-  /* links in running text must not rely on colour alone (3:1 vs the text is not met) */
-  text-decoration: underline;
-}
-
 main .default-content-wrapper h2:not([class*="heading-h"])::after {
   content: "";
   display: block;
@@ -269,6 +264,11 @@ a:any-link {
 
 a:hover {
   color: var(--link-hover-color);
+  text-decoration: underline;
+}
+
+main .default-content-wrapper :is(p, li) a:any-link:not(.button) {
+  /* links in running text must not rely on colour alone (3:1 vs the text is not met) */
   text-decoration: underline;
 }
 
