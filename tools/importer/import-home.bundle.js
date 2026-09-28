@@ -73,7 +73,7 @@ var CustomImportScript = (() => {
       const noscript = container.querySelector("noscript");
       if (noscript) {
         const m = /src=["']([^"']+)["']/i.exec(noscript.textContent || noscript.innerHTML || "");
-        if (m) src = m[1];
+        if (m) [, src] = m;
       }
     }
     if (!src) return img || null;
@@ -338,49 +338,49 @@ var CustomImportScript = (() => {
   // tools/importer/data/wknd-page-data.js
   var wknd_page_data_default = {
     "/us/en/adventures/bali-surf-camp": {
-      "Categories": "Surfing"
+      Categories: "Surfing"
     },
     "/us/en/adventures/beervana-portland": {
-      "Categories": "Travel"
+      Categories: "Travel"
     },
     "/us/en/adventures/climbing-new-zealand": {
-      "Categories": "Climbing"
+      Categories: "Climbing"
     },
     "/us/en/adventures/colorado-rock-climbing": {
-      "Categories": "Climbing"
+      Categories: "Climbing"
     },
     "/us/en/adventures/cycling-tuscany": {
-      "Categories": "Cycling, Travel"
+      Categories: "Cycling, Travel"
     },
     "/us/en/adventures/downhill-skiing-wyoming": {
-      "Categories": "Skiing"
+      Categories: "Skiing"
     },
     "/us/en/adventures/gastronomic-marais-tour": {
-      "Categories": "Travel"
+      Categories: "Travel"
     },
     "/us/en/adventures/napa-wine-tasting": {
-      "Categories": "Travel"
+      Categories: "Travel"
     },
     "/us/en/adventures/riverside-camping-australia": {
-      "Categories": "Travel"
+      Categories: "Travel"
     },
     "/us/en/adventures/ski-touring-mont-blanc": {
-      "Categories": "Skiing"
+      Categories: "Skiing"
     },
     "/us/en/adventures/surf-camp-costa-rica": {
-      "Categories": "Surfing"
+      Categories: "Surfing"
     },
     "/us/en/adventures/tahoe-skiing": {
-      "Categories": "Skiing"
+      Categories: "Skiing"
     },
     "/us/en/adventures/west-coast-cycling": {
-      "Categories": "Cycling"
+      Categories: "Cycling"
     },
     "/us/en/adventures/whistler-mountain-biking": {
-      "Categories": "Cycling"
+      Categories: "Cycling"
     },
     "/us/en/adventures/yosemite-backpacking": {
-      "Categories": "Travel"
+      Categories: "Travel"
     },
     "/us/en/magazine/guide-la-skateparks": {
       "Publication Date": "2020-09-30"
@@ -398,7 +398,7 @@ var CustomImportScript = (() => {
 
   // tools/importer/transformers/wknd-cleanup.js
   var TransformHook = { beforeTransform: "beforeTransform", afterTransform: "afterTransform" };
-  function transform(hookName, element, payload) {
+  function transform(hookName, element) {
     if (hookName === TransformHook.beforeTransform) {
       WebImporter.DOMUtils.remove(element, [
         "iframe.aamIframeLoaded",
@@ -438,7 +438,14 @@ var CustomImportScript = (() => {
         ".cmp-carousel__indicators"
       ]);
       WebImporter.DOMUtils.remove(element, ["div.separator"]);
-      WebImporter.DOMUtils.remove(element, ["iframe", "link", "noscript", "meta", "script", "style"]);
+      WebImporter.DOMUtils.remove(element, [
+        "iframe",
+        "link",
+        "noscript",
+        "meta",
+        "script",
+        "style"
+      ]);
       element.querySelectorAll("[data-cmp-data-layer], [data-cmp-clickable]").forEach((el) => {
         el.removeAttribute("data-cmp-data-layer");
         el.removeAttribute("data-cmp-clickable");
@@ -455,12 +462,7 @@ var CustomImportScript = (() => {
   var SECTION_MARKER_ATTR = "data-excat-section-id";
   function querySection(root, selectors) {
     const list = Array.isArray(selectors) ? selectors : [selectors];
-    for (const sel of list) {
-      if (!sel) continue;
-      const el = root.querySelector(sel);
-      if (el) return el;
-    }
-    return null;
+    return list.reduce((found, sel) => found || sel && root.querySelector(sel) || null, null);
   }
   function transform2(hookName, element, payload) {
     const sections = payload && payload.template && payload.template.sections || [];
@@ -471,29 +473,29 @@ var CustomImportScript = (() => {
       const firstIdx = sectionEls.findIndex(Boolean);
       for (let i = sections.length - 1; i >= 0; i -= 1) {
         const section = sections[i];
-        if (i === firstIdx && !section.style) continue;
         const sectionEl = sectionEls[i];
-        if (!sectionEl) continue;
-        const hr = doc.createElement("hr");
-        if (section.style) hr.setAttribute(SECTION_MARKER_ATTR, section.id);
-        sectionEl.before(hr);
+        if (sectionEl && (i !== firstIdx || section.style)) {
+          const hr = doc.createElement("hr");
+          if (section.style) hr.setAttribute(SECTION_MARKER_ATTR, section.id);
+          sectionEl.before(hr);
+        }
       }
     }
     if (hookName === "afterTransform") {
       for (let i = sections.length - 1; i >= 0; i -= 1) {
         const section = sections[i];
-        if (!section.style) continue;
-        const marker = element.querySelector(`[${SECTION_MARKER_ATTR}="${section.id}"]`);
-        const anchor = marker || querySection(element, section.selector);
-        if (!anchor) continue;
-        const metadataBlock = WebImporter.Blocks.createBlock(doc, {
-          name: "Section Metadata",
-          cells: { style: section.style }
-        });
-        anchor.after(metadataBlock);
-        if (marker) {
-          marker.removeAttribute(SECTION_MARKER_ATTR);
-          if (i === 0) marker.remove();
+        const marker = section.style && element.querySelector(`[${SECTION_MARKER_ATTR}="${section.id}"]`);
+        const anchor = section.style && (marker || querySection(element, section.selector));
+        if (anchor) {
+          const metadataBlock = WebImporter.Blocks.createBlock(doc, {
+            name: "Section Metadata",
+            cells: { style: section.style }
+          });
+          anchor.after(metadataBlock);
+          if (marker) {
+            marker.removeAttribute(SECTION_MARKER_ATTR);
+            if (i === 0) marker.remove();
+          }
         }
       }
     }
@@ -507,113 +509,114 @@ var CustomImportScript = (() => {
     "hero-teaser": parse4
   };
   var PAGE_TEMPLATE = {
-    "name": "home",
-    "description": "WKND homepage",
-    "urls": [
+    name: "home",
+    description: "WKND homepage",
+    urls: [
       "https://wknd.site/us/en.html"
     ],
-    "blocks": [
+    blocks: [
       {
-        "name": "carousel-hero",
-        "instances": [
+        name: "carousel-hero",
+        instances: [
           ".carousel.cmp-carousel--hero"
         ]
       },
       {
-        "name": "columns-featured",
-        "instances": [
+        name: "columns-featured",
+        instances: [
           ".teaser.cmp-teaser--featured"
         ]
       },
       {
-        "name": "cards-article",
-        "instances": [
+        name: "cards-article",
+        instances: [
           "main .image-list.list"
         ]
       },
       {
-        "name": "hero-teaser",
-        "instances": [
+        name: "hero-teaser",
+        instances: [
           ".teaser.cmp-teaser--hero.cmp-teaser--imagebottom"
         ]
       }
     ],
-    "sections": [
+    sections: [
       {
-        "id": "section-1",
-        "name": "Hero carousel",
-        "selector": [
+        id: "section-1",
+        name: "Hero carousel",
+        selector: [
           ".carousel.cmp-carousel--hero"
         ],
-        "style": null,
-        "blocks": [
+        style: null,
+        blocks: [
           "carousel-hero"
         ],
-        "defaultContent": []
+        defaultContent: []
       },
       {
-        "id": "section-2",
-        "name": "Featured article",
-        "selector": [
+        id: "section-2",
+        name: "Featured article",
+        selector: [
           ".teaser.cmp-teaser--featured"
         ],
-        "style": null,
-        "blocks": [
+        style: null,
+        blocks: [
           "columns-featured"
         ],
-        "defaultContent": []
+        defaultContent: []
       },
       {
-        "id": "section-3",
-        "name": "Recent Articles",
-        "selector": [
+        id: "section-3",
+        name: "Recent Articles",
+        selector: [
           ".teaser.cmp-teaser--featured + .title"
         ],
-        "style": "separator",
-        "blocks": [
+        style: "separator",
+        blocks: [
           "cards-article"
         ],
-        "defaultContent": [
+        defaultContent: [
           ".teaser.cmp-teaser--featured + .title",
           ".teaser.cmp-teaser--featured ~ .button.cmp-button--primary"
         ]
       },
       {
-        "id": "section-4",
-        "name": "Next Adventures",
-        "selector": [
+        id: "section-4",
+        name: "Next Adventures",
+        selector: [
           ".separator + .title.cmp-title--underline"
         ],
-        "style": null,
-        "blocks": [
+        style: null,
+        blocks: [
           "hero-teaser"
         ],
-        "defaultContent": [
+        defaultContent: [
           ".separator + .title.cmp-title--underline"
         ]
       },
       {
-        "id": "section-5",
-        "name": "Where do you want to go?",
-        "selector": [
+        id: "section-5",
+        name: "Where do you want to go?",
+        selector: [
           ".teaser.cmp-teaser--imagebottom + .cmp-layout-container--fixed"
         ],
-        "style": "separator",
-        "blocks": [
+        style: "separator",
+        blocks: [
           "cards-article"
         ],
-        "defaultContent": [
+        defaultContent: [
           ".teaser.cmp-teaser--imagebottom + .cmp-layout-container--fixed .title",
           ".teaser.cmp-teaser--imagebottom + .cmp-layout-container--fixed .button.cmp-button--primary"
         ]
       }
     ]
   };
+  var useSections = PAGE_TEMPLATE.sections && (PAGE_TEMPLATE.sections.length > 1 || PAGE_TEMPLATE.sections.some((s) => s.style));
   var transformers = [
     transform,
-    ...PAGE_TEMPLATE.sections && (PAGE_TEMPLATE.sections.length > 1 || PAGE_TEMPLATE.sections.some((s) => s.style)) ? [transform2] : []
+    ...useSections ? [transform2] : []
   ];
-  function executeTransformers(hookName, element, payload) {
+  function executeTransformers(hookName, element, payload, issues) {
     const enhancedPayload = __spreadProps(__spreadValues({}, payload), {
       template: PAGE_TEMPLATE
     });
@@ -621,7 +624,7 @@ var CustomImportScript = (() => {
       try {
         transformerFn.call(null, hookName, element, enhancedPayload);
       } catch (e) {
-        console.error(`Transformer failed at ${hookName}:`, e);
+        issues.push(`Transformer failed at ${hookName}: ${e.message}`);
       }
     });
   }
@@ -645,13 +648,13 @@ var CustomImportScript = (() => {
       body.append(tr);
     });
   }
-  function findBlocksOnPage(document2, template) {
+  function findBlocksOnPage(document2, template, issues) {
     const pageBlocks = [];
     template.blocks.forEach((blockDef) => {
       blockDef.instances.forEach((selector) => {
         const elements = document2.querySelectorAll(selector);
         if (elements.length === 0) {
-          console.warn(`Block "${blockDef.name}" selector not found: ${selector}`);
+          issues.push(`Block "${blockDef.name}" selector not found: ${selector}`);
         }
         elements.forEach((element) => {
           pageBlocks.push({
@@ -663,15 +666,15 @@ var CustomImportScript = (() => {
         });
       });
     });
-    console.log(`Found ${pageBlocks.length} block instances on page`);
     return pageBlocks;
   }
   var import_home_default = {
     transform: (payload) => {
       const { document: document2, url, params } = payload;
       const main = document2.body;
-      executeTransformers("beforeTransform", main, payload);
-      const pageBlocks = findBlocksOnPage(document2, PAGE_TEMPLATE);
+      const issues = [];
+      executeTransformers("beforeTransform", main, payload, issues);
+      const pageBlocks = findBlocksOnPage(document2, PAGE_TEMPLATE, issues);
       pageBlocks.forEach((block) => {
         if (!block.element.parentNode) return;
         const parser = parsers[block.name];
@@ -679,13 +682,13 @@ var CustomImportScript = (() => {
           try {
             parser(block.element, { document: document2, url, params });
           } catch (e) {
-            console.error(`Failed to parse ${block.name} (${block.selector}):`, e);
+            issues.push(`Failed to parse ${block.name} (${block.selector}): ${e.message}`);
           }
         } else {
-          console.warn(`No parser found for block: ${block.name}`);
+          issues.push(`No parser found for block: ${block.name}`);
         }
       });
-      executeTransformers("afterTransform", main, payload);
+      executeTransformers("afterTransform", main, payload, issues);
       const hr = document2.createElement("hr");
       main.appendChild(hr);
       WebImporter.rules.createMetadata(main, document2);
@@ -700,7 +703,8 @@ var CustomImportScript = (() => {
         report: {
           title: document2.title,
           template: PAGE_TEMPLATE.name,
-          blocks: pageBlocks.map((b) => b.name)
+          blocks: pageBlocks.map((b) => b.name),
+          issues
         }
       }];
     }

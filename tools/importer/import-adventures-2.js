@@ -80,10 +80,14 @@ const PAGE_TEMPLATE = {
   ],
 };
 
+// Section breaks/metadata are needed for several sections or a styled one
+const useSections = PAGE_TEMPLATE.sections
+  && (PAGE_TEMPLATE.sections.length > 1 || PAGE_TEMPLATE.sections.some((s) => s.style));
+
 // TRANSFORMER REGISTRY - section transformer runs after cleanup
 const transformers = [
   wkndCleanupTransformer,
-  ...(PAGE_TEMPLATE.sections && (PAGE_TEMPLATE.sections.length > 1 || PAGE_TEMPLATE.sections.some((s) => s.style)) ? [wkndSectionsTransformer] : []),
+  ...(useSections ? [wkndSectionsTransformer] : []),
 ];
 
 /**
@@ -91,8 +95,9 @@ const transformers = [
  * @param {string} hookName - 'beforeTransform' or 'afterTransform'
  * @param {Element} element - The DOM element to transform
  * @param {Object} payload - { document, url, html, params }
+ * @param {string[]} issues - collects failures for the page report
  */
-function executeTransformers(hookName, element, payload) {
+function executeTransformers(hookName, element, payload, issues) {
   const enhancedPayload = {
     ...payload,
     template: PAGE_TEMPLATE,
@@ -102,7 +107,7 @@ function executeTransformers(hookName, element, payload) {
     try {
       transformerFn.call(null, hookName, element, enhancedPayload);
     } catch (e) {
-      console.error(`Transformer failed at ${hookName}:`, e);
+      issues.push(`Transformer failed at ${hookName}: ${e.message}`);
     }
   });
 }
@@ -136,16 +141,17 @@ function addPageMetadata(main, document, originalURL) {
  * Find all blocks on the page based on the embedded template configuration
  * @param {Document} document - The DOM document
  * @param {Object} template - The embedded PAGE_TEMPLATE object
+ * @param {string[]} issues - collects unmatched selectors for the page report
  * @returns {Array} Block instances found on the page
  */
-function findBlocksOnPage(document, template) {
+function findBlocksOnPage(document, template, issues) {
   const pageBlocks = [];
 
   template.blocks.forEach((blockDef) => {
     blockDef.instances.forEach((selector) => {
       const elements = document.querySelectorAll(selector);
       if (elements.length === 0) {
-        console.warn(`Block "${blockDef.name}" selector not found: ${selector}`);
+        issues.push(`Block "${blockDef.name}" selector not found: ${selector}`);
       }
       elements.forEach((element) => {
         pageBlocks.push({
@@ -158,7 +164,6 @@ function findBlocksOnPage(document, template) {
     });
   });
 
-  console.log(`Found ${pageBlocks.length} block instances on page`);
   return pageBlocks;
 }
 
@@ -167,12 +172,13 @@ export default {
     const { document, url, params } = payload;
 
     const main = document.body;
+    const issues = [];
 
     // 1. Initial cleanup + section breaks
-    executeTransformers('beforeTransform', main, payload);
+    executeTransformers('beforeTransform', main, payload, issues);
 
     // 2. Find blocks on page
-    const pageBlocks = findBlocksOnPage(document, PAGE_TEMPLATE);
+    const pageBlocks = findBlocksOnPage(document, PAGE_TEMPLATE, issues);
 
     // 3. Parse each block, skipping elements already replaced by an earlier parser
     pageBlocks.forEach((block) => {
@@ -182,15 +188,15 @@ export default {
         try {
           parser(block.element, { document, url, params });
         } catch (e) {
-          console.error(`Failed to parse ${block.name} (${block.selector}):`, e);
+          issues.push(`Failed to parse ${block.name} (${block.selector}): ${e.message}`);
         }
       } else {
-        console.warn(`No parser found for block: ${block.name}`);
+        issues.push(`No parser found for block: ${block.name}`);
       }
     });
 
     // 4. Final cleanup + section metadata
-    executeTransformers('afterTransform', main, payload);
+    executeTransformers('afterTransform', main, payload, issues);
 
     // 5. WebImporter built-in rules
     const hr = document.createElement('hr');
@@ -213,6 +219,7 @@ export default {
         title: document.title,
         template: PAGE_TEMPLATE.name,
         blocks: pageBlocks.map((b) => b.name),
+        issues,
       },
     }];
   },
