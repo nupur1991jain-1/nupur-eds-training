@@ -1,0 +1,80 @@
+/* Structural only: grid of centered person cards (1 / 2 / 4 columns) —
+   round avatar on top, name, role line, row of social icon links. */
+
+.cards-contributor > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+}
+
+.cards-contributor .cards-contributor-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  text-align: center;
+}
+
+.cards-contributor .cards-contributor-avatar {
+  width: 164px;
+  max-width: 100%;
+  aspect-ratio: 1;
+  line-height: 0;
+}
+
+.cards-contributor .cards-contributor-avatar picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.cards-contributor .cards-contributor-avatar img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.cards-contributor .cards-contributor-body {
+  min-width: 0;
+}
+
+.cards-contributor .cards-contributor-name,
+.cards-contributor .cards-contributor-role {
+  margin: 0;
+}
+
+.cards-contributor .cards-contributor-social {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.cards-contributor .cards-contributor-social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-width: 48px;
+  min-height: 48px;
+}
+
+@media (width >= 600px) {
+  .cards-contributor > ul {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (width >= 900px) {
+  .cards-contributor > ul {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}

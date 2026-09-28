@@ -11,11 +11,16 @@
   },
   "contentPattern": "cards: each row = [linked image] | [linked title (strong/heading), description]; 4 rows",
   "options": [],
-  "memberVariantIds": ["cards-article"],
+  "memberVariantIds": [
+    "cards-article"
+  ],
   "sourceUrl": "https://wknd.site/us/en.html",
   "usage": {
-    "pagesUsing": ["https://wknd.site/us/en.html"],
-    "reuseCount": 2,
+    "pagesUsing": [
+      "https://wknd.site/us/en.html",
+      "https://wknd.site/us/en/magazine.html"
+    ],
+    "reuseCount": 3,
     "lastUsed": "2026-09-28"
   }
 }
