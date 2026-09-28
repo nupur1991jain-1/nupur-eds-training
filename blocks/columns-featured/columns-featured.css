@@ -5,8 +5,11 @@
   flex-direction: column;
 }
 
+/* Imported content is authored [text | image]; the layout shows the image first
+   (above on mobile, left on desktop) regardless of cell order. */
 .columns-featured .columns-featured-image {
   line-height: 0;
+  order: -1;
 }
 
 .columns-featured .columns-featured-image p {

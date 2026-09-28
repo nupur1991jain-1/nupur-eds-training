@@ -3,6 +3,19 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 // No authorable options yet; declared so future options branch on one list.
 const OPTION_CLASSES = [];
 
+// The imported CTA is a plain <p><a> (no strong/em), so decorateButtons() leaves it as a text
+// link. Mark a trailing link-only paragraph as the panel's CTA button.
+function decorateCta(content) {
+  const last = content.lastElementChild;
+  if (!last || last.tagName !== 'P') return;
+  const links = last.querySelectorAll('a[href]');
+  if (links.length !== 1 || last.querySelector('img, picture')) return;
+  const [a] = links;
+  if (last.textContent.trim() !== a.textContent.trim()) return;
+  last.classList.add('button-wrapper');
+  if (!a.classList.contains('button')) a.classList.add('button', 'primary');
+}
+
 export default function decorate(block) {
   // eslint-disable-next-line no-unused-vars
   const active = [...block.classList].filter((c) => OPTION_CLASSES.includes(c));
@@ -30,6 +43,7 @@ export default function decorate(block) {
         if (heading && first && first !== heading && first.tagName === 'P' && !first.querySelector('a, picture')) {
           first.classList.add('columns-featured-eyebrow');
         }
+        decorateCta(col);
       }
     });
   });
