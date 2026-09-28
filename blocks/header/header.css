@@ -103,6 +103,10 @@ header .nav-locale-toggle:focus-visible {
   outline: 1px solid var(--header-light);
 }
 
+header .nav-locale-toggle picture {
+  display: contents;
+}
+
 header .nav-locale-toggle img {
   position: absolute;
   top: -3px;
@@ -153,6 +157,13 @@ header .nav-locale-country {
 
 header .nav-locale-country:last-child {
   border-bottom: 0;
+}
+
+header .nav-locale-flag img {
+  display: block;
+  width: 23px;
+  height: 23px;
+  object-fit: contain;
 }
 
 header .nav-locale-flag {
@@ -322,6 +333,12 @@ header .nav-search {
   display: flex;
   align-items: center;
   margin: 0;
+}
+
+header .nav-search-icon img {
+  display: block;
+  width: 16px;
+  height: 16px;
 }
 
 header .nav-search-icon {
@@ -582,7 +599,7 @@ header .nav-signin-submit {
   }
 
   /* the root "Home" link is only shown in the mobile menu */
-  header .nav-sections > ul > li > a:any-link {
+  header .nav-sections .nav-root-link:any-link {
     display: none;
   }
 

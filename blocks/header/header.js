@@ -57,8 +57,10 @@ function takeSection(sections, predicate) {
  */
 function splitListItem(li) {
   const nested = li.querySelector(':scope > ul');
-  const img = li.querySelector(':scope > img, :scope > picture');
-  const label = [...li.childNodes]
+  // published fragments wrap the image + label in a <p>; local ones do not
+  const holder = li.querySelector(':scope > p') || li;
+  const img = holder.querySelector(':scope > picture, :scope > img');
+  const label = [...holder.childNodes]
     .filter((n) => n.nodeType === Node.TEXT_NODE)
     .map((n) => n.textContent.trim())
     .join(' ')
@@ -306,7 +308,7 @@ export default async function decorate(block) {
   if (!sections) return;
 
   // identify sections by content so authors can reorder them
-  const utility = takeSection(sections, (s) => s.querySelector('li > img, li > picture'));
+  const utility = takeSection(sections, (s) => s.querySelector('li img, li picture'));
   const signIn = takeSection(sections, (s) => s.querySelector('h1, h2'));
   const brand = takeSection(sections, (s) => s.querySelector('a img, a picture') && !s.querySelector('ul'));
   const links = takeSection(sections, (s) => s.querySelector('ul'));
@@ -370,6 +372,7 @@ export default async function decorate(block) {
     const list = links.querySelector('ul');
     list.querySelectorAll('a').forEach((a) => {
       const isRoot = !a.closest('li').parentElement.closest('li');
+      if (isRoot) a.classList.add('nav-root-link');
       if (isCurrent(a, isRoot)) a.setAttribute('aria-current', 'page');
     });
     navSections.append(list);
