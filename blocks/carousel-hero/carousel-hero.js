@@ -15,8 +15,17 @@ function decorateCta(content) {
   if (!a.classList.contains('button')) a.classList.add('button', 'primary');
 }
 
+// WKND sizes the carousel to the visible slide, so the controls sit right below its CTA
+// (a flex row would otherwise take the tallest slide's height).
+function fitToActiveSlide(block) {
+  const slides = block.querySelector('.carousel-hero-slides');
+  const active = slides && slides.children[parseInt(block.dataset.activeSlide || 0, 10)];
+  if (active) slides.style.height = `${active.offsetHeight}px`;
+}
+
 function updateActiveSlide(block, slideIndex) {
   block.dataset.activeSlide = slideIndex;
+  fitToActiveSlide(block);
 
   block.querySelectorAll('.carousel-hero-slide').forEach((slide, idx) => {
     const active = idx === slideIndex;
@@ -76,6 +85,10 @@ function bindEvents(block) {
     });
   }, { threshold: 0.5 });
   block.querySelectorAll('.carousel-hero-slide').forEach((slide) => observer.observe(slide));
+
+  // text rewraps (resize, font load, lazy images) change the active slide's height
+  const resizeObserver = new ResizeObserver(() => fitToActiveSlide(block));
+  block.querySelectorAll('.carousel-hero-slide').forEach((slide) => resizeObserver.observe(slide));
 }
 
 function createSlide(row, slideIndex, id) {

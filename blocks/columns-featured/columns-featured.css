@@ -2,8 +2,9 @@
    Mobile: grey text panel stacked above the image.
    Desktop: image (2/3) on the left, grey text panel (1/3) on the right. */
 
+/* space below the teaser before the next heading (collapses with its 27px top margin) */
 .columns-featured {
-  margin-bottom: 18px;
+  margin-bottom: 52px;
 }
 
 .columns-featured .columns-featured-row {
@@ -78,6 +79,10 @@ main .columns-featured a.button:any-link {
 }
 
 @media (width >= 900px) {
+  .columns-featured {
+    margin-bottom: 45px;
+  }
+
   /* image on the left regardless of authored cell order (source uses row-reverse) */
   .columns-featured .columns-featured-row {
     flex-direction: row;

@@ -11,7 +11,7 @@
 .carousel-hero {
   position: relative;
   max-width: 1680px;
-  margin: 0 auto 72px;
+  margin: 0 auto 39px;
 }
 
 .carousel-hero .carousel-hero-slides-container {
@@ -27,6 +27,7 @@
 
 .carousel-hero .carousel-hero-slides {
   display: flex;
+  align-items: flex-start;
   scroll-behavior: smooth;
   scroll-snap-type: x mandatory;
   overflow: scroll clip;
@@ -47,6 +48,7 @@
 }
 
 .carousel-hero .carousel-hero-slide-image {
+  margin-bottom: 7px;
   line-height: 0;
 }
 
@@ -183,6 +185,14 @@
 
 /* Desktop: fixed-height image, centred panel overlapping the image bottom */
 @media (width >= 1200px) {
+  .carousel-hero {
+    margin-bottom: 67px;
+  }
+
+  .carousel-hero .carousel-hero-slide-image {
+    margin-bottom: 0;
+  }
+
   .carousel-hero .carousel-hero-slide-image img {
     height: 640px;
     aspect-ratio: auto;

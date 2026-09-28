@@ -30,6 +30,9 @@
 
   /* nav height */
   --nav-height: 117px;
+
+  /* WKND offsets content 130px / 200px from the top: nav height plus this gap */
+  --header-gap: 13px;
 }
 
 /* fallback fonts */
@@ -49,6 +52,7 @@
   :root {
     /* nav height */
     --nav-height: 194px;
+    --header-gap: 6px;
   }
 }
 
@@ -68,6 +72,10 @@ body.appear {
 
 header {
   height: var(--nav-height);
+}
+
+body > main {
+  padding-top: var(--header-gap);
 }
 
 /* mobile nav drawer pushes the page right (header block toggles the class) */
@@ -151,6 +159,7 @@ main .default-content-wrapper h2::after {
   content: "";
   display: block;
   width: 84px;
+  padding-top: 8px;
   border-bottom: 2px solid var(--accent-color);
 }
 
@@ -220,6 +229,11 @@ p.button-wrapper {
   margin: 18px 0;
 }
 
+/* a button right after a block (e.g. "All Articles" under a card list) sits flush below it */
+main .section > [class$="-wrapper"]:not(.default-content-wrapper) + .default-content-wrapper > p.button-wrapper:first-child {
+  margin-top: 0;
+}
+
 a.button:any-link,
 button.button {
   box-sizing: border-box;
@@ -230,7 +244,9 @@ button.button {
   margin: 0;
   border: 0;
   border-radius: 0;
-  padding: 16px 32px;
+
+  /* WKND: 48px box with the label 16px from the top */
+  padding: 16px 32px 11px;
   font-family: var(--body-font-family);
   font-size: 14px;
   font-weight: 600;
