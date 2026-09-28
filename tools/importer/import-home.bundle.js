@@ -387,6 +387,12 @@ var CustomImportScript = (() => {
       ]);
       WebImporter.DOMUtils.remove(element, [".experiencefragment .separator:has(+ .byline)"]);
       element.querySelectorAll(".breadcrumb + main.container :is(h1, h2, h3, h4, h5, h6) :is(b, strong)").forEach((b) => b.replaceWith(...b.childNodes));
+      element.querySelectorAll(".button.cmp-button--primary > a.cmp-button").forEach((a) => {
+        if (a.closest("strong")) return;
+        const strong = element.ownerDocument.createElement("strong");
+        a.replaceWith(strong);
+        strong.append(a);
+      });
     }
     if (hookName === TransformHook.afterTransform) {
       WebImporter.DOMUtils.remove(element, [

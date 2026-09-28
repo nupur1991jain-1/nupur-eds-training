@@ -68,6 +68,16 @@ export default function transform(hookName, element, payload) {
     // between .breadcrumb and main.container, which breaks the `+` adjacency.
     element.querySelectorAll('.breadcrumb + main.container :is(h1, h2, h3, h4, h5, h6) :is(b, strong)')
       .forEach((b) => b.replaceWith(...b.childNodes));
+
+    // Primary button components in default content ("All Articles", "All Trips"):
+    // <div class="button cmp-button--primary"><a class="cmp-button"><span class="cmp-button__text">
+    // Bold the link so EDS decorateButtons() renders it as a primary button (yellow on WKND).
+    element.querySelectorAll('.button.cmp-button--primary > a.cmp-button').forEach((a) => {
+      if (a.closest('strong')) return;
+      const strong = element.ownerDocument.createElement('strong');
+      a.replaceWith(strong);
+      strong.append(a);
+    });
   }
 
   if (hookName === TransformHook.afterTransform) {

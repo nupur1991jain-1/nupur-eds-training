@@ -5,6 +5,7 @@ header .header {
   --header-dark: #202020;
   --header-light: #ebebeb;
   --header-accent: #ffea00;
+  --header-drawer-width: 275px;
 }
 
 header .nav-wrapper {
@@ -14,6 +15,12 @@ header .nav-wrapper {
   z-index: 10;
   width: 100%;
   font-family: var(--header-font-family);
+  transition: transform 0.5s;
+}
+
+/* mobile drawer open: the whole header slides right with the page */
+header .nav-wrapper.drawer-open {
+  transform: translateX(var(--header-drawer-width));
 }
 
 header nav {
@@ -43,20 +50,19 @@ header .nav-utility {
 
 header .nav-utility-inner {
   display: flex;
-  align-items: center;
-  justify-content: flex-end;
+  align-items: flex-start;
+  justify-content: space-between;
   box-sizing: border-box;
   max-width: 1192px;
   height: 25px;
   margin: 0 auto;
-  padding: 0 14px;
+  padding: 1px 14px 0;
   font-size: 14px;
   line-height: 18px;
   text-transform: uppercase;
 }
 
 header .nav-signin:any-link {
-  margin-right: 14px;
   color: var(--header-light);
 }
 
@@ -73,14 +79,24 @@ header .nav-locale {
 header .nav-locale-toggle {
   all: unset;
   position: relative;
-  display: inline;
+  display: inline-block;
   box-sizing: border-box;
-  margin-left: 14px;
+  min-width: 56px;
+  height: 18px;
   padding: 0 14px 0 35px;
   color: var(--header-light);
   font: inherit;
   text-transform: uppercase;
   cursor: pointer;
+}
+
+/* only the flag + chevron show on small screens */
+header .nav-locale-toggle span {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
 }
 
 header .nav-locale-toggle:focus-visible {
@@ -176,7 +192,7 @@ header .nav-locale-langs a:hover {
   text-decoration: underline;
 }
 
-/* main row */
+/* main row: hamburger, logo, search */
 header .nav-main {
   background-color: #fff;
   transition: box-shadow 0.2s ease;
@@ -184,12 +200,12 @@ header .nav-main {
 
 header .nav-main-inner {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
+  align-items: flex-start;
   box-sizing: border-box;
   max-width: 1192px;
+  min-height: 92px;
   margin: 0 auto;
-  padding: 8px 14px;
+  padding: 15px 14px;
 }
 
 header .nav-wrapper.scrolled .nav-main {
@@ -197,7 +213,9 @@ header .nav-wrapper.scrolled .nav-main {
 }
 
 header .nav-brand {
-  flex: 1 1 auto;
+  flex: 0 0 auto;
+  order: 1;
+  padding-top: 12px;
 }
 
 header .nav-brand p {
@@ -206,98 +224,104 @@ header .nav-brand p {
 
 header .nav-brand img {
   display: block;
-  width: 128px;
-  height: 48px;
+  width: 96px;
+  height: 36px;
   object-fit: contain;
   object-position: left center;
 }
 
-/* hamburger */
+/* hamburger: three bars of decreasing width */
 header .nav-hamburger {
   all: unset;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+  flex: 0 0 40px;
+  order: 0;
+  width: 40px;
   height: 44px;
+  margin: 0 10px 0 -4px;
   cursor: pointer;
+}
+
+header .nav-hamburger:focus-visible {
+  outline: 1px solid var(--header-dark);
 }
 
 header .nav-hamburger-icon,
 header .nav-hamburger-icon::before,
 header .nav-hamburger-icon::after {
-  position: relative;
   display: block;
-  width: 24px;
   height: 2px;
   background-color: var(--header-dark);
-  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+header .nav-hamburger-icon {
+  position: absolute;
+  top: 12px;
+  left: 8px;
+  width: 30px;
 }
 
 header .nav-hamburger-icon::before,
 header .nav-hamburger-icon::after {
   content: "";
   position: absolute;
+  left: 0;
 }
 
 header .nav-hamburger-icon::before {
-  top: -8px;
+  top: 7px;
+  width: 23px;
 }
 
 header .nav-hamburger-icon::after {
-  top: 8px;
+  top: 15px;
+  width: 17px;
 }
 
-header nav[aria-expanded="true"] .nav-hamburger-icon {
-  background-color: transparent;
-}
-
-header nav[aria-expanded="true"] .nav-hamburger-icon::before {
-  transform: translateY(8px) rotate(45deg);
-}
-
-header nav[aria-expanded="true"] .nav-hamburger-icon::after {
-  transform: translateY(-8px) rotate(-45deg);
-}
-
-/* sections */
+/* sections: off-canvas drawer on small screens */
 header .nav-sections {
-  display: none;
-  flex: 1 0 100%;
+  position: absolute;
+  top: 0;
+  left: calc(var(--header-drawer-width) * -1);
+  box-sizing: border-box;
+  width: var(--header-drawer-width);
+  height: 100vh;
+  padding-top: 15px;
+  overflow-y: auto;
+  background-color: var(--header-dark);
+  box-shadow: inset -3px 0 5px 0 rgb(0 0 0 / 35%);
+  visibility: hidden;
+  transition: visibility 0.5s;
 }
 
-header nav[aria-expanded="true"] .nav-sections {
-  display: block;
+header .nav-wrapper.drawer-open .nav-sections {
+  visibility: visible;
 }
 
 header .nav-sections a:any-link {
   display: block;
-  padding: 15px 17px;
-  color: var(--header-dark);
+  padding: 0 14px;
+  border-top: 1px solid rgb(255 255 255 / 8%);
+  color: var(--header-light);
   font-size: 14px;
-  line-height: 18px;
+  line-height: 44px;
   text-transform: uppercase;
-}
-
-header .nav-sections a:hover,
-header .nav-sections a[aria-current="page"] {
-  background-color: var(--header-accent);
 }
 
 /* tools: search */
 header .nav-tools {
-  display: none;
-  flex: 1 0 100%;
-}
-
-header nav[aria-expanded="true"] .nav-tools {
-  display: block;
+  flex: 0 0 160px;
+  order: 2;
+  margin: 10px 0 0 auto;
 }
 
 header .nav-search {
   position: relative;
   display: flex;
   align-items: center;
+  margin: 0;
 }
 
 header .nav-search-icon {
@@ -335,9 +359,10 @@ header .nav-search input:focus {
 header .nav-search-results {
   position: absolute;
   top: 100%;
-  left: 0;
+  right: 0;
   z-index: 11;
   width: 100%;
+  min-width: 240px;
   background-color: #fff;
   box-shadow: 0 8px 20px 0 rgb(0 0 0 / 26%);
 }
@@ -451,15 +476,40 @@ header .nav-signin-submit {
 }
 
 @media (width >= 900px) {
+  header .nav-wrapper,
+  header .nav-wrapper.drawer-open {
+    transform: none;
+    transition: none;
+  }
+
   header .nav-utility-inner {
-    align-items: flex-start;
+    justify-content: flex-end;
     max-width: 1164px;
     padding: 1px 0 0;
+  }
+
+  header .nav-signin:any-link {
+    margin-right: 14px;
   }
 
   header .nav-locale {
     box-sizing: border-box;
     width: 194px;
+  }
+
+  header .nav-locale-toggle {
+    display: inline;
+    min-width: 0;
+    height: auto;
+    margin-left: 14px;
+  }
+
+  header .nav-locale-toggle span {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip-path: none;
   }
 
   header .nav-locale-panel {
@@ -470,9 +520,8 @@ header .nav-signin-submit {
   }
 
   header .nav-main-inner {
-    flex-wrap: nowrap;
-    align-items: flex-start;
     max-width: 1164px;
+    min-height: 0;
     padding: 50px 0;
     transition: padding 0.2s ease;
   }
@@ -483,9 +532,15 @@ header .nav-signin-submit {
 
   header .nav-brand {
     flex: 0 0 194px;
+    order: 0;
     box-sizing: border-box;
     height: 69px;
     padding: 7px 14px 0;
+  }
+
+  header .nav-brand img {
+    width: 128px;
+    height: 48px;
   }
 
   header .nav-hamburger {
@@ -493,11 +548,20 @@ header .nav-signin-submit {
   }
 
   header .nav-sections,
-  header nav[aria-expanded="true"] .nav-sections {
+  header .nav-wrapper.drawer-open .nav-sections {
+    position: static;
     display: flex;
     flex: 1 1 auto;
+    order: 1;
     justify-content: flex-end;
-    padding-right: 14px;
+    width: auto;
+    height: auto;
+    padding: 0 14px 0 0;
+    overflow: visible;
+    background-color: transparent;
+    box-shadow: none;
+    visibility: visible;
+    transition: none;
   }
 
   header .nav-sections ul ul {
@@ -507,6 +571,14 @@ header .nav-signin-submit {
 
   header .nav-sections a:any-link {
     padding: 15px 17px;
+    border-top: 0;
+    color: var(--header-dark);
+    line-height: 18px;
+  }
+
+  header .nav-sections a:hover,
+  header .nav-sections a[aria-current="page"] {
+    background-color: var(--header-accent);
   }
 
   /* the root "Home" link is only shown in the mobile menu */
@@ -514,11 +586,11 @@ header .nav-signin-submit {
     display: none;
   }
 
-  header .nav-tools,
-  header nav[aria-expanded="true"] .nav-tools {
-    display: block;
+  header .nav-tools {
     flex: 0 0 194px;
+    order: 2;
     box-sizing: border-box;
+    margin: 0;
     padding: 0 14px;
   }
 

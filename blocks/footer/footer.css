@@ -1,20 +1,229 @@
+/* footer (mobile first) */
 footer {
-  background-color: var(--light-color);
-  font-size: var(--body-font-size-xs);
-}
-
-footer .footer > div {
-  margin: auto;
-  max-width: 1200px;
-  padding: 40px 24px 24px;
+  margin-top: 48px;
+  padding: 16px 0 24px;
+  background-color: #202020;
+  color: #f7f7f7;
+  font-family: "Source Sans Pro", "Helvetica Neue", helvetica, arial, sans-serif;
 }
 
 footer .footer p {
   margin: 0;
 }
 
+footer .footer ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+footer .footer-inner {
+  box-sizing: border-box;
+  max-width: 1164px;
+  margin: 0 auto;
+  padding: 0 14px;
+}
+
+footer .footer-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+/* brand */
+footer .footer-brand {
+  flex: 0 0 116px;
+  box-sizing: border-box;
+  padding: 7px 14px 0;
+}
+
+footer .footer-brand p {
+  display: flex;
+}
+
+footer .footer-brand a:hover {
+  text-decoration: none;
+}
+
+footer .footer-brand img {
+  display: block;
+  width: 88px;
+  height: 33px;
+  object-fit: contain;
+  object-position: left center;
+}
+
+/* nav */
+footer .footer-nav {
+  flex: 1 1 0;
+  box-sizing: border-box;
+  padding: 1px 14px 0;
+}
+
+/* stacked links on small screens (48px targets overlapping by 5px) */
+footer .footer-nav ul ul li {
+  margin-bottom: -5px;
+}
+
+footer .footer-nav a:any-link {
+  display: inline-block;
+  padding: 13.5px 17px;
+  color: #ebebeb;
+  font-size: 14px;
+  line-height: 21px;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+/* the root "Home" link mirrors the source markup but is not displayed */
+footer .footer .footer-nav-root:any-link {
+  display: none;
+}
+
+footer .footer-nav a:hover,
+footer .footer-nav a[aria-current="page"] {
+  color: #ebebeb;
+  text-decoration: underline;
+}
+
+footer .footer-nav a[aria-current="page"] {
+  color: #f7f7f7;
+}
+
+/* follow us + social buttons */
+footer .footer-social {
+  display: flex;
+  flex: 1 0 100%;
+  flex-direction: column;
+  align-items: flex-start;
+  box-sizing: border-box;
+  padding: 0 14px;
+}
+
+footer .footer-social h4 {
+  margin: 30px 0 22px;
+  color: #ebebeb;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  text-transform: uppercase;
+}
+
+footer .footer-social-links {
+  display: flex;
+}
+
+footer .footer-social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background-color: #ebebeb;
+  color: #202020;
+}
+
+/* glyphs from the WKND icon font (see styles/fonts.css) */
+footer .footer-social-link::before {
+  font-family: wknd-icon-font, sans-serif;
+  font-size: 17.5px;
+  line-height: 1;
+  speak: never;
+}
+
+footer .footer-social-facebook::before {
+  content: "\e902";
+}
+
+footer .footer-social-twitter::before {
+  content: "\e901";
+}
+
+footer .footer-social-instagram::before {
+  content: "\e903";
+}
+
+footer .footer-social-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+
+footer .footer-social-link:hover {
+  text-decoration: none;
+}
+
+footer .footer-social-links img {
+  display: block;
+  width: 48px;
+  height: 48px;
+}
+
+/* legal copy (the source's separator is a hidden spacer) */
+footer .footer-legal {
+  margin: 36px 14px 0;
+  font-size: 12px;
+  line-height: 15px;
+  text-align: justify;
+}
+
+footer .footer-legal + .footer-legal {
+  margin-top: 0;
+}
+
+footer .footer .footer-legal p {
+  margin-bottom: 14px;
+}
+
+footer .footer-legal a:any-link {
+  color: #f7f7f7;
+  text-decoration: underline;
+}
+
 @media (width >= 900px) {
-  footer .footer > div {
-    padding: 40px 32px 24px;
+  footer .footer-inner {
+    padding: 0;
+  }
+
+  footer .footer-top {
+    flex-wrap: nowrap;
+    height: 68px;
+  }
+
+  footer .footer-brand {
+    flex: 0 0 194px;
+    padding-top: 7px;
+  }
+
+  footer .footer-brand img {
+    width: 128px;
+    height: 48px;
+  }
+
+  footer .footer-nav {
+    flex: 1 1 auto;
+    padding: 6px 14px 0;
+  }
+
+  footer .footer-nav ul ul {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  footer .footer-nav ul ul li {
+    margin-bottom: 0;
+  }
+
+  footer .footer-social {
+    flex: 0 0 auto;
+    flex-direction: row;
+    padding: 0 50px 0 0;
+  }
+
+  footer .footer-social h4 {
+    margin: 21px 14px 0 0;
   }
 }

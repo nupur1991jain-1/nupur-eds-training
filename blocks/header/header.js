@@ -312,6 +312,8 @@ export default async function decorate(block) {
   const links = takeSection(sections, (s) => s.querySelector('ul'));
   const search = takeSection(sections, (s) => s.textContent.trim());
 
+  const navWrapper = document.createElement('div');
+  navWrapper.className = 'nav-wrapper';
   const nav = document.createElement('nav');
   nav.id = 'nav';
   nav.setAttribute('aria-label', 'Main');
@@ -380,13 +382,30 @@ export default async function decorate(block) {
   hamburger.setAttribute('aria-label', 'Open navigation');
   hamburger.innerHTML = '<span class="nav-hamburger-icon"></span>';
 
+  // mobile: off-canvas drawer that pushes the page right (see header.css / styles.css)
   const toggleMenu = (force) => {
     const open = force !== undefined ? force : nav.getAttribute('aria-expanded') !== 'true';
     nav.setAttribute('aria-expanded', open ? 'true' : 'false');
+    hamburger.setAttribute('aria-expanded', open ? 'true' : 'false');
     hamburger.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
-    document.body.style.overflowY = open && !isDesktop.matches ? 'hidden' : '';
+    navWrapper.classList.toggle('drawer-open', open && !isDesktop.matches);
+    document.body.classList.toggle('nav-drawer-open', open && !isDesktop.matches);
   };
-  hamburger.addEventListener('click', () => toggleMenu());
+  hamburger.setAttribute('aria-expanded', 'false');
+  hamburger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleMenu();
+  });
+  // tapping anywhere outside the drawer closes it
+  document.addEventListener('click', (e) => {
+    if (nav.getAttribute('aria-expanded') === 'true' && !navSections.contains(e.target)) toggleMenu(false);
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.code === 'Escape' && nav.getAttribute('aria-expanded') === 'true') {
+      toggleMenu(false);
+      hamburger.focus();
+    }
+  });
 
   const tools = document.createElement('div');
   tools.className = 'nav-tools';
@@ -396,8 +415,6 @@ export default async function decorate(block) {
   mainRow.append(mainInner);
 
   nav.append(utilityBar, mainRow);
-  const navWrapper = document.createElement('div');
-  navWrapper.className = 'nav-wrapper';
   navWrapper.append(nav);
   block.append(navWrapper);
   if (dialog) block.append(dialog);
