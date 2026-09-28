@@ -6,6 +6,9 @@ import breadcrumbParser from './parsers/breadcrumb.js';
 import columnsAuthorParser from './parsers/columns-author.js';
 import cardsUpnextParser from './parsers/cards-upnext.js';
 
+// PAGE DATA (metadata WKND shows outside the page, e.g. categories, dates)
+import pageData from './data/wknd-page-data.js';
+
 // TRANSFORMER IMPORTS
 import wkndCleanupTransformer from './transformers/wknd-cleanup.js';
 import wkndSectionsTransformer from './transformers/wknd-sections.js';
@@ -121,6 +124,31 @@ function executeTransformers(hookName, element, payload) {
 }
 
 /**
+ * Adds per-page metadata rows (from data/wknd-page-data.js) to the page's Metadata block
+ * @param {Element} main
+ * @param {Document} document
+ * @param {string} originalURL source page URL
+ */
+function addPageMetadata(main, document, originalURL) {
+  const pagePath = new URL(originalURL).pathname.replace(/\.html?$/, '');
+  const entries = Object.entries(pageData[pagePath] || {}).filter(([, v]) => v);
+  if (!entries.length) return;
+  const table = [...main.querySelectorAll('table')]
+    .find((t) => (t.querySelector('tr')?.textContent || '').trim().toLowerCase() === 'metadata');
+  if (!table) return;
+  const body = table.tBodies[0] || table;
+  entries.forEach(([key, value]) => {
+    const tr = document.createElement('tr');
+    [key, value].forEach((text) => {
+      const td = document.createElement('td');
+      td.textContent = text;
+      tr.append(td);
+    });
+    body.append(tr);
+  });
+}
+
+/**
  * Find all blocks on the page based on the embedded template configuration
  * @param {Document} document - The DOM document
  * @param {Object} template - The embedded PAGE_TEMPLATE object
@@ -184,6 +212,7 @@ export default {
     const hr = document.createElement('hr');
     main.appendChild(hr);
     WebImporter.rules.createMetadata(main, document);
+    addPageMetadata(main, document, params.originalURL);
     WebImporter.rules.transformBackgroundImages(main, document);
     WebImporter.rules.adjustImageUrls(main, url, params.originalURL);
 
