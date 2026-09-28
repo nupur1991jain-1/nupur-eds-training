@@ -83,7 +83,7 @@ const PAGE_TEMPLATE = {
       "selector": [
         ".teaser.cmp-teaser--featured + .title"
       ],
-      "style": null,
+      "style": "separator",
       "blocks": [
         "cards-article"
       ],
@@ -112,7 +112,7 @@ const PAGE_TEMPLATE = {
       "selector": [
         ".teaser.cmp-teaser--imagebottom + .cmp-layout-container--fixed"
       ],
-      "style": null,
+      "style": "separator",
       "blocks": [
         "cards-article"
       ],

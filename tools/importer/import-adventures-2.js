@@ -67,7 +67,7 @@ const PAGE_TEMPLATE = {
       "selector": [
         ".teaser.cmp-teaser--hero ~ main.cmp-layout-container--fixed"
       ],
-      "style": null,
+      "style": "separator",
       "blocks": [
         "cards-filter"
       ],

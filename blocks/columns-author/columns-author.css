@@ -1,23 +1,36 @@
-/* Structural only: avatar + name/role on the left, row of social icon links on the right. */
+/* Author byline: divider, avatar + name/occupation, row of icon-only social buttons.
+   Values from wknd.site .cmp-separator / .cmp-byline / .cmp-button--icononly. */
 
 .columns-author {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  margin-top: 64px;
+  padding-top: 64px;
+  border-top: 2px solid var(--light-color);
+  font-family: var(--body-font-family);
+  color: var(--text-color);
 }
 
+/* profile: 60px round avatar, text column offset 85px from the left edge */
 .columns-author .columns-author-profile {
   display: flex;
-  align-items: center;
-  gap: 16px;
+  align-items: flex-start;
+  gap: 25px;
   min-width: 0;
 }
 
 .columns-author .columns-author-avatar {
   flex: 0 0 auto;
-  width: 64px;
-  height: 64px;
+  width: 60px;
+  height: 60px;
+  margin: 7px 0;
   line-height: 0;
+}
+
+.columns-author .columns-author-avatar picture {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .columns-author .columns-author-avatar img {
@@ -25,44 +38,141 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 50%;
+  border-radius: 30px;
 }
 
 .columns-author .columns-author-info {
+  flex: 1 1 auto;
   min-width: 0;
 }
 
-.columns-author .columns-author-name,
-.columns-author .columns-author-role {
-  margin: 0;
+.columns-author .columns-author-name {
+  margin: 0 0 4px;
+  padding: 8px 0 0;
+  font-family: var(--heading-font-family);
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 36px;
+  color: var(--text-color);
 }
 
+.columns-author .columns-author-role {
+  margin: 0 0 13.5px;
+  font-family: var(--body-font-family);
+  font-size: 12px;
+  line-height: 30px;
+  color: #696969;
+  text-transform: uppercase;
+}
+
+/* social: adjacent 48px dark squares with wknd-icon-font glyphs */
 .columns-author .columns-author-social {
-  list-style: none;
-  margin: 0;
-  padding: 0;
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  align-self: flex-start;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.columns-author .columns-author-social a {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  min-width: 40px;
-  min-height: 40px;
+.columns-author .columns-author-social li {
+  margin: 0;
+  padding: 0;
 }
 
-@media (width >= 600px) {
+.columns-author .columns-author-social a:any-link {
+  display: block;
+  box-sizing: border-box;
+  width: 48px;
+  min-width: 48px;
+  height: 48px;
+  padding: 18px 0 0 14px;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background-color: var(--dark-color);
+  color: var(--light-color);
+  font-family: wknd-icon-font, sans-serif;
+  font-size: 17.5px;
+  font-weight: 400;
+  line-height: 17.5px;
+  text-decoration: none;
+  text-transform: none;
+  overflow: hidden;
+}
+
+.columns-author .columns-author-social a:hover,
+.columns-author .columns-author-social a:focus-visible {
+  background-color: var(--dark-color);
+  color: var(--light-color);
+  text-decoration: none;
+}
+
+.columns-author .columns-author-social a:focus-visible {
+  outline: 2px solid var(--link-color);
+  outline-offset: 2px;
+}
+
+.columns-author .columns-author-social a::before {
+  display: block;
+  font-family: wknd-icon-font, sans-serif;
+  speak: never;
+}
+
+.columns-author .columns-author-social-facebook a::before {
+  content: "\e902";
+}
+
+.columns-author .columns-author-social-twitter a::before,
+.columns-author .columns-author-social-x a::before {
+  content: "\e901";
+}
+
+.columns-author .columns-author-social-instagram a::before {
+  content: "\e903";
+}
+
+/* the text label stays for assistive tech (link also carries aria-label) */
+.columns-author .columns-author-social-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* networks without a glyph fall back to the visible label */
+.columns-author .columns-author-social li:not([class]) a:any-link {
+  width: auto;
+  padding: 18px 14px 0;
+  font-family: var(--body-font-family);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 14px;
+  text-transform: uppercase;
+}
+
+.columns-author .columns-author-social li:not([class]) .columns-author-social-label {
+  position: static;
+  width: auto;
+  height: auto;
+  margin: 0;
+  clip-path: none;
+}
+
+/* source aem grid: byline 9/12, social buttons 3/12 side by side at desktop only */
+@media (width >= 1200px) {
   .columns-author {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: calc(75% + 7px) 1fr;
+    align-items: start;
   }
 
-  .columns-author .columns-author-social {
-    flex: 0 0 auto;
+  .columns-author .columns-author-profile {
+    padding-right: 14px;
   }
 }

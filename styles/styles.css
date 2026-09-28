@@ -113,12 +113,32 @@ h6 {
   scroll-margin: calc(var(--nav-height) + 20px);
 }
 
+h4,
+h5,
+h6 {
+  font-family: var(--body-font-family);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
 h1 { font-size: var(--heading-font-size-xxl); }
 h2 { font-size: var(--heading-font-size-xl); }
 h3 { font-size: var(--heading-font-size-l); }
-h4 { font-size: var(--heading-font-size-m); }
-h5 { font-size: var(--heading-font-size-s); }
-h6 { font-size: var(--heading-font-size-xs); }
+
+h4 {
+  margin: 1.33em 0;
+  font-size: var(--heading-font-size-m);
+}
+
+h5 {
+  margin: 1.67em 0;
+  font-size: var(--heading-font-size-s);
+}
+
+h6 {
+  margin: 2.33em 0;
+  font-size: var(--heading-font-size-xs);
+}
 
 p,
 dl,
@@ -337,7 +357,7 @@ main img {
 
 /* sections */
 main > .section {
-  margin: 40px 0;
+  margin: 0;
 }
 
 main > .section > div {
@@ -369,21 +389,20 @@ main .section.background-grey {
 @media (width >= 900px) {
   main > .section.sidebar {
     display: grid;
-    grid-template-columns: 1fr 3fr;
+    grid-template-columns: 3fr 9fr;
     grid-auto-rows: min-content;
-    column-gap: 32px;
     box-sizing: border-box;
     max-width: var(--content-max-width);
     margin-left: auto;
     margin-right: auto;
-    padding: 0 var(--content-gutter);
+    padding: 0;
   }
 
   main > .section.sidebar > div {
     grid-column: 1;
     width: 100%;
     max-width: none;
-    padding: 0;
+    padding: 0 var(--content-gutter);
   }
 
   main > .section.sidebar > div:last-child {
@@ -396,21 +415,21 @@ main .section.background-grey {
 @media (width >= 900px) {
   main > .section.article-sidebar {
     display: grid;
-    grid-template-columns: 3fr 1fr;
+    grid-template-columns: calc(100% * 8 / 12) calc(100% * 3 / 12);
     grid-template-rows: min-content min-content 1fr;
-    column-gap: 48px;
+    justify-content: space-between;
     box-sizing: border-box;
     max-width: var(--content-max-width);
     margin-left: auto;
     margin-right: auto;
-    padding: 0 var(--content-gutter);
+    padding: 0;
   }
 
   main > .section.article-sidebar > div {
     grid-column: 1;
     width: 100%;
     max-width: none;
-    padding: 0;
+    padding: 0 var(--content-gutter);
   }
 
   main > .section.article-sidebar > div:first-child {
@@ -431,4 +450,29 @@ main .section.background-grey {
   main > .section.article-sidebar > div:last-child:nth-child(3) {
     grid-row: 1;
   }
+}
+
+/* separator: WKND horizontal rule closing a section (130px band, 74px when medium) */
+main > .section.separator::after,
+main > .section.separator-medium::after {
+  content: "";
+  display: block;
+  box-sizing: border-box;
+  max-width: calc(var(--content-max-width) - (2 * var(--content-gutter)));
+  margin: 64.5px auto 0;
+  padding-bottom: 64.5px;
+  border-top: 1px solid var(--light-color);
+}
+
+main > .section.separator-medium::after {
+  margin-top: 36.5px;
+  padding-bottom: 36.5px;
+}
+
+/* title-underline: page titles that carry the yellow bar on WKND (adventures, FAQs) */
+main > .section.title-underline h1::after {
+  content: "";
+  display: block;
+  width: 84px;
+  border-bottom: 2px solid var(--accent-color);
 }

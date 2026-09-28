@@ -618,7 +618,7 @@ var CustomImportScript = (() => {
         "selector": [
           ".aem-Grid > .image-list ~ .title.cmp-title--underline"
         ],
-        "style": null,
+        "style": "separator-medium",
         "blocks": [],
         "defaultContent": [
           ".aem-Grid > .image-list ~ .title.cmp-title--underline",

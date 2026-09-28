@@ -259,7 +259,7 @@ var CustomImportScript = (() => {
         "selector": [
           "main .aem-Grid > .container.aem-GridColumn--default--8"
         ],
-        "style": "article-sidebar",
+        "style": "article-sidebar, title-underline",
         "blocks": [
           "accordion-faq"
         ],

@@ -1,5 +1,7 @@
-/* Structural only: full-bleed slides, content panel overlapping the bottom-left of the image,
-   dot indicators centred below, prev/next arrows at the bottom-right. Brand styling is applied later. */
+/* carousel-hero: WKND homepage hero slider (values extracted from wknd.site .cmp-carousel--hero).
+   Mobile/tablet: 16:9 image with the white content panel stacked below.
+   Desktop (>= 1200px): 640px-tall image, 1192px content panel overlapping it by 180px.
+   Controls: dot indicators (centred from 900px) and icon-font arrows at the right. */
 
 .carousel-hero-container .carousel-hero-wrapper {
   max-width: unset;
@@ -8,6 +10,8 @@
 
 .carousel-hero {
   position: relative;
+  max-width: 1680px;
+  margin: 0 auto 72px;
 }
 
 .carousel-hero .carousel-hero-slides-container {
@@ -53,120 +57,142 @@
 .carousel-hero .carousel-hero-slide-image img {
   display: block;
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 16 / 9;
   object-fit: cover;
 }
 
-/* Mobile: content stacks below the image */
+/* content panel */
 .carousel-hero .carousel-hero-slide-content {
   position: relative;
+  box-sizing: border-box;
   background-color: var(--background-color);
-  padding: 16px;
+  padding: 0 var(--content-gutter);
+  color: var(--text-color);
+  font-size: 18px;
+  line-height: 27px;
 }
 
+.carousel-hero .carousel-hero-slide-content h2 {
+  margin: 18px 0 0;
+  font-size: 36px;
+  line-height: 54px;
+  color: var(--text-color);
+}
+
+.carousel-hero .carousel-hero-slide-content p {
+  margin: 0;
+  line-height: 31.5px;
+}
+
+.carousel-hero .carousel-hero-slide-content p.button-wrapper {
+  margin: 18px 0;
+  line-height: 27px;
+}
+
+.carousel-hero .carousel-hero-slide-content a.button:any-link {
+  padding: 14px 35px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 21px;
+}
+
+/* controls: indicators (left on mobile) + arrows (right) */
 .carousel-hero .carousel-hero-controls {
-  position: relative;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 44px;
-  padding: 8px 0;
+  align-items: flex-start;
+}
+
+.carousel-hero .carousel-hero-controls nav {
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 .carousel-hero .carousel-hero-indicators {
   display: flex;
-  gap: 8px;
+  justify-content: flex-start;
+  margin-top: 9px;
+  padding: 14px 0 0 14px;
   line-height: 0;
 }
 
+.carousel-hero .carousel-hero-indicator {
+  margin: 0 7px;
+}
+
 .carousel-hero .carousel-hero-indicator button {
+  display: block;
   width: 10px;
   height: 10px;
   margin: 0;
   padding: 0;
   border: 0;
   border-radius: 50%;
-  background-color: currentcolor;
-  opacity: 0.3;
+  background-color: rgb(175 175 175);
   cursor: pointer;
 }
 
 .carousel-hero .carousel-hero-indicator button:disabled,
 .carousel-hero .carousel-hero-indicator button:hover,
 .carousel-hero .carousel-hero-indicator button:focus-visible {
-  opacity: 1;
+  background-color: rgb(0 0 0 / 80%);
 }
 
 .carousel-hero .carousel-hero-navigation {
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
   display: flex;
-  gap: 8px;
+  flex: 0 0 auto;
+  gap: 4px;
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
 .carousel-hero .carousel-hero-navigation button {
-  position: relative;
-  width: 44px;
-  height: 44px;
-  margin: 0;
-  padding: 0;
+  box-sizing: border-box;
+  width: 26px;
+  height: 24px;
+  margin: 0 13.3333px 0 0;
+  padding: 1px 0 1px 6px;
   border: 0;
   background: transparent;
-  color: inherit;
+  color: rgb(0 0 0);
+  text-align: center;
   cursor: pointer;
 }
 
 .carousel-hero .carousel-hero-navigation button::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 10px;
-  height: 10px;
-  border: 2px solid currentcolor;
-  border-bottom: 0;
-  border-left: 0;
-  transform: translate(-25%, -50%) rotate(-135deg);
+  display: inline-block;
+  font-family: wknd-icon-font, sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 20px;
+  vertical-align: top;
+}
+
+.carousel-hero .carousel-hero-navigation .carousel-hero-prev::after {
+  content: '\e90f';
 }
 
 .carousel-hero .carousel-hero-navigation .carousel-hero-next::after {
-  transform: translate(-75%, -50%) rotate(45deg);
+  content: '\e90e';
 }
 
-@media (width >= 600px) {
-  .carousel-hero .carousel-hero-slide-image img {
-    aspect-ratio: 16 / 7;
+@media (width >= 900px) {
+  .carousel-hero .carousel-hero-indicators {
+    justify-content: center;
+    padding: 0;
   }
 }
 
-/* Desktop: panel overlays the bottom-left of the image, stopping short of the right edge */
-@media (width >= 900px) {
-  .carousel-hero .carousel-hero-slide {
-    padding-bottom: 0;
+/* Desktop: fixed-height image, centred panel overlapping the image bottom */
+@media (width >= 1200px) {
+  .carousel-hero .carousel-hero-slide-image img {
+    height: 640px;
+    aspect-ratio: auto;
   }
 
   .carousel-hero .carousel-hero-slide-content {
-    position: absolute;
-    left: 24px;
-    right: 24px;
-    bottom: 0;
-    padding: 16px 16px 24px;
-  }
-
-  .carousel-hero .carousel-hero-controls {
-    padding: 16px 24px;
-  }
-
-  .carousel-hero .carousel-hero-navigation {
-    right: 24px;
-  }
-}
-
-@media (width >= 1200px) {
-  .carousel-hero .carousel-hero-slide-image img {
-    aspect-ratio: 1280 / 640;
+    align-self: center;
+    width: 1192px;
+    max-width: 100%;
+    margin-top: -180px;
+    padding: 0 28px;
   }
 }

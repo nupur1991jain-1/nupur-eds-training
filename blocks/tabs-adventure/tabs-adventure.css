@@ -1,63 +1,104 @@
-/* Structural only: horizontal row of tab buttons above a single visible panel containing
-   headings, full-width images, paragraphs and lists. Active-tab styling uses currentcolor
-   inversion as a neutral placeholder; brand styling is applied later by the design pass. */
+/* tabs-adventure: WKND adventure detail tabs (source: .cmp-tabs on wknd.site).
+   Values below are the source computed styles (identical at 375px and 1440px). */
 
-/* Tabs wrap onto a second line on narrow screens instead of scrolling behind a hidden
-   scrollbar (the 3 real labels overflow a 375px viewport and the last tab was cut off). */
+/* tab list: flush row of square tabs, wraps on narrow screens */
 .tabs-adventure .tabs-adventure-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px;
-  margin-bottom: 24px;
+  margin: 18px 0;
+  padding: 0;
 }
 
 .tabs-adventure .tabs-adventure-tab {
   flex: 0 0 auto;
   max-width: 100%;
   margin: 0;
-  padding: 8px 12px;
+  padding: 8px 16px;
   border: 0;
+  border-bottom: 1px solid transparent;
   border-radius: 0;
-  background: transparent;
-  color: inherit;
-  font: inherit;
+  background-color: transparent;
+  color: var(--text-color);
+  font-family: var(--body-font-family);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 21px;
+  text-align: left;
+  text-transform: uppercase;
   white-space: nowrap;
   cursor: pointer;
 }
 
-/* Active tab: filled pill, inverted from the inherited text/background tokens */
+/* source has no hover change on inactive tabs */
+.tabs-adventure .tabs-adventure-tab:hover {
+  background-color: transparent;
+  color: var(--text-color);
+}
+
 .tabs-adventure .tabs-adventure-tab[aria-selected='true'] {
-  color: var(--background-color, #fff);
-  background-color: var(--text-color, #000);
+  background-color: var(--dark-color);
+  color: var(--background-color);
+}
+
+/* panel: own block formatting context so child margins stay inside (as on the source) */
+.tabs-adventure .tabs-adventure-panel {
+  display: flow-root;
 }
 
 .tabs-adventure .tabs-adventure-panel[hidden] {
   display: none;
 }
 
-.tabs-adventure .tabs-adventure-panel > :first-child {
-  margin-top: 0;
+.tabs-adventure .tabs-adventure-panel h2 {
+  margin: 27px 0 13.5px;
+  font-size: 36px;
+  font-weight: 700; /* source headings are wrapped in <b> (Asar synthesized bold) */
+  line-height: 54px;
 }
 
-.tabs-adventure .tabs-adventure-panel picture,
+.tabs-adventure .tabs-adventure-panel p {
+  margin: 0 0 13.5px;
+  line-height: 45px;
+  text-align: justify;
+}
+
+/* image paragraphs: 7px above, 14px below the image (source .cmp-image box) */
+.tabs-adventure .tabs-adventure-panel p:has(> picture) {
+  margin: 0;
+  line-height: 0;
+}
+
+/* padding (not margin) so the offsets never collapse with neighbouring margins */
+.tabs-adventure .tabs-adventure-panel picture {
+  display: block;
+  padding: 7px 0 14px;
+}
+
 .tabs-adventure .tabs-adventure-panel img {
   display: block;
   width: 100%;
   height: auto;
 }
 
+/* lists: icon-font triangle bullets */
 .tabs-adventure .tabs-adventure-panel ul {
-  padding-left: 20px;
+  margin: 18px 0;
+  padding: 0;
+  list-style: none;
 }
 
-@media (width >= 600px) {
-  .tabs-adventure .tabs-adventure-tab {
-    padding: 8px 16px;
-  }
+.tabs-adventure .tabs-adventure-panel li {
+  padding-left: 12px;
+  line-height: 36px;
 }
 
-@media (width >= 900px) {
-  .tabs-adventure .tabs-adventure-list {
-    margin-bottom: 32px;
-  }
+.tabs-adventure .tabs-adventure-panel li::before {
+  content: '\ea1c';
+  position: relative;
+  top: -0.25em;
+  left: -0.75em;
+  font-family: wknd-icon-font, sans-serif;
+  font-size: 0.55em;
+  line-height: 1;
+  color: var(--text-color);
 }

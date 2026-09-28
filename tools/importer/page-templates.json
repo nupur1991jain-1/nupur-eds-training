@@ -101,7 +101,7 @@
           "selector": [
             ".aem-Grid > .image-list ~ .title.cmp-title--underline"
           ],
-          "style": null,
+          "style": "separator-medium",
           "blocks": [],
           "defaultContent": [
             ".aem-Grid > .image-list ~ .title.cmp-title--underline",
@@ -202,7 +202,7 @@
           "selector": [
             "main .cmp-layout-container--fixed .title.cmp-title--underline"
           ],
-          "style": null,
+          "style": "title-underline",
           "blocks": [],
           "defaultContent": [
             "main .cmp-layout-container--fixed .title.cmp-title--underline"
@@ -278,7 +278,7 @@
           "selector": [
             ".teaser.cmp-teaser--hero ~ main.cmp-layout-container--fixed"
           ],
-          "style": null,
+          "style": "separator",
           "blocks": [
             "cards-filter"
           ],
@@ -311,7 +311,7 @@
           "selector": [
             "main .aem-Grid > .container.aem-GridColumn--default--8"
           ],
-          "style": "article-sidebar",
+          "style": "article-sidebar, title-underline",
           "blocks": [
             "accordion-faq"
           ],
@@ -390,7 +390,7 @@
           "selector": [
             ".teaser.cmp-teaser--featured + .title"
           ],
-          "style": null,
+          "style": "separator",
           "blocks": [
             "cards-article"
           ],
@@ -419,7 +419,7 @@
           "selector": [
             ".teaser.cmp-teaser--imagebottom + .cmp-layout-container--fixed"
           ],
-          "style": null,
+          "style": "separator",
           "blocks": [
             "cards-article"
           ],

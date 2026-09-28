@@ -1,24 +1,37 @@
-/* Structural only: single-column vertical list of linked titles with a date below, no images. */
+/* cards-upnext: "Up next" list of related articles (WKND .cmp-list--upnext).
+ * Each item is a card with a 5px grey left rule, uppercase title and small dimgray date.
+ * The whole card is clickable (title link is stretched over the card) and turns yellow on hover.
+ * Values extracted from wknd.site computed styles. */
+
+.cards-upnext {
+  display: flow-root;
+  padding-top: 32px;
+}
 
 .cards-upnext > ul {
+  display: flow-root; /* source floats its items, so margins never collapse */
   list-style: none;
-  margin: 0;
+  margin: 18px 0;
   padding: 0;
-  display: flex;
-  flex-direction: column;
 }
 
 .cards-upnext .cards-upnext-item {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  position: relative;
+  box-sizing: content-box;
   min-width: 0;
-  padding: 16px 0;
-  border-bottom: 1px solid currentcolor;
+  min-height: 120px;
+  margin: 0 0 18px;
+  padding: 8px 16px;
+  border-left: 5px solid var(--light-color);
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 27px;
 }
 
-.cards-upnext .cards-upnext-item:last-child {
-  border-bottom: 0;
+.cards-upnext .cards-upnext-item:hover,
+.cards-upnext .cards-upnext-item:has(a:focus-visible) {
+  background-color: var(--accent-color);
+  border-left-color: var(--dark-color);
 }
 
 .cards-upnext .cards-upnext-image {
@@ -33,16 +46,33 @@
 
 .cards-upnext .cards-upnext-body > * {
   margin: 0;
+  padding: 5px;
+  text-transform: uppercase;
 }
 
 .cards-upnext .cards-upnext-title {
+  color: var(--text-color);
   overflow-wrap: anywhere;
 }
 
-.cards-upnext .cards-upnext-title a {
-  display: block;
+.cards-upnext .cards-upnext-title a:any-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.cards-upnext .cards-upnext-title a:focus-visible {
+  outline: none;
+}
+
+/* stretch the title link over the whole card, like the source's block-level card link */
+.cards-upnext .cards-upnext-title a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
 }
 
 .cards-upnext .cards-upnext-date {
-  margin-top: 4px;
+  color: dimgray;
+  font-size: 12px;
+  line-height: 18px;
 }

@@ -541,7 +541,7 @@ var CustomImportScript = (() => {
         "selector": [
           ".teaser.cmp-teaser--featured + .title"
         ],
-        "style": null,
+        "style": "separator",
         "blocks": [
           "cards-article"
         ],
@@ -570,7 +570,7 @@ var CustomImportScript = (() => {
         "selector": [
           ".teaser.cmp-teaser--imagebottom + .cmp-layout-container--fixed"
         ],
-        "style": null,
+        "style": "separator",
         "blocks": [
           "cards-article"
         ],
