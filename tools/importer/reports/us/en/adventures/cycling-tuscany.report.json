@@ -2,7 +2,7 @@
   "status": "success",
   "url": "https://wknd.site/us/en/adventures/cycling-tuscany.html",
   "path": "us/en/adventures/cycling-tuscany",
-  "timestamp": "2026-09-28T14:28:12.029Z",
+  "timestamp": "2026-09-29T05:56:23.339Z",
   "title": "Cycling Tuscany",
   "template": "adventures",
   "blocks": [
@@ -10,5 +10,6 @@
     "carousel-gallery",
     "table-trip-facts",
     "tabs-adventure"
-  ]
+  ],
+  "issues": []
 }

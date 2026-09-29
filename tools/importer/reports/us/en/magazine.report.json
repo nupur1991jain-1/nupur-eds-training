@@ -2,7 +2,7 @@
   "status": "success",
   "url": "https://wknd.site/us/en/magazine.html",
   "path": "us/en/magazine",
-  "timestamp": "2026-09-28T14:29:25.165Z",
+  "timestamp": "2026-09-29T05:54:45.678Z",
   "title": "Magazine",
   "template": "about-us",
   "blocks": [
@@ -10,5 +10,8 @@
     "cards-article",
     "cards-members",
     "cards-members"
+  ],
+  "issues": [
+    "Block \"cards-contributor\" selector not found: section.cmp-experience-fragment--contributor"
   ]
 }

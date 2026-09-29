@@ -2,7 +2,7 @@
   "status": "success",
   "url": "https://wknd.site/us/en/adventures/yosemite-backpacking.html",
   "path": "us/en/adventures/yosemite-backpacking",
-  "timestamp": "2026-09-28T14:27:46.718Z",
+  "timestamp": "2026-09-29T05:55:57.129Z",
   "title": "Yosemite Backpacking",
   "template": "adventures",
   "blocks": [
@@ -10,5 +10,6 @@
     "carousel-gallery",
     "table-trip-facts",
     "tabs-adventure"
-  ]
+  ],
+  "issues": []
 }

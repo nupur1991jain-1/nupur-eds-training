@@ -2,7 +2,7 @@
   "status": "success",
   "url": "https://wknd.site/us/en/about-us.html",
   "path": "us/en/about-us",
-  "timestamp": "2026-09-28T14:29:19.560Z",
+  "timestamp": "2026-09-29T05:54:40.168Z",
   "title": "About Us",
   "template": "about-us",
   "blocks": [
@@ -13,5 +13,10 @@
     "cards-contributor",
     "cards-contributor",
     "cards-contributor"
+  ],
+  "issues": [
+    "Block \"columns-featured\" selector not found: .teaser.cmp-teaser--featured",
+    "Block \"cards-article\" selector not found: main .image-list.list",
+    "Block \"cards-members\" selector not found: .teaser.cmp-teaser--secure"
   ]
 }

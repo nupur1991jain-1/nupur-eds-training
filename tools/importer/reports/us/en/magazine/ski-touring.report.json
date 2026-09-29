@@ -2,12 +2,13 @@
   "status": "success",
   "url": "https://wknd.site/us/en/magazine/ski-touring.html",
   "path": "us/en/magazine/ski-touring",
-  "timestamp": "2026-09-28T14:29:04.853Z",
+  "timestamp": "2026-09-29T05:55:17.211Z",
   "title": "Ski Touring",
   "template": "magazine",
   "blocks": [
     "breadcrumb",
     "columns-author",
     "cards-upnext"
-  ]
+  ],
+  "issues": []
 }
