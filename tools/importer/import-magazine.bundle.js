@@ -244,6 +244,10 @@ var CustomImportScript = (() => {
     },
     "/us/en/magazine/san-diego-surf": {
       "Publication Date": "2020-07-09"
+    },
+    // shown only in the "Up next" list on san-diego-surf.html
+    "/us/en/magazine/arctic-surfing": {
+      "Publication Date": "2020-07-09"
     }
   };
 
