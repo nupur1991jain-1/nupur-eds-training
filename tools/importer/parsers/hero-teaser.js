@@ -85,6 +85,6 @@ export default function parse(element, { document }) {
   if (image) cells.push([image]);
   cells.push([textCell.length ? textCell : '']);
 
-  const block = WebImporter.Blocks.createBlock(document, { name: 'hero-teaser', cells });
+  const block = WebImporter.Blocks.createBlock(document, { name: 'Hero (Teaser)', cells });
   element.replaceWith(block);
 }

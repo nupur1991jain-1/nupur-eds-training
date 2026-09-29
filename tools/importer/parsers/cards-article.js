@@ -18,7 +18,7 @@ export default function parse(element, { document, params }) {
   }
   const items = element.querySelectorAll('.cmp-image-list__item, li');
   const isLanding = `${pagePath(params)}/` === source;
-  replaceWithListing(element, document, 'cards-article', isLanding
+  replaceWithListing(element, document, 'Cards (Article)', isLanding
     ? { source, sort: 'title' }
     : { source, sort: 'recent', limit: items.length });
 }

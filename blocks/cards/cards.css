@@ -1,4 +1,8 @@
-.cards > ul {
+/* cards: base block. Variants (.cards.article, .cards.contributor, .cards.filter, .cards.members, .cards.upnext) are styled
+   in ./<variant>.css, loaded by cards.js only when used; base rules are scoped with
+   :not(.article, .contributor, .filter, .members, .upnext) so they never style a variant. */
+
+.cards:not(.article, .contributor, .filter, .members, .upnext) > ul {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -7,20 +11,20 @@
   gap: 24px;
 }
 
-.cards > ul > li {
+.cards:not(.article, .contributor, .filter, .members, .upnext) > ul > li {
   border: 1px solid #dadada;
   background-color: var(--background-color);
 }
 
-.cards .cards-card-body {
+.cards:not(.article, .contributor, .filter, .members, .upnext) .cards-card-body {
   margin: 16px;
 }
 
-.cards .cards-card-image {
+.cards:not(.article, .contributor, .filter, .members, .upnext) .cards-card-image {
   line-height: 0;
 }
 
-.cards > ul > li img {
+.cards:not(.article, .contributor, .filter, .members, .upnext) > ul > li img {
   width: 100%;
   aspect-ratio: 4 / 3;
   object-fit: cover;

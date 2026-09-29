@@ -1,32 +1,36 @@
-.columns > div {
+/* columns: base block. Variants (.columns.author, .columns.featured) are styled
+   in ./<variant>.css, loaded by columns.js only when used; base rules are scoped with
+   :not(.author, .featured) so they never style a variant. */
+
+.columns:not(.author, .featured) > div {
   display: flex;
   flex-direction: column;
 }
 
-.columns img {
+.columns:not(.author, .featured) img {
   width: 100%;
 }
 
-.columns > div > div {
+.columns:not(.author, .featured) > div > div {
   order: 1;
 }
 
-.columns > div > .columns-img-col {
+.columns:not(.author, .featured) > div > .columns-img-col {
   order: 0;
 }
 
-.columns > div > .columns-img-col img {
+.columns:not(.author, .featured) > div > .columns-img-col img {
   display: block;
 }
 
 @media (width >= 900px) {
-  .columns > div {
+  .columns:not(.author, .featured) > div {
     align-items: center;
     flex-direction: unset;
     gap: 24px;
   }
 
-  .columns > div > div {
+  .columns:not(.author, .featured) > div > div {
     flex: 1;
     order: unset;
   }

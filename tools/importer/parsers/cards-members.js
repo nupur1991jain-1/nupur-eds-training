@@ -145,6 +145,6 @@ export default function parse(element, { document }) {
     return;
   }
 
-  const block = WebImporter.Blocks.createBlock(document, { name: 'cards-members', cells });
+  const block = WebImporter.Blocks.createBlock(document, { name: 'Cards (Members)', cells });
   element.replaceWith(block);
 }

@@ -139,7 +139,7 @@ var CustomImportScript = (() => {
       return;
     }
     const cells = [[profile.length ? profile : "", social.length ? social : ""]];
-    const block = WebImporter.Blocks.createBlock(document2, { name: "columns-author", cells });
+    const block = WebImporter.Blocks.createBlock(document2, { name: "Columns (Author)", cells });
     element.replaceWith(block);
   }
 
@@ -178,7 +178,7 @@ var CustomImportScript = (() => {
       return;
     }
     const items = element.querySelectorAll("li.cmp-list__item, li");
-    replaceWithListing(element, document2, "cards-upnext", {
+    replaceWithListing(element, document2, "Cards (Upnext)", {
       source,
       sort: "recent",
       limit: items.length,

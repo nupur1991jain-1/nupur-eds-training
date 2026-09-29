@@ -1,0 +1,149 @@
+/* Cards (Filter) variant: WKND adventures tabs (.cmp-tabs) over an image-list card grid (.cmp-image-list).
+   Values extracted from wknd.site computed styles. Cards mirror the Cards (Article) variant. */
+
+/* filter row (.cmp-tabs__tablist): wrapping flex, no gap, 18px above/below */
+.cards.filter .cards-filter-controls {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 18px 0;
+  padding: 0;
+}
+
+/* inactive filter (.cmp-tabs__tab): square, transparent, uppercase 14/21 */
+.cards.filter .cards-filter-button {
+  box-sizing: border-box;
+  min-width: 48px;
+  max-height: 48px;
+  margin: 0;
+  padding: 8px 16px;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  border-radius: 0;
+  background-color: transparent;
+  color: var(--text-color);
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-xs);
+  font-weight: 400;
+  line-height: 21px;
+  text-align: left;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+/* source has no hover change */
+.cards.filter .cards-filter-button:hover {
+  background-color: transparent;
+  color: var(--text-color);
+}
+
+/* active filter (.cmp-tabs__tab--active): dark square fill, white text */
+.cards.filter .cards-filter-button[aria-pressed='true'],
+.cards.filter .cards-filter-button[aria-pressed='true']:hover {
+  border-bottom: 0;
+  background-color: var(--dark-color);
+  color: rgb(255 255 255);
+}
+
+.cards.filter .cards-filter-button:focus {
+  outline: none;
+}
+
+.cards.filter .cards-filter-button:focus-visible {
+  outline: 2px solid var(--text-color);
+  outline-offset: 2px;
+}
+
+/* card grid (.cmp-image-list): fixed 260px cards in a wrapping flex row */
+.cards.filter > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.cards.filter .cards-filter-card {
+  box-sizing: content-box;
+  flex: 0 1 260px;
+  min-width: 0;
+  margin: 0 0 32px;
+  padding: 0;
+}
+
+.cards.filter .cards-filter-card[hidden] {
+  display: none;
+}
+
+/* image: 260 x 200 cover; source inline img leaves a 7px line-box gap below (207px image area) */
+.cards.filter .cards-filter-image {
+  line-height: 0;
+  padding-bottom: 7px;
+}
+
+.cards.filter .cards-filter-image p {
+  margin: 0;
+}
+
+.cards.filter .cards-filter-image a {
+  display: block;
+}
+
+.cards.filter .cards-filter-image img {
+  display: block;
+  width: 100%;
+  height: 200px;
+  margin: 0;
+  object-fit: cover;
+  object-position: center center;
+}
+
+.cards.filter .cards-filter-body {
+  padding: 0;
+}
+
+/* title (.cmp-image-list__item-title): body font, 18px semibold uppercase */
+.cards.filter .cards-filter-title {
+  margin: 0;
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-m);
+  font-weight: 600;
+  line-height: 27px;
+}
+
+.cards.filter .cards-filter-title a:any-link,
+.cards.filter .cards-filter-title strong {
+  color: var(--text-color);
+  font-weight: 600;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.cards.filter .cards-filter-title a:hover {
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+/* description (.cmp-image-list__item-description): dimgray 14/21 uppercase, single line */
+.cards.filter .cards-filter-description {
+  margin: 16px 0 0;
+  font-size: var(--body-font-size-xs);
+  line-height: 21px;
+  color: rgb(105 105 105);
+  text-transform: uppercase;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+@media (width >= 600px) {
+  .cards.filter > ul {
+    justify-content: normal;
+  }
+
+  .cards.filter .cards-filter-card {
+    padding-right: 14px;
+  }
+}

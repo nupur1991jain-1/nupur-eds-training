@@ -113,7 +113,7 @@ var CustomImportScript = (() => {
     const cells = [];
     if (image) cells.push([image]);
     cells.push([textCell.length ? textCell : ""]);
-    const block = WebImporter.Blocks.createBlock(document2, { name: "hero-teaser", cells });
+    const block = WebImporter.Blocks.createBlock(document2, { name: "Hero (Teaser)", cells });
     element.replaceWith(block);
   }
 
@@ -151,7 +151,7 @@ var CustomImportScript = (() => {
       element.replaceWith(...element.childNodes);
       return;
     }
-    replaceWithListing(element, document2, "cards-filter", { source, sort: "title" });
+    replaceWithListing(element, document2, "Cards (Filter)", { source, sort: "title" });
   }
 
   // tools/importer/data/wknd-page-data.js

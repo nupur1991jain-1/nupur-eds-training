@@ -1,0 +1,92 @@
+/* Hero (Teaser) variant: full-bleed image; from 1200px a white content panel overlaps its bottom edge.
+   Values extracted from wknd.site .cmp-teaser--hero computed styles. */
+
+.hero.teaser {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  max-width: 1680px;
+  margin: 0 auto;
+}
+
+/* Mobile/tablet: image at its natural ratio, capped at 400px (top of the image kept).
+   The source's inline <img> leaves a 7px baseline gap below it; reproduced as padding so it
+   renders the same regardless of document mode. Overflow clips at the padding box, so a
+   taller image still fills the full 400px. */
+.hero.teaser .hero-teaser-image {
+  box-sizing: border-box;
+  width: 100%;
+  max-height: 400px;
+  padding-bottom: 7px;
+  overflow: hidden;
+}
+
+.hero.teaser .hero-teaser-image picture,
+.hero.teaser .hero-teaser-image img {
+  display: block;
+}
+
+.hero.teaser .hero-teaser-image img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  object-position: center bottom;
+}
+
+.hero.teaser .hero-teaser-content {
+  position: relative;
+  padding: 0 var(--content-gutter);
+}
+
+.hero.teaser .hero-teaser-content h2 {
+  margin: 18px 0 0;
+  font-size: 36px;
+  line-height: 54px;
+}
+
+.hero.teaser .hero-teaser-content p {
+  margin: 0;
+  font-size: var(--body-font-size-m);
+  line-height: 1.75;
+}
+
+/* Source justifies description paragraphs; its CTA teaser carries plain (unjustified) text */
+.hero.teaser .hero-teaser-content:not(:has(.button-wrapper)) > p {
+  text-align: justify;
+}
+
+.hero.teaser .hero-teaser-content p.button-wrapper {
+  margin: 18px 0;
+}
+
+main .hero.teaser a.button:any-link {
+  padding: 14px 35px;
+}
+
+/* Desktop: fixed 640px cover image, 1192px panel pulled up 180px over it */
+@media (width >= 1200px) {
+  .hero.teaser .hero-teaser-image {
+    height: 640px;
+    max-height: 640px;
+    padding-bottom: 0;
+  }
+
+  .hero.teaser .hero-teaser-image picture,
+  .hero.teaser .hero-teaser-image img {
+    height: 100%;
+  }
+
+  .hero.teaser .hero-teaser-content {
+    box-sizing: border-box;
+    width: 1192px;
+    max-width: 100%;
+    min-height: 180px;
+    margin: -180px auto 0;
+    padding: 0 28px;
+    background-color: var(--background-color);
+  }
+
+  .hero.teaser.hero-teaser-no-image .hero-teaser-content {
+    margin-top: 0;
+  }
+}

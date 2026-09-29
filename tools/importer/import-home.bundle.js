@@ -211,7 +211,7 @@ var CustomImportScript = (() => {
       return;
     }
     const cells = [[textCell.length ? textCell : "", image || ""]];
-    const block = WebImporter.Blocks.createBlock(document2, { name: "columns-featured", cells });
+    const block = WebImporter.Blocks.createBlock(document2, { name: "Columns (Featured)", cells });
     element.replaceWith(block);
   }
 
@@ -254,7 +254,7 @@ var CustomImportScript = (() => {
     }
     const items = element.querySelectorAll(".cmp-image-list__item, li");
     const isLanding = `${pagePath(params)}/` === source;
-    replaceWithListing(element, document2, "cards-article", isLanding ? { source, sort: "title" } : { source, sort: "recent", limit: items.length });
+    replaceWithListing(element, document2, "Cards (Article)", isLanding ? { source, sort: "title" } : { source, sort: "recent", limit: items.length });
   }
 
   // tools/importer/parsers/hero-teaser.js
@@ -330,7 +330,7 @@ var CustomImportScript = (() => {
     const cells = [];
     if (image) cells.push([image]);
     cells.push([textCell.length ? textCell : ""]);
-    const block = WebImporter.Blocks.createBlock(document2, { name: "hero-teaser", cells });
+    const block = WebImporter.Blocks.createBlock(document2, { name: "Hero (Teaser)", cells });
     element.replaceWith(block);
   }
 

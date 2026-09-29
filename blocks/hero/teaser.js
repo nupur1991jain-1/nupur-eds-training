@@ -1,0 +1,50 @@
+import { optimizedPicture } from '../../scripts/utils.js';
+
+// The imported CTA is a plain <p><a> (no strong/em), so decorateButtons() leaves it as a text
+// link. Mark a trailing link-only paragraph as the teaser's CTA button.
+function decorateCta(content) {
+  const last = content.lastElementChild;
+  if (!last || last.tagName !== 'P') return;
+  const links = last.querySelectorAll('a[href]');
+  if (links.length !== 1 || last.querySelector('img, picture')) return;
+  const [a] = links;
+  if (last.textContent.trim() !== a.textContent.trim()) return;
+  last.classList.add('button-wrapper');
+  if (!a.classList.contains('button')) a.classList.add('button', 'primary');
+}
+
+export default function decorate(block) {
+  // Authored as row 1 = [image], row 2 = [heading, text, CTA], but tolerate a single
+  // row with two cells or the image and text sharing one cell.
+  const cells = [...block.querySelectorAll(':scope > div > div')];
+  const picture = block.querySelector('picture');
+
+  const media = document.createElement('div');
+  media.className = 'hero-teaser-image';
+  if (picture) {
+    const img = picture.querySelector('img');
+    // leading hero (only a breadcrumb or nothing above it) is the LCP image: load it eagerly
+    const section = block.closest('.section');
+    const leading = section && [...section.parentElement.children].indexOf(section) <= 1;
+    const optimized = img
+      ? optimizedPicture(img, leading, [{ media: '(min-width: 900px)', width: '2000' }, { width: '900' }])
+      : picture;
+    const wrapper = picture.parentElement;
+    media.append(optimized);
+    picture.remove();
+    if (wrapper && wrapper.tagName === 'P' && !wrapper.textContent.trim() && !wrapper.children.length) wrapper.remove();
+  }
+
+  const content = document.createElement('div');
+  content.className = 'hero-teaser-content';
+  cells.forEach((cell) => {
+    if (cell.textContent.trim() || cell.children.length) content.append(...cell.childNodes);
+  });
+
+  decorateCta(content);
+
+  block.replaceChildren();
+  if (picture) block.append(media);
+  if (content.textContent.trim()) block.append(content);
+  if (!picture) block.classList.add('hero-teaser-no-image');
+}

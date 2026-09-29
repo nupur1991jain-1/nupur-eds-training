@@ -1,0 +1,186 @@
+/* Contributor grid: centered person cards (1 / 2 / 4 columns), round 164px avatar,
+   Asar name, uppercase semibold role line, dark bar of icon-only social links.
+   Values measured from wknd.site/us/en/about-us.html (computed styles). */
+
+/* Source cards span the full 1164px content box and carry their own 28px side inset
+   (14px column padding + 14px inner container); cancel the section gutter so the
+   card grid lines up with the source at every width. */
+.cards.contributor > ul {
+  list-style: none;
+  margin: 0 calc(-1 * var(--content-gutter));
+  padding: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.cards.contributor .cards-contributor-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+  padding: 9px calc(2 * var(--content-gutter)) 18px;
+  text-align: center;
+  color: var(--text-color);
+}
+
+/* Imported portraits are not square (e.g. 164x246); the square crop lives on the img itself
+   so a tall source can't stretch the avatar box and misalign names across a row.
+   Source image box is 185px tall: 7px margin + 164px image + 7px margin + 7px inline descender gap. */
+.cards.contributor .cards-contributor-avatar {
+  width: 164px;
+  max-width: 100%;
+  padding-bottom: 7px;
+  line-height: 0;
+}
+
+.cards.contributor .cards-contributor-avatar picture {
+  display: block;
+  width: 100%;
+}
+
+.cards.contributor .cards-contributor-avatar img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 7px 0;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.cards.contributor .cards-contributor-body {
+  width: 100%;
+  min-width: 0;
+}
+
+.cards.contributor .cards-contributor-name {
+  margin: 0 0 6px;
+  font-family: var(--heading-font-family);
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 36px;
+}
+
+.cards.contributor .cards-contributor-role {
+  margin: 0 0 3.5px;
+  font-family: var(--body-font-family);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 21px;
+  text-transform: uppercase;
+}
+
+/* Social: 48px square dark cells, glyph from wknd-icon-font inset 14px / 18px like the source */
+.cards.contributor .cards-contributor-social {
+  list-style: none;
+  margin: 0;
+  padding: 18px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.cards.contributor .cards-contributor-social li {
+  margin: 0;
+}
+
+.cards.contributor .cards-contributor-social a:any-link {
+  position: relative;
+  display: block;
+  width: 48px;
+  height: 48px;
+  background-color: var(--dark-color);
+  color: var(--light-color);
+  text-decoration: none;
+}
+
+.cards.contributor .cards-contributor-social a:hover {
+  color: var(--light-color);
+  text-decoration: none;
+}
+
+.cards.contributor .cards-contributor-social a:focus-visible {
+  outline: 2px solid var(--link-color);
+  outline-offset: 2px;
+}
+
+/* Visually hidden label keeps the accessible name (the link also carries aria-label) */
+.cards.contributor .cards-contributor-social-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.cards.contributor .cards-contributor-social a::before {
+  display: block;
+  width: fit-content;
+  padding: 18px 0 0 14px;
+  font-family: wknd-icon-font, sans-serif;
+  font-size: 17.5px;
+  font-weight: 400;
+  line-height: 17.5px;
+}
+
+.cards.contributor .cards-contributor-social-facebook a::before {
+  content: "\e902";
+}
+
+.cards.contributor .cards-contributor-social-twitter a::before,
+.cards.contributor .cards-contributor-social-x a::before {
+  content: "\e901";
+}
+
+.cards.contributor .cards-contributor-social-instagram a::before {
+  content: "\e903";
+}
+
+/* Networks without a glyph in the icon font fall back to the visible text label */
+.cards.contributor .cards-contributor-social li:not(
+  .cards-contributor-social-facebook,
+  .cards-contributor-social-twitter,
+  .cards-contributor-social-x,
+  .cards-contributor-social-instagram
+) a:any-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  min-width: 48px;
+  padding: 0 14px;
+  box-sizing: border-box;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.cards.contributor .cards-contributor-social li:not(
+  .cards-contributor-social-facebook,
+  .cards-contributor-social-twitter,
+  .cards-contributor-social-x,
+  .cards-contributor-social-instagram
+) .cards-contributor-social-label {
+  position: static;
+  width: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  clip-path: none;
+}
+
+/* Source: 2 columns from tablet, 4 columns from desktop */
+@media (width >= 600px) {
+  .cards.contributor > ul {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (width >= 1200px) {
+  .cards.contributor > ul {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}

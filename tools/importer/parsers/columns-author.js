@@ -115,6 +115,6 @@ export default function parse(element, { document }) {
   }
 
   const cells = [[profile.length ? profile : '', social.length ? social : '']];
-  const block = WebImporter.Blocks.createBlock(document, { name: 'columns-author', cells });
+  const block = WebImporter.Blocks.createBlock(document, { name: 'Columns (Author)', cells });
   element.replaceWith(block);
 }

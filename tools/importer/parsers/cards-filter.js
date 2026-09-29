@@ -13,5 +13,5 @@ export default function parse(element, { document, params }) {
     element.replaceWith(...element.childNodes);
     return;
   }
-  replaceWithListing(element, document, 'cards-filter', { source, sort: 'title' });
+  replaceWithListing(element, document, 'Cards (Filter)', { source, sort: 'title' });
 }

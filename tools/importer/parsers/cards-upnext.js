@@ -13,7 +13,7 @@ export default function parse(element, { document, params }) {
     return;
   }
   const items = element.querySelectorAll('li.cmp-list__item, li');
-  replaceWithListing(element, document, 'cards-upnext', {
+  replaceWithListing(element, document, 'Cards (Upnext)', {
     source, sort: 'recent', limit: items.length, excludeCurrent: true,
   });
 }

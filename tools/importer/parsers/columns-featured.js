@@ -84,6 +84,6 @@ export default function parse(element, { document }) {
   }
 
   const cells = [[textCell.length ? textCell : '', image || '']];
-  const block = WebImporter.Blocks.createBlock(document, { name: 'columns-featured', cells });
+  const block = WebImporter.Blocks.createBlock(document, { name: 'Columns (Featured)', cells });
   element.replaceWith(block);
 }
