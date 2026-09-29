@@ -8,7 +8,11 @@
  *   | Exclude Current | true             |   optional, leave the current page out
  * The block's own decorate() then renders the generated rows exactly like authored ones,
  * so newly published pages appear without code or listing-page edits.
+ * "recent" orders by each page's Publication Date metadata (newest first), falling back to
+ * the page's last modification when it has none.
  */
+
+import { toClassName } from './aem.js';
 
 const CONFIG_KEYS = ['source', 'sort', 'limit', 'exclude current'];
 
@@ -96,11 +100,33 @@ export function fetchPageMeta(path) {
         const end = html.indexOf('</head>');
         const doc = new DOMParser().parseFromString(end > -1 ? html.slice(0, end + 7) : html, 'text/html');
         return Object.fromEntries([...doc.head.querySelectorAll('meta[name]')]
-          .map((m) => [m.getAttribute('name'), m.getAttribute('content') || '']));
+          // published pages use "publication-date"; local preview keeps "Publication Date"
+          .map((m) => [toClassName(m.getAttribute('name')), m.getAttribute('content') || '']));
       })
       .catch(() => ({})));
   }
   return metaCache.get(path);
+}
+
+/**
+ * A page's Publication Date metadata (the index does not carry it, so it is read from the page).
+ * @param {Object} row index row
+ * @returns {Promise<string>} e.g. "2020-09-30", or '' when the page has none
+ */
+export async function publicationDate(row) {
+  if (row.publicationDate !== undefined) return row.publicationDate || '';
+  return (await fetchPageMeta(row.path))['publication-date'] || '';
+}
+
+/**
+ * Sort key for "recent": publication date, else the index's last modification (ms).
+ * @param {Object} row index row
+ * @returns {Promise<number>}
+ */
+async function recencyTime(row) {
+  const published = await publicationDate(row);
+  const time = published ? Date.parse(`${String(published).slice(0, 10)}T00:00:00Z`) : NaN;
+  return Number.isNaN(time) ? (Number(row.lastModified) || 0) * 1000 : time;
 }
 
 /**
@@ -118,8 +144,12 @@ export async function queryListing(config) {
   if (config.sort === 'title') rows.sort(byTitle);
   else if (config.sort === 'title desc') rows.sort((a, b) => byTitle(b, a));
   else {
-    const modified = (row) => Number(row.lastModified) || 0;
-    rows.sort((a, b) => modified(b) - modified(a) || byTitle(a, b));
+    // recent: newest Publication Date first (pages without one use their last modification);
+    // same-day pages by title Z-A, which is how WKND orders them
+    const times = new Map(await Promise.all(
+      rows.map(async (row) => [row, await recencyTime(row)]),
+    ));
+    rows.sort((a, b) => times.get(b) - times.get(a) || byTitle(b, a));
   }
   return config.limit ? rows.slice(0, config.limit) : rows;
 }

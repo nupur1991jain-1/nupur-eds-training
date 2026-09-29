@@ -1,5 +1,5 @@
 import {
-  expandListing, fetchPageMeta, formatDate, listingCell, rowLink,
+  expandListing, formatDate, listingCell, publicationDate, rowLink,
 } from '../../scripts/listing.js';
 import { optimizedPicture } from '../../scripts/utils.js';
 
@@ -11,9 +11,7 @@ import { optimizedPicture } from '../../scripts/utils.js';
 async function listingRow(row) {
   const title = document.createElement('p');
   title.append(rowLink(row));
-  const published = row.publicationDate !== undefined
-    ? row.publicationDate
-    : (await fetchPageMeta(row.path))['publication-date'];
+  const published = await publicationDate(row);
   const date = document.createElement('p');
   date.textContent = formatDate(published || row.lastModified);
   return [listingCell(title, date.textContent ? date : null)];
